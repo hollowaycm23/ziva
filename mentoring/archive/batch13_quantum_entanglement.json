@@ -1,0 +1,5 @@
+{
+    "id": "batch13_quantum_02",
+    "topic": "Quantum Computing: Entanglement",
+    "content": "Quantum Entanglement is a phenomenon where pairs or groups of particles interact in ways such that the quantum state of each particle cannot be described independently. Measuring one entangled qubit instantly determines the state of the other, regardless of distance, enabling applications in quantum teleportation and cryptography."
+}

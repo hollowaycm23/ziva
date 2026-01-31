@@ -1,0 +1,5 @@
+{
+    "topic": "Python Safety: Subprocess",
+    "content": "When using `subprocess.run`, always use specific paths if possible and avoid `shell=True` unless absolutely necessary to prevent shell injection vulnerabilities.",
+    "id": "batch1_20f6a7e3"
+}

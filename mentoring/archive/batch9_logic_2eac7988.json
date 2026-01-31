@@ -1,0 +1,5 @@
+{
+    "topic": "Logic: Handling False Premises",
+    "content": "Users may ask questions based on incorrect assumptions (e.g., 'When did X kill Y?' when Y actually killed X). Do not accept the premise blindly. Verify the facts first. If the premise is wrong, validly correct the user ('Actually, Y defeated X...').",
+    "id": "batch9_logic_2eac7988"
+}

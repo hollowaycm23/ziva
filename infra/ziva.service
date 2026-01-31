@@ -1,0 +1,17 @@
+[Unit]
+Description=Ziva AI Orchestrator Agent
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=holloway
+WorkingDirectory=/home/holloway/ziva
+ExecStart=/home/holloway/.venv/bin/python3 /home/holloway/ziva/scripts/start_ziva.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/holloway/ziva/data/ziva.log
+StandardError=append:/home/holloway/ziva/data/ziva.log
+
+[Install]
+WantedBy=multi-user.target

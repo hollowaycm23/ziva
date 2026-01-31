@@ -1,0 +1,5 @@
+{
+    "id": "batch15_ai_rag",
+    "topic": "AI Mastery: RAG (Retrieval-Augmented Generation)",
+    "content": "RAG enhances LLMs by grounding them in external data. 1. Retriever: Fetches relevant docs (chunks) from a vector database (e.g., Qdrant) based on query similarity. 2. Generator: The LLM synthesizes an answer using the retrieved context, reducing hallucinations."
+}

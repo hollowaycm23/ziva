@@ -1,0 +1,5 @@
+core/binary_server.py:256:32: E128 continuation line under-indented for visual indent
+                               f"Output: {example['output']}")
+                               ^
+1     E128 continuation line under-indented for visual indent
+1

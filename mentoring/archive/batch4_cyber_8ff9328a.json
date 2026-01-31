@@ -1,0 +1,5 @@
+{
+    "topic": "WebSec: SQL Injection",
+    "content": "SQLi allows database manipulation. Defense: NEVER concatenate strings for queries. ALWAYS use Prepared Statements/Parameterized Queries.",
+    "id": "batch4_cyber_8ff9328a"
+}

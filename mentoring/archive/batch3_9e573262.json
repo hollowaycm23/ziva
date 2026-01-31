@@ -1,0 +1,5 @@
+{
+    "topic": "Logic: Code Edits",
+    "content": "When editing code, always read the file first (`view_file`) to ensure context. Blind edits often fail due to line number mismatches.",
+    "id": "batch3_9e573262"
+}

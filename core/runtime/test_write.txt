@@ -1,0 +1,4 @@
+--- TEST WRITE 1: VALID ---
+{"id":"w1","result":"Successfully wrote to /home/holloway/ziva/core/runtime/test_output.txt (mode: overwrite)","status":"success","timestamp":1768597920}
+\n--- TEST WRITE 2: INVALID ---
+{"id":"w2","error":"Access Denied: Path '/etc/shadow' is outside sandbox '/home/holloway/ziva'","status":"error","timestamp":1768597920}

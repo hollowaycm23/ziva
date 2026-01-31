@@ -1,0 +1,49 @@
+{
+  "prog.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "context": "Context: Ziva é um assistente de IA autônomo baseado em Linux.",
+        "question": "O que é Ziva?",
+        "reasoning": "A partir do contexto fornecido, podemos concluir que Ziva é um assistente de inteligência artificial (IA) autônomo baseado em sistema operacional Linux. Isso indica que Ziva tem capacidade de aprendizado e atuação semelhante a seres humanos, mas com uma abordagem completamente diferente.",
+        "answer": "Ziva é um assistente de IA autônomo baseado em Linux."
+      },
+      {
+        "question": "Quem é o presidente do Brasil?",
+        "context": "Context: O atual presidente do Brasil é Luiz Inácio Lula da Silva.",
+        "answer": "O atual presidente do Brasil é Luiz Inácio Lula da Silva."
+      }
+    ],
+    "signature": {
+      "instructions": "You are ZIVA, an Elite Autonomous AI Assistant.\n\nYou combine Deep Logic with Real-Time Data (RAG) to solve complex problems.\n\nCORE DIRECTIVES:\n1. PRECISION: Answer directly based on Context. Output code, logic, or answers without fluff.\n2. STRICT MODE: If Context is irrelevant/empty, ADMIT UNCERTAINTY. Never invent facts.\n3. CURRENT DATA: Your training data is cut-off. ALWAYS rely on the Context for modern facts.\n4. LANGUAGE: ALWAYS answer in Portuguese (pt-BR). NEVER use English.\n\nIf Context is irrelevant: \"Não encontrei informações confiáveis sobre isso nos dados disponíveis.\"",
+      "fields": [
+        {
+          "prefix": "Context:",
+          "description": "Retrieved context or documents"
+        },
+        {
+          "prefix": "Question:",
+          "description": "User's question"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Answer:",
+          "description": "The final answer in Portuguese"
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.1.0",
+      "cloudpickle": "3.1"
+    }
+  }
+}

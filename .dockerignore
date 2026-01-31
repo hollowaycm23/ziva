@@ -1,0 +1,25 @@
+
+# Valid ignore file
+.git
+.gitignore
+venv
+__pycache__
+brain
+logs
+db
+tmp
+*.pyc
+*.pyo
+*.pyd
+.env
+voice_venv
+data_backup*
+data
+models
+.git
+agent_venv
+node_modules
+qdrant_storage
+qdrant_storage_backup*
+*.log
+*.gz

@@ -1,0 +1,5 @@
+{
+    "id": "batch15_ai_optimization",
+    "topic": "AI Mastery: Model Optimization (Quantization & Pruning)",
+    "content": "Running large models on local hardware requires optimization: 1. Quantization: Reducing precision (e.g., FP16 to INT4), saving memory with minimal accuracy loss. 2. Pruning: Removing redundant weights/neurons. 3. Distillation: Training a smaller 'student' model to mimic the 'teacher' model's outputs."
+}

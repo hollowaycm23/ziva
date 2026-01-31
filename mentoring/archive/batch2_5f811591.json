@@ -1,0 +1,5 @@
+{
+    "topic": "Data: JSON Robustness",
+    "content": "When parsing JSON from external sources, wrap `json.loads()` in a try-except block to handle malformed data gracefully without crashing the agent.",
+    "id": "batch2_5f811591"
+}

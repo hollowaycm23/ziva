@@ -1,0 +1,5 @@
+{
+    "topic": "Data: CSV Handling",
+    "content": "Use the standard `csv` module or `pandas` for CSVs. Never try to parse CSVs using string splitting (`line.split(',')`) as it fails on quoted fields.",
+    "id": "batch2_c07911d2"
+}

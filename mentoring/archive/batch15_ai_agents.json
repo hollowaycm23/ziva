@@ -1,0 +1,5 @@
+{
+    "id": "batch15_ai_agents",
+    "topic": "AI Mastery: Agent Architectures (ReAct & CoT)",
+    "content": "AI Agents use reasoning loops to solve tasks. 1. Chain of Thought (CoT): Decomposing problems into logical steps before answering. 2. ReAct (Reason+Act): Interleaving reasoning traces with external tool actions (e.g., 'Thought: I need to search. Action: WebSearch'). This loop allows LLMs to interact with the world dynamically."
+}

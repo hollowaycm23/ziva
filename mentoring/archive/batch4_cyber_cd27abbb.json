@@ -1,0 +1,5 @@
+{
+    "topic": "Hacking: Subdomain Enumeration",
+    "content": "Use tools like `sublist3r` or passive DNS queries to find subdomains. This increases the attack surface visibility during authorized audits.",
+    "id": "batch4_cyber_cd27abbb"
+}

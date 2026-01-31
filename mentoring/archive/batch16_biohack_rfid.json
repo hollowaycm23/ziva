@@ -1,0 +1,5 @@
+{
+    "id": "batch16_biohack_rfid",
+    "topic": "Biohacking: RFID & NFC Implants",
+    "content": "Subdermal RFID/NFC tags are glass-encased microchips usually implanted in the hand (between thumb and index finger). Uses include: Unlocking doors, starting cars, sharing contact info (vCard), or 2FA authentication. Popular chip types: NTAG216 (NFC) and xEM (125kHz RFID)."
+}

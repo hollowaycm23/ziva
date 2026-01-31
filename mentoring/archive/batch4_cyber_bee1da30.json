@@ -1,0 +1,5 @@
+{
+    "topic": "Defense: Log Analysis",
+    "content": "Monitor invalid login attempts in `/var/log/auth.log`. Use tools like Fail2Ban to automatically ban IPs that show brute-force patterns.",
+    "id": "batch4_cyber_bee1da30"
+}

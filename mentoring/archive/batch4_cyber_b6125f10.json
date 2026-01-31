@@ -1,0 +1,5 @@
+{
+    "topic": "PrivEsc: SUID Binaries",
+    "content": "Files with the SUID bit set run as owner (root). Use `find / -perm -4000 2>/dev/null` to find them. If a writable SUID file exists, it's a root vulnerability.",
+    "id": "batch4_cyber_b6125f10"
+}

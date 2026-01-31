@@ -1,0 +1,68 @@
+[
+  {
+    "domain": "Theoretical Physics",
+    "arxiv_query": "cat:quant-ph OR cat:hep-th OR cat:astro-ph OR cat:gr-qc",
+    "github_topics": ["quantum-computing", "physics-simulation", "general-relativity"],
+    "keywords": ["quantum", "gravity", "black hole", "entanglement", "spacetime"]
+  },
+  {
+    "domain": "Data Science & AI",
+    "arxiv_query": "cat:cs.LG OR cat:cs.AI OR cat:stat.ML",
+    "github_topics": ["machine-learning", "deep-learning", "artificial-intelligence", "neural-networks"],
+    "keywords": ["machine learning", "neural network", "transformer", "reinforcement learning", "optimization"]
+  },
+  {
+    "domain": "Mathematics",
+    "arxiv_query": "cat:math.CA OR cat:math.NA OR cat:math.NT OR cat:math.PR OR cat:math.CO",
+    "github_topics": ["mathematics", "numerical-analysis", "number-theory", "algebra"],
+    "keywords": ["theorem", "proof", "algorithm", "equation", "calculus", "probability"]
+  },
+  {
+    "domain": "Computer Science (Systems)",
+    "arxiv_query": "cat:cs.DS OR cat:cs.CR OR cat:cs.DC OR cat:cs.OS OR cat:cs.PL",
+    "github_topics": ["distributed-systems", "operating-system", "cryptography", "compiler"],
+    "keywords": ["distributed", "concurrency", "encryption", "kernel", "compiler", "complexity"]
+  },
+  {
+    "domain": "Space Habitats & Megastructures",
+    "arxiv_query": "all:\"O'Neill Cylinder\" OR all:\"Stanford Torus\" OR all:\"Bernal Sphere\" OR all:\"rotating habitat\" OR all:\"space settlement\"",
+    "github_topics": ["space-habitat", "orbital-settlement"],
+    "keywords": ["O'Neill", "Stanford Torus", "Bernal Sphere", "Island Three", "artificial gravity"]
+  },
+  {
+    "domain": "Civilization Scales & SETI",
+    "arxiv_query": "all:\"Kardashev scale\" OR all:\"Dyson sphere\" OR all:\"technosignature\" OR all:\"megastructure\"",
+    "github_topics": ["seti", "dyson-sphere-program"],
+    "keywords": ["Kardashev", "Type I", "Type II", "energy consumption", "supercivilization"]
+  },
+  {
+    "domain": "Orbital Dynamics & 3-Body Physics",
+    "arxiv_query": "all:\"three-body problem\" OR all:\"n-body simulation\" OR all:\"Lagrange points\" OR all:\"orbital resonance\"",
+    "github_topics": ["n-body", "orbital-mechanics", "astrodynamics"],
+    "keywords": ["3-body", "chaos theory", "stability", "trajectory optimization"]
+  },
+  {
+    "domain": "Space Colonization & Engineering",
+    "arxiv_query": "cat:astro-ph.IM AND (all:habitat OR all:colony OR all:propulsion)",
+    "github_topics": ["orbital-mechanics", "space-exploration", "rocketry"],
+    "keywords": ["O'Neill Cylinder", "High Frontier", "terraform", "megastructure", "Dyson sphere", "ISRU"]
+  },
+  {
+    "domain": "Biology & Networks",
+    "arxiv_query": "cat:q-bio.NC OR cat:q-bio.GN OR cat:q-bio.PE OR cat:q-bio.QM",
+    "github_topics": ["bioinformatics", "neuroscience", "computational-biology"],
+    "keywords": ["genome", "neuron", "synapse", "evolution", "protein", "dna"]
+  },
+  {
+    "domain": "Engineering & Robotics",
+    "arxiv_query": "cat:cs.RO OR cat:eess.SY OR cat:eess.SP",
+    "github_topics": ["robotics", "control-theory", "signal-processing"],
+    "keywords": ["robot", "control", "signal", "feedback", "automation"]
+  },
+  {
+    "domain": "Philosophy & Ethics of AI",
+    "arxiv_query": "cat:cs.CY OR cat:physics.hist-ph",
+    "github_topics": ["ai-ethics", "tech-policy"],
+    "keywords": ["ethics", "bias", "philosophical", "history of science", "societal impact"]
+  }
+]

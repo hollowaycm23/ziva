@@ -1,0 +1,5 @@
+{
+    "topic": "Python Type Hints",
+    "content": "Always use Type Hints (PEP 484) in function signatures, e.g., `def func(name: str) -> bool:`. It documents code intentions and helps static analysis.",
+    "id": "batch1_94a3cf68"
+}

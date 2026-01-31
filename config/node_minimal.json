@@ -1,0 +1,25 @@
+{
+    "node_type": "worker",
+    "node_name": "mita",
+    "master_node": "100.105.168.115",
+    "master_hostname": "spacex-2",
+    "p2p_port": 9000,
+    "p2p_auth_key": "admin",
+    "services": {
+        "binary_server": true,
+        "rag": false,
+        "autonomic": false,
+        "api": false
+    },
+    "ollama": {
+        "enabled": true,
+        "host": "127.0.0.1",
+        "port": 11434,
+        "model": "llama3:8b"
+    },
+    "qdrant": {
+        "enabled": false,
+        "host": "100.105.168.115",
+        "port": 6333
+    }
+}

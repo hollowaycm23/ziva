@@ -1,0 +1,549 @@
+from typing import Dict, Any
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from core.agent.state import AgentState
+from qdrant_client import QdrantClient
+from langchain_core.documents import Document
+
+# --- Configuration ---
+# Connect to local Qdrant
+client = QdrantClient(host="localhost", port=6333)
+# Connect to local Ollama (Llama 3.2 or compatible)
+llm = ChatOllama(model="llama3.1:8b", temperature=0)
+
+from core.vector_store import VectorStore
+from core.llm import LLMService
+
+from core.tools.sherlock import SherlockClient
+sherlock_client = SherlockClient()
+
+# Connect to local Qdrant via our VectorStore wrapper
+vs = VectorStore()
+# Connect to local Ollama for embeddings
+embedder = LLMService(model="nomic-embed-text:latest") 
+
+def retrieve(state: AgentState) -> Dict[str, Any]:
+    """
+    Retrieve documents from Qdrant based on the question.
+    """
+    print("---RETRIEVE---")
+    question = state["question"]
+    
+    documents = []
+    try:
+        # Generate embedding for question
+        query_vector = embedder.embedding(question)
+        
+        if query_vector:
+            # Search Qdrant
+            results = vs.search(embedding=query_vector, limit=3)
+            # Extract text content
+            documents = [r["text"] for r in results]
+            
+            if not documents:
+                print("  ⚠️ No relevant documents found.")
+                # Fallback to a default context if empty to prevent error, or handle gracefully
+                # For now let empty list flow to grader (which will likely fail/rewrite)
+        if not documents:
+            print("  ⚠️ No relevant results found via SearXNG.")
+            
+    except Exception as e:
+        print(f"Error in web search: {e}")
+        
+    return {"documents": documents, "question": question}
+
+def sherlock_search(state: AgentState):
+    """
+    Executes an OSINT search using Sherlock to find social media accounts.
+    """
+    print("---SHERLOCK SEARCH---")
+    query = state["question"]
+    
+    # Simple extraction
+    username = query.lower().replace("sherlock", "").strip()
+    if not username:
+        username = query.strip()
+        
+    print(f"  🔍 Hunting for username: {username}")
+    
+    results = sherlock_client.search(username)
+    
+    documents = []
+    if "error" in results:
+        documents.append(f"Shared Error: {results['error']}")
+    elif results.get("found_count", 0) > 0:
+        doc_str = f"Sherlock OSINT Report for '{results['username']}':\n"
+        doc_str += f"Found {results['found_count']} accounts:\n"
+        for site in results["sites"]:
+            doc_str += f"- {site['site']}: {site['url']}\n"
+        documents.append(doc_str)
+    else:
+        documents.append(f"Sherlock search for '{username}' returned no results.")
+
+    return {"documents": documents, "question": query}
+
+def get_memory_stats(state: AgentState):
+    """
+    Retrieves statistics about the internal Vector Database (Qdrant).
+    """
+    print("---GET MEMORY STATS---")
+    query = state["question"]
+    
+    stats = vs.get_stats()
+    
+    documents = []
+    if "error" in stats:
+        documents.append(f"Erro ao acessar estatísticas da memória: {stats['error']}")
+    else:
+        doc_str = "Estatísticas da Memória Interna (Qdrant):\n"
+        doc_str += f"- Total de Pontos (Chunks): {stats['total_points']}\n"
+        doc_str += f"- Status da Coleção: {stats['status']}\n"
+        doc_str += f"- Segmentos Otimizados: {stats['segments']}\n"
+        doc_str += f"- Vetores Indexados: {stats['vectors_count']}\n"
+        documents.append(doc_str)
+        
+    return {"documents": documents, "question": query}
+
+def get_system_services(state: AgentState):
+    """
+    Lists all running services and their ports for Ziva's operation.
+    """
+    print("---GET SYSTEM SERVICES---")
+    query = state["question"]
+    
+    import socket
+    
+    def check_port(port):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.settimeout(0.5)
+                return s.connect_ex(('127.0.0.1', port)) == 0
+        except:
+            return False
+    
+    services = [
+        {"name": "SSH (Sistema)", "port": 22},
+        {"name": "SSH Alternativo (Tailscale/Custom)", "port": 2222},
+        {"name": "Ollama (LLM Backend)", "port": 11434},
+        {"name": "Qdrant (Vector Database)", "port": 6333},
+        {"name": "SearXNG (Web Search)", "port": 8080},
+        {"name": "Kiwix (Offline Wikipedia)", "port": 8081},
+        {"name": "Binary Server (P2P Sync)", "port": 9000},
+        {"name": "Ziva API (FastAPI)", "port": 8000},
+    ]
+    
+    doc_str = "Serviços do Sistema Ziva:\n\n"
+    for svc in services:
+        status = "🟢 Online" if check_port(svc["port"]) else "🔴 Offline"
+        doc_str += f"- {svc['name']}: Porta {svc['port']} - {status}\n"
+    
+    documents = [doc_str]
+    return {"documents": documents, "question": query}
+
+def get_network_devices(state: AgentState):
+    """
+    Discovers devices on the Tailscale network.
+    """
+    print("---GET NETWORK DEVICES---")
+    query = state["question"]
+    
+    import subprocess
+    
+    try:
+        # Run tailscale status to get network devices
+        result = subprocess.run(
+            ["tailscale", "status"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        
+        if result.returncode == 0:
+            lines = result.stdout.strip().split('\n')
+            doc_str = "Dispositivos na Rede Tailscale:\n\n"
+            
+            for line in lines:
+                if line.strip():
+                    # Parse tailscale status output
+                    # Format: hostname IP [tags] [online/offline]
+                    parts = line.split()
+                    if len(parts) >= 2:
+                        hostname = parts[0]
+                        ip = parts[1]
+                        doc_str += f"- {hostname}: {ip}\n"
+            
+            documents = [doc_str]
+        else:
+            documents = ["Erro ao acessar Tailscale. Verifique se o serviço está rodando."]
+            
+    except FileNotFoundError:
+        documents = ["Tailscale não está instalado ou não está no PATH do sistema."]
+    except subprocess.TimeoutExpired:
+        documents = ["Timeout ao consultar Tailscale."]
+    except Exception as e:
+        documents = [f"Erro ao descobrir dispositivos: {str(e)}"]
+    
+    return {"documents": documents, "question": query}
+
+def fetch_tech_news(state: AgentState):
+    """
+    Fetches latest tech news headlines from Brazilian sources and summarizes them.
+    """
+    print("---FETCH TECH NEWS---")
+    query = state["question"]
+    
+    from core.tools.tech_news import TechNewsClient
+    
+    client = TechNewsClient()
+    headlines = client.fetch_headlines(max_sources=2)
+    
+    documents = []
+    doc_str = "Últimas Notícias de Tecnologia:\n\n"
+    
+    for source, data in headlines.items():
+        if "error" in data:
+            doc_str += f"❌ {source.title()}: Erro ao buscar ({data['error']})\n\n"
+        else:
+            doc_str += f"📰 {source.title().replace('_', ' ')} ({data['url']}):\n"
+            doc_str += f"{data['content']}\n\n"
+    
+    documents.append(doc_str)
+    return {"documents": documents, "question": query}
+
+def grade_documents(state: AgentState) -> Dict[str, Any]:
+    """
+    Determines whether the retrieved documents are relevant to the question.
+    """
+    print("---CHECK RELEVANCE---")
+    question = state["question"]
+    documents = state["documents"]
+    
+    # LLM-as-a-Judge
+    prompt = PromptTemplate(
+        template="""You are a grader assessing relevance of a retrieved document to a user question. \n 
+        Here is the retrieved document: \n\n {document} \n\n
+        Here is the user question: {question} \n
+        If the document contains ANY information that helps answer the question (even partially, or definition of terms), grade it as relevant.
+        
+        CRITICAL RULES:
+        1. If the question asks about a specific Name (e.g. "Gabrielle", "Ziva"), and the document mentions that Name, it is RELEVANT.
+        2. Focus on semantic meaning. (Architecture ≈ Components ≈ Stack).
+        3. Be STRICT. If the document is in a different language (e.g. Chinese) or completely unrelated (e.g. "Word tables"), grade it 'no'.
+        4. If the document has NO snippet and the title is ambiguous, grade it 'no'.
+        
+        Give a binary score 'yes' or 'no' score to indicate whether the document is relevant to the question.""",
+        input_variables=["question", "document"],
+    )
+    
+    chain = prompt | llm | StrOutputParser()
+    
+    filtered_docs = []
+    for doc in documents:
+        score = chain.invoke({"question": question, "document": doc})
+        grade = score.strip().lower()
+        if "yes" in grade:
+            print("---GRADE: DOCUMENT RELEVANT---")
+            filtered_docs.append(doc)
+        else:
+            print("---GRADE: DOCUMENT NOT RELEVANT---")
+            continue
+            
+    return {"documents": filtered_docs, "question": question}
+
+def generate(state: AgentState) -> Dict[str, Any]:
+    """
+    Generates the answer using the retrieved documents.
+    """
+    print("---GENERATE---")
+    question = state["question"]
+    documents = state["documents"]
+    
+    # Get System Date
+    import datetime
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    prompt = PromptTemplate(
+        template="""IDENTITY:
+        You are ZIVA, an Elite Autonomous AI Assistant operating in a local Linux environment.
+        You combine Deep Logic with Real-Time Data (RAG) to solve complex problems.
+        
+        CORE DIRECTIVES:
+        1. PRECISION: Answer directly. Output code, logic, or answers without fluff.
+        2. AUTONOMY: Solve problems using the provided Context.
+        3. CURRENT DATA: Your training data is cut-off. ALWAYS rely on the [Context] for modern facts.
+        
+        System Information:
+        Current Date/Time: {current_time}
+        
+        Rules:
+        1. RELEVANCE CHECK: First, check if the [Context] is actually related to the [Question].
+        2. IF CONTEXT IS JUNK (e.g. Question="War", Context="Android Settings" or "Dictionary"): IGNORE IT.
+        3. FALLBACK: If Context is irrelevant or empty, answer using your INTERNAL KNOWLEDGE.
+        4. DISCLAIMER: If Context is irrelevant/empty, answer using INTERNAL KNOWLEDGE directly. Do NOT explain why or verify lack of context.
+        5. SYNTHESIS: If Context IS relevant, use it.
+        6. Answer in Portuguese (pt-BR).
+        
+        Question: {question} 
+        
+        Context:
+        {documents} 
+        
+        Answer:""",
+        input_variables=["question", "documents", "current_time"],
+    )
+    
+    chain = prompt | llm | StrOutputParser()
+    generation = chain.invoke({"documents": documents, "question": question, "current_time": current_time})
+    return {"generation": generation}
+
+def transform_query(state: AgentState) -> Dict[str, Any]:
+    """
+    Transform the query to produce a better question.
+    """
+    print("---TRANSFORM QUERY---")
+    question = state["question"]
+    retry_count = state.get("retry_count", 0) + 1
+    
+    prompt = PromptTemplate(
+        template="""You are generating questions that is well optimized for retrieval. \n 
+        Look at the input and try to reason about the underlying semantic intent / meaning. \n 
+        Here is the initial question:
+        {question}
+        \n Formulate an improved question: """,
+        input_variables=["question"],
+    )
+    chain = prompt | llm | StrOutputParser()
+    better_question = chain.invoke({"question": question})
+    return {"question": better_question, "retry_count": retry_count}
+
+def contextualize_query(state: AgentState) -> Dict[str, Any]:
+    """
+    Rewrites the question based on chat history to make it standalone.
+    """
+    print("---CONTEXTUALIZE QUERY---")
+    question = state["question"]
+    chat_history = state.get("chat_history", [])
+    
+    if not chat_history:
+        return {"question": question}
+    
+    # Format history for prompt
+    history_str = "\n".join(chat_history[-4:]) # Keep last 4 turns
+    
+    prompt = PromptTemplate(
+        template="""You are a helpful assistant. Your task is to reformulate a follow-up question into a standalone question, if necessary.
+
+        Rules:
+        1. The "Follow Up Input" is the MOST IMPORTANT part. Use it as the basis for the standalone question.
+        2. Only use "Chat History" to resolve pronouns (it, he, she, that) or ambiguous references in the "Follow Up Input".
+        3. If "Follow Up Input" introduces a NEW TOPIC unrelated to "Chat History", return the "Follow Up Input" exactly as is.
+        4. DO NOT change the topic. DO NOT start asking about something from the history if the user asked something else.
+
+        Chat History:
+        {history}
+        
+        Follow Up Input: {question}
+        
+        Standalone Question:""",
+        input_variables=["history", "question"],
+    )
+    
+    chain = prompt | llm | StrOutputParser()
+    new_question = chain.invoke({"history": history_str, "question": question})
+    print(f"  🔄 Rewritten: {new_question}")
+    return {"question": new_question}
+
+from core.tools.weather import WeatherClient
+
+def check_weather(state: AgentState) -> Dict[str, Any]:
+    """
+    Executes weather check and returns it as a document context.
+    """
+    print("---CHECK WEATHER---")
+    question = state["question"]
+    
+    # Extract location (heuristic for MVP)
+    # Ideally use LLM to extract entity, but let's try keyword split or just pass full query
+    client = WeatherClient()
+    
+    # Improved Entity Extraction (Heuristic)
+    # 1. Try splitting by "em", "no", "na"
+    lower_q = question.lower()
+    location = ""
+    
+    delimiters = [" em ", " no ", " na ", " in ", " for ", " para "]
+    for d in delimiters:
+        if d in lower_q:
+            parts = lower_q.split(d)
+            if len(parts) > 1:
+                location = parts[-1].replace("?", "").strip()
+                break
+    
+    # 2. If no delimiter, fallback to cleaning
+    if not location:
+        stopwords = ["qual", "o", "a", "clima", "tempo", "temperatura", "previsão", "como", "está", "hoje", "agora", "para", "de"]
+        words = lower_q.replace("?", "").split()
+        clean_words = [w for w in words if w not in stopwords]
+        location = " ".join(clean_words)
+        
+    # 3. Clean Date Words from Location (to prevent Geocoding errors)
+    date_words = ["hoje", "amanhã", "amanha", "agora", "tomorrow", "today"]
+    for dw in date_words:
+        location = location.replace(dw, "").strip()
+        
+    print(f"  🌦️ Checking weather for: {location}")
+    if len(location) < 2:
+         return {"documents": ["Erro: Localização não detectada na pergunta."], "question": question}
+
+    data = client.get_weather(location)
+    
+    documents = []
+    if "result" in data:
+        documents.append(data["result"])
+    else:
+        documents.append(f"Não foi possível obter o clima: {data.get('error')}")
+        
+    return {"documents": documents, "question": question}
+
+def validate_answer(state: AgentState) -> Dict[str, Any]:
+    """
+    Checks if the generated answer is a refusal ("I don't know").
+    """
+    print("---VALIDATE ANSWER---")
+    generation = state["generation"]
+    
+    # Simple heuristic to start (save LLM call)
+    # Simple heuristic to start (save LLM call)
+    refusals = [
+        "i don't know", "não sei", "não tenho informações", "no information", 
+        "cannot answer", "não há informações", "a resposta não está disponível",
+        "não encontrei informações", "desculpe", "sinto muito"
+    ]
+    for r in refusals:
+        if r in generation.lower():
+             print("---DECISION: ANSWER IS REFUSAL---")
+             return {"generation": generation, "is_refusal": True}
+             
+    print("---DECISION: ANSWER IS VALID---")
+    return {"generation": generation, "is_refusal": False}
+
+    print("---DECISION: ANSWER IS VALID---")
+    return {"generation": generation, "is_refusal": False}
+
+from core.tools.kiwix import KiwixClient
+
+def offline_search(state: AgentState) -> Dict[str, Any]:
+    """
+    Search offline verification (Kiwix).
+    """
+    print("---OFFLINE SEARCH (Kiwix)---")
+    question = state["question"]
+    
+    kiwix = KiwixClient()
+    results = kiwix.search(question, num_results=2)
+    
+    documents = []
+    if results:
+        print(f"  📚 Found {len(results)} articles in Kiwix.")
+        for r in results:
+            # Fetch full content for the best result
+            content = kiwix.get_page_content(r["url"])
+            doc_str = f"Source: Kiwix (Offline)\nTitle: {r['title']}\nURL: {r['url']}\n\n{content}"
+            documents.append(doc_str)
+            print(f"  📄 Read article: {r['title']}")
+    else:
+        print("  ⚠️ No Kiwix results found.")
+    
+    retry_count = state.get("retry_count", 0) + 1
+    return {"documents": documents, "question": question, "retry_count": retry_count}
+
+from core.tools.searxng import SearXNGClient
+from core.tools.scraper import PlaywrightScraper
+
+def web_search(state: AgentState) -> Dict[str, Any]:
+    """
+    Fallback: Search via SearXNG, scrape via Playwright (Stealth), validate staleness, and auto-ingest.
+    """
+    print("---WEB SEARCH (SearXNG + Playwright)---")
+    question = state["question"]
+    
+    searx = SearXNGClient()
+    scraper = PlaywrightScraper()
+    
+    documents = []
+    
+    try:
+        # 1. Search for URLs (Deep Search Strategy)
+        print(f"  🔍 Querying SearXNG: {question}")
+        
+        # A. General Search
+        results_gen = searx.search(question, num_results=3)
+        
+        # B. Targeted Search (Community/Tech)
+        # Append site filters to finding discussions and code
+        tech_query = f"{question} (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com)"
+        print(f"  🔍 Querying Specialized Sources: {tech_query}")
+        results_tech = searx.search(tech_query, num_results=3)
+        
+        # Combine and Deduplicate by URL
+        unique_urls = set()
+        combined_results = []
+        
+        for r in results_gen + results_tech:
+            if r.get("url") and r["url"] not in unique_urls:
+                unique_urls.add(r["url"])
+                combined_results.append(r)
+        
+        if combined_results:
+            # Limit scraping to top 5
+            for r in combined_results[:5]:
+                url = r.get("url")
+                
+                # 2. Scrape Content (Stealth)
+                print(f"  🕷️ Playwright Scraping: {url}")
+                data = scraper.scrape(url)
+                
+                if data["status"] == "success":
+                    if data["is_stale"]:
+                        print(f"  ⚠️ Skipping stale content ({data['date']})")
+                        continue
+                        
+                    # Format content
+                    content = f"Source: {url}\nTitle: {data['title']}\nDate: {data['date']}\n\n{data['content']}"
+                    documents.append(content)
+                    
+                    # 3. Auto-Ingestion
+                    try:
+                        emb = embedder.embedding(content)
+                        if emb:
+                            vs.add_text(content, emb, {"source": "web_search", "url": url, "date": data['date']})
+                            print("  💾 Auto-ingested web content.")
+                    except Exception as e:
+                        print(f"  ⚠️ Ingestion failed: {e}")
+                else:
+                    print(f"  ❌ Scrape failed: {data.get('error')}")
+                        
+        else:
+            print("  ⚠️ No SearXNG results found.")
+
+    except Exception as e:
+        print(f"  ❌ Web Search failed: {e}")
+        
+    # 4. Fallback: If no docs found, try Kiwix (Offline)
+    if not documents:
+        print("  ⚠️ Web search yielded no results. Trying Offline (Kiwix)...")
+        try:
+            from core.tools.kiwix import KiwixClient
+            kiwix = KiwixClient()
+            k_results = kiwix.search(question, num_results=2)
+            if k_results:
+                 for r in k_results:
+                     content = kiwix.get_page_content(r["url"])
+                     documents.append(f"Source: Kiwix (Offline)\nTitle: {r['title']}\nURL: {r['url']}\n\n{content}")
+                     print(f"  📚 Found offline article: {r['title']}")
+        except Exception as e:
+            print(f"  ❌ Kiwix Fallback failed: {e}")
+    
+    retry_count = state.get("retry_count", 0) + 1
+    return {"documents": documents, "question": question, "retry_count": retry_count}

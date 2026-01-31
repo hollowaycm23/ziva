@@ -1,0 +1,5 @@
+{
+    "topic": "Python Library: Rich",
+    "content": "Use the `rich` library for terminal output. `Console.print()` supports BBCode-like tags for colors (e.g., `[bold red]Error[/]`). It improves user experience significantly.",
+    "id": "batch1_0b2755a1"
+}

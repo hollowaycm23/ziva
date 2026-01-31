@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIVA / SYSTEM DASHBOARD</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Simple Markdown Parser (optional, using crude implementation within main.js for no-dep) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Sidebar / Vitals -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>ZIVA v2.4</h1>
+                <span class="status-indicator online">ONLINE</span>
+            </div>
+
+            <div class="vitals">
+                <div class="vital-card">
+                    <h3>CPU</h3>
+                    <div class="progress-bar"><div id="cpu-bar" style="width: 0%"></div></div>
+                    <span id="cpu-val">0%</span>
+                </div>
+                <div class="vital-card">
+                    <h3>RAM</h3>
+                    <div class="progress-bar"><div id="ram-bar" style="width: 0%"></div></div>
+                    <span id="ram-val">0%</span>
+                </div>
+                <div class="vital-card">
+                    <h3>DISK</h3>
+                    <div class="progress-bar"><div id="disk-bar" style="width: 0%"></div></div>
+                    <span id="disk-val">0%</span>
+                </div>
+            </div>
+
+            <div class="memory-inspector">
+                <h3>🧠 Active Context</h3>
+                <ul id="memory-list">
+                    <li>Waiting for data...</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-interface">
+            <div id="chat-history" class="chat-history">
+                <div class="message system">
+                    <p>System initialized. Polymath & Vision modules ready.</p>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <textarea id="user-input" placeholder="Enter command or query... (Shift+Enter for new line)"></textarea>
+                <button id="send-btn">SEND</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

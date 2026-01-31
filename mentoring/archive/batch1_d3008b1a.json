@@ -1,0 +1,5 @@
+{
+    "topic": "Linux Process Management: pgrep",
+    "content": "Use `pgrep -a` to find full command lines of running processes. It is safer and easier to parse than piping `ps aux | grep ...`.",
+    "id": "batch1_d3008b1a"
+}

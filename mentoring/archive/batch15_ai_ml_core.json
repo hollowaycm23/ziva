@@ -1,0 +1,5 @@
+{
+    "id": "batch15_ai_ml_core",
+    "topic": "AI Mastery: Machine Learning Core (Transformers & Attention)",
+    "content": "Modern LLMs are built on the Transformer architecture. Key mechanism: 'Self-Attention', which allows the model to weigh the importance of different words in a sequence relative to each other, regardless of distance, enabling deep contextual understanding."
+}

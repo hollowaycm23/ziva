@@ -1,0 +1,5 @@
+{
+    "topic": "Python Performance: Generator Expressions",
+    "content": "Use generator expressions instead of list comprehensions for large datasets to save memory. Syntax: `(x for x in data)`. This evaluates lazily.",
+    "id": "batch1_7c0b4f3e"
+}
