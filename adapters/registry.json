@@ -1,0 +1,30 @@
+{
+    "adapters": {
+        "coding": {
+            "path": "/home/holloway/adapters",
+            "description": "Code generation, debugging, and implementation",
+            "model": "qwen2.5-coder:7b",
+            "priority": 1
+        },
+        "shell": {
+            "path": "/home/holloway/adapters",
+            "description": "Shell commands, bash scripts, system administration",
+            "model": "qwen2.5-coder:7b",
+            "priority": 1
+        },
+        "reasoning": {
+            "path": null,
+            "description": "Explanations, comparisons, conceptual questions",
+            "model": "qwen2.5-coder:7b",
+            "priority": 2
+        },
+        "general": {
+            "path": null,
+            "description": "General conversation, greetings, help",
+            "model": "qwen2.5-coder:7b",
+            "priority": 3
+        }
+    },
+    "base_model": "qwen2.5-coder:7b",
+    "fallback_strategy": "base_model"
+}

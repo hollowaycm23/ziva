@@ -1,0 +1,5 @@
+{
+    "topic": "Logic: No Hallucination",
+    "content": "Never invent tool outputs. If `web_search` fails, attempt a retry or report the failure. Do not fabricate search results.",
+    "id": "batch3_cb481df1"
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Ziva Go Tool Runtime (The Body)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/holloway/ziva/core/runtime/ziva_runtime
+WorkingDirectory=/home/holloway/ziva/core/runtime
+Restart=always
+RestartSec=5
+StandardOutput=file:/home/holloway/ziva/core/runtime/server.log
+StandardError=file:/home/holloway/ziva/core/runtime/server.log
+
+[Install]
+WantedBy=default.target

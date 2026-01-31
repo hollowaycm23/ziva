@@ -1,0 +1,5 @@
+{
+    "id": "batch15_ai_dev_plan",
+    "topic": "AI Mastery: Development Plan for AI Agents",
+    "content": "To build an AI Agent: 1. Define Persona & Goal. 2. Select Core LLM (e.g., Llama 3). 3. Implement Memory (Vector Store). 4. Define Tools (Web, CLI, API). 5. Design the Control Loop (LangGraph or custom Graph). 6. Evaluate via RAGAS or human feedback."
+}

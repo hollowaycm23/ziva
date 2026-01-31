@@ -1,0 +1,2326 @@
+=== TESTE DE ABSORÇÃO DE CONHECIMENTO - ZIVA ===
+Data: Tue Jan 13 21:29:55 -03 2026
+
+=== GEOGRAFIA ===
+---
+QUESTÃO 1: Qual é a capital da Austrália?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 22 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content="[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é a capital da Austrália?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['These queries aim to capture the original intent of finding the capital city of Australia, while also considering possible synonyms and expansions for Austrália (e.g., Commonwealth da Austrália, país australiano).']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Identity Profile: Magno Fernando Fonseca
+Magno Fernando da Fonseca (GitHub: magnocat) is the Executi...
+  -- DOC: User Identity: Holloway
+The user of this system identifies as 'Holloway'. When the user uses terms l...
+  -- DOC: LHC: History & Identity
+The Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Biology: Blue Whale Heart
+The heart of a Blue Whale is so large that a human could swim through its ...
+  -- DOC: Source: https://www.automationanywhere.com/de
+Title: 
+Date: Unknown
+
+...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Scouting Manual: Citizenship (Cidadania)
+A core pillar of Scouting is Citizenship. This includes und...
+  -- DOC: LHC: Philosophy & Governance
+LHC operates on a do-ocracy model: 'The one who does the work decides h...
+  -- DOC: LHC: Notable Projects
+Key projects developed at LHC include 'LHC/Infra' (HomeLab experiments with Ku...
+  -- DOC: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: 7 de setembro de 182...
+  -- DOC: Source: https://br.bing.com/?setlang=pt-br&cc=br&cc=BR
+Title: Pesquisa - Microsoft Bing
+Date: Unknow...
+  🔍 Executing Expanded Retrieval for: ['These queries aim to capture the original intent of finding the capital city of Australia, while also considering possible synonyms and expansions for Austrália (e.g., Commonwealth da Austrália, país australiano).']
+    + 5 docs from variation: 'These queries aim to capture the original intent of finding the capital city of Australia, while also considering possible synonyms and expansions for Austrália (e.g., Commonwealth da Austrália, país australiano).'
+  ⚖️ Reranking 22 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 2: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+  -- RANK 3: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 4: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: ...
+  -- RANK 5: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido com...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é a capital da Austrália? (Intent Context: These queries aim to capture the original intent of finding the capital city of Australia, while also considering possible synonyms and expansions for Austrália (e.g., Commonwealth da Austrália, país australiano).)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1089 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+A capital da Austrália é Canberra.
+--------------------------------------------------
+
+---
+QUESTÃO 2: Qual é o rio mais longo do mundo?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 24 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é o rio mais longo do mundo?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['These queries aim to capture the original intent while providing variations that are more specific and less prone to misinterpretation, especially for non-native speakers or those unfamiliar with the acronym rio (which can be translated to both river and stream).']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm
+Title: O que são...
+  -- DOC: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: preciso | Dicionário I...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, Fullmetal Alchemist)...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  🔍 Executing Expanded Retrieval for: ['These queries aim to capture the original intent while providing variations that are more specific and less prone to misinterpretation, especially for non-native speakers or those unfamiliar with the acronym rio (which can be translated to both river and stream).']
+    + 5 docs from variation: 'These queries aim to capture the original intent while providing variations that are more specific and less prone to misinterpretation, especially for non-native speakers or those unfamiliar with the acronym rio (which can be translated to both river and stream).'
+  ⚖️ Reranking 24 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 2: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 3: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: pr...
+  -- RANK 4: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online ...
+  -- RANK 5: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é o rio mais longo do mundo? (Intent Context: These queries aim to capture the original intent while providing variations that are more specific and less prone to misinterpretation, especially for non-native speakers or those unfamiliar with the acronym rio (which can be translated to both river and stream).)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1089 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+O rio mais longo do mundo é o Rio Nilo, com uma extensão de 6.650 km.
+--------------------------------------------------
+
+---
+QUESTÃO 3: Qual é o maior oceano do planeta?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 23 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é o maior oceano do planeta?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Oceano mais extenso do mundo', 'These queries aim to capture the original intent of finding the largest ocean on Earth, while avoiding the use of the acronym oceano and instead using synonyms like mar and massa de água.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: Unknown
+
+maior 23 id...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.dicio.com.br/poder/
+Title: Poder - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm
+Title: O que são...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  🔍 Executing Expanded Retrieval for: ['Oceano mais extenso do mundo', 'These queries aim to capture the original intent of finding the largest ocean on Earth, while avoiding the use of the acronym oceano and instead using synonyms like mar and massa de água.']
+    + 5 docs from variation: 'Oceano mais extenso do mundo'
+    + 5 docs from variation: 'These queries aim to capture the original intent of finding the largest ocean on Earth, while avoiding the use of the acronym oceano and instead using synonyms like mar and massa de água.'
+  ⚖️ Reranking 23 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 2: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+  -- RANK 3: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online ...
+  -- RANK 4: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+  -- RANK 5: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: ...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é o maior oceano do planeta? (Intent Context: Oceano mais extenso do mundo, These queries aim to capture the original intent of finding the largest ocean on Earth, while avoiding the use of the acronym oceano and instead using synonyms like mar and massa de água.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1089 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+O maior oceano do planeta é o Oceano Pacífico.
+--------------------------------------------------
+
+---
+QUESTÃO 4: Quantos continentes existem?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 20 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quantos continentes existem?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: []
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm
+Title: O que são...
+  -- DOC: LHC: History & Identity
+The Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://www.automationanywhere.com/de
+Title: 
+Date: Unknown
+
+...
+  -- DOC: Biology: Tardigrades
+Microscopic animals capable of surviving extreme conditions: vacuum of space, e...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.forosecuador.ec/advanced_search?r=501240813
+Title: Forosecuador | Noticias de Ec...
+  -- DOC: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, Jujutsu Kaisen)
+DRAGO...
+  -- DOC: Biology: The Hummingbird
+The only bird capable of true backward flight is the Hummingbird (Beija-flo...
+  -- DOC: Esportes: Copas do Mundo, Olimpíadas e Recordes
+COPA DO MUNDO FIFA:
+
+Maiores Campeões:
+1. Brasil: 5 ...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  ⚖️ Reranking 20 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros....
+  -- RANK 2: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 3: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 4: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, J...
+  -- RANK 5: Esportes: Copas do Mundo, Olimpíadas e Recordes
+COPA DO MUNDO FIFA:
+
+Maiores Cam...
+---CHECK RELEVANCE---
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 6894 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: continentes existem?
+  🔍 Querying Specialized Sources: continentes existem? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.todamateria.com.br/continentes-do-mundo/
+    🕷️ Navigating to: https://www.todamateria.com.br/continentes-do-mundo/
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 15497 chars
+  🕷️ Playwright Scraping: https://pt.wikipedia.org/wiki/Continente
+    🕷️ Navigating to: https://pt.wikipedia.org/wiki/Continente
+    ✅ Readability extracted 27821 chars
+  🕷️ Playwright Scraping: https://brasilescola.uol.com.br/geografia/continentes.htm
+    🕷️ Navigating to: https://brasilescola.uol.com.br/geografia/continentes.htm
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 17853 chars
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 9201 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Existem seis continentes no mundo.
+--------------------------------------------------
+
+---
+QUESTÃO 5: Qual é a montanha mais alta do mundo?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 20 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é a montanha mais alta do mundo?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: []
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: Unknown
+
+maior 23 id...
+  -- DOC: Source: https://www.dicio.com.br/episodio/
+Title: Episódio - Dicio, Dicionário Online de Português
+D...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://www.significados.com.br/teoria/
+Title: O que é Teoria? Entenda o conceito e seus uso...
+  -- DOC: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm
+Title: O que são...
+  -- DOC: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, Jujutsu Kaisen)
+DRAGO...
+  -- DOC: Source: https://conceito.de/protagonista
+Title: Protagonista - O que é, funções, história, tipos e e...
+  ⚖️ Reranking 20 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 2: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: ...
+  -- RANK 3: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online ...
+  -- RANK 4: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 5: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+---CHECK RELEVANCE---
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1089 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+O Monte Everest é a montanha mais alta do mundo, com uma altura de 8.849 metros.
+--------------------------------------------------
+
+=== LITERATURA ===
+---
+QUESTÃO 6: Quem escreveu Dom Casmurro?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 31 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem escreveu Dom Casmurro?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Autor do romance Dom Casmurro, um livro clássico da literatura brasileira.', 'These queries aim to capture the users intent by:', '* Expanding the acronym Dom Casmurro to its full form and making it clear that were looking for information about the book.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: LHC: History & Identity
+The Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October...
+  -- DOC: Source: https://www.zhihu.com/question/292275114
+Title: 
+Date: Unknown
+
+知乎，让每一次点击都充满意义 —— 欢迎来到知乎，发现问...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.automationanywhere.com/de
+Title: 
+Date: Unknown
+
+...
+  -- DOC: Source: https://www.lhc.ch/forum/v_message.asp?id=161078
+Title: Re: LHC-Lugano, écrit par Suomi11 le...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Source: https://www.forosecuador.ec/advanced_search?r=501240813
+Title: Forosecuador | Noticias de Ec...
+  -- DOC: LHC: Notable Projects
+Key projects developed at LHC include 'LHC/Infra' (HomeLab experiments with Ku...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  🔍 Executing Expanded Retrieval for: ['Autor do romance Dom Casmurro, um livro clássico da literatura brasileira.', 'These queries aim to capture the users intent by:', '* Expanding the acronym Dom Casmurro to its full form and making it clear that were looking for information about the book.']
+    + 5 docs from variation: 'Autor do romance Dom Casmurro, um livro clássico da literatura brasileira.'
+    + 5 docs from variation: 'These queries aim to capture the users intent by:'
+    + 5 docs from variation: '* Expanding the acronym Dom Casmurro to its full form and making it clear that were looking for information about the book.'
+  ⚖️ Reranking 31 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 2: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de...
+  -- RANK 3: Source: https://www.dicio.com.br/episodio/
+Title: Episódio - Dicio, Dicionário O...
+  -- RANK 4: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+  -- RANK 5: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator ...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem escreveu Dom Casmurro? (Intent Context: Autor do romance Dom Casmurro, um livro clássico da literatura brasileira., These queries aim to capture the users intent by:, * Expanding the acronym Dom Casmurro to its full form and making it clear that were looking for information about the book.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 904 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Machado de Assis escreveu Dom Casmurro.
+--------------------------------------------------
+
+---
+QUESTÃO 7: Quem é o autor de Dom Quixote?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 26 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem é o autor de Dom Quixote?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Autor de Don Quijote', 'These queries aim to capture the original intent of finding the author of Dom Quixote while avoiding the use of acronyms and focusing on clear, concise language.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: 7 de setembro de 182...
+  -- DOC: Source: https://www.automationanywhere.com/de
+Title: 
+Date: Unknown
+
+...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dicionário Online de Por...
+  🔍 Executing Expanded Retrieval for: ['Autor de Don Quijote', 'These queries aim to capture the original intent of finding the author of Dom Quixote while avoiding the use of acronyms and focusing on clear, concise language.']
+    + 5 docs from variation: 'Autor de Don Quijote'
+    + 5 docs from variation: 'These queries aim to capture the original intent of finding the author of Dom Quixote while avoiding the use of acronyms and focusing on clear, concise language.'
+  ⚖️ Reranking 26 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 2: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido com...
+  -- RANK 3: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dici...
+  -- RANK 4: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ati...
+  -- RANK 5: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator ...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem é o autor de Dom Quixote? (Intent Context: Autor de Don Quijote, These queries aim to capture the original intent of finding the author of Dom Quixote while avoiding the use of acronyms and focusing on clear, concise language.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 904 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Miguel de Cervantes é o autor de Dom Quixote (1605).
+--------------------------------------------------
+
+---
+QUESTÃO 8: Qual é a obra mais famosa de Gabriel García Márquez?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 25 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content="[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é a obra mais famosa de Gabriel García Márquez?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['In these queries, Ive maintained the original intent of the question while expanding on the acronym (none in this case) and incorporating synonyms to capture related meanings.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dicionário Online de Por...
+  -- DOC: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, Fullmetal Alchemist)...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, Jujutsu Kaisen)
+DRAGO...
+  -- DOC: Source: https://www.dicio.com.br/episodio/
+Title: Episódio - Dicio, Dicionário Online de Português
+D...
+  🔍 Executing Expanded Retrieval for: ['In these queries, Ive maintained the original intent of the question while expanding on the acronym (none in this case) and incorporating synonyms to capture related meanings.']
+    + 5 docs from variation: 'In these queries, Ive maintained the original intent of the question while expanding on the acronym (none in this case) and incorporating synonyms to capture related meanings.'
+  ⚖️ Reranking 25 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 2: Source: https://www.dicio.com.br/episodio/
+Title: Episódio - Dicio, Dicionário O...
+  -- RANK 3: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dici...
+  -- RANK 4: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 5: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é a obra mais famosa de Gabriel García Márquez? (Intent Context: In these queries, Ive maintained the original intent of the question while expanding on the acronym (none in this case) and incorporating synonyms to capture related meanings.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 904 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+A obra mais famosa de Gabriel García Márquez é "Cem Anos de Solidão".
+--------------------------------------------------
+
+---
+QUESTÃO 9: Quem escreveu Orgulho e Preconceito?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 22 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem escreveu Orgulho e Preconceito?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Autor do romance Orgulho e Preconceito, publicado em 1813.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: LHC: History & Identity
+The Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  -- DOC: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://conceito.de/protagonista
+Title: Protagonista - O que é, funções, história, tipos e e...
+  -- DOC: Source: https://www.dicio.com.br/episodio/
+Title: Episódio - Dicio, Dicionário Online de Português
+D...
+  🔍 Executing Expanded Retrieval for: ['Autor do romance Orgulho e Preconceito, publicado em 1813.']
+    + 5 docs from variation: 'Autor do romance Orgulho e Preconceito, publicado em 1813.'
+  ⚖️ Reranking 22 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 2: Source: https://conceito.de/protagonista
+Title: Protagonista - O que é, funções,...
+  -- RANK 3: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+  -- RANK 4: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dici...
+  -- RANK 5: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem escreveu Orgulho e Preconceito? (Intent Context: Autor do romance Orgulho e Preconceito, publicado em 1813.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 904 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Jane Austen escreveu Orgulho e Preconceito.
+--------------------------------------------------
+
+---
+QUESTÃO 10: Algum brasileiro já ganhou o Nobel de Literatura?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 25 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Algum brasileiro já ganhou o Nobel de Literatura?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['These queries aim to capture the original intent of the users question, which is to find out if any Brazilian has won the Nobel Prize in Literature. The first query expands Nobel to its full form, while the second and third queries use synonyms for author and writer to broaden the search results.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://br.bing.com/?setlang=pt-br&cc=br&cc=BR
+Title: Pesquisa - Microsoft Bing
+Date: Unknow...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, Fullmetal Alchemist)...
+  -- DOC: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: 7 de setembro de 182...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, Jujutsu Kaisen)
+DRAGO...
+  -- DOC: Source: https://support.google.com/youtube/answer/3227660?hl=pt-BR&co=GENIE.Platform%3DAndroid
+Title...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  🔍 Executing Expanded Retrieval for: ['These queries aim to capture the original intent of the users question, which is to find out if any Brazilian has won the Nobel Prize in Literature. The first query expands Nobel to its full form, while the second and third queries use synonyms for author and writer to broaden the search results.']
+    + 5 docs from variation: 'These queries aim to capture the original intent of the users question, which is to find out if any Brazilian has won the Nobel Prize in Literature. The first query expands Nobel to its full form, while the second and third queries use synonyms for author and writer to broaden the search results.'
+  ⚖️ Reranking 25 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+  -- RANK 2: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BR...
+  -- RANK 3: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: ...
+  -- RANK 4: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 5: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Algum brasileiro já ganhou o Nobel de Literatura? (Intent Context: These queries aim to capture the original intent of the users question, which is to find out if any Brazilian has won the Nobel Prize in Literature. The first query expands Nobel to its full form, while the second and third queries use synonyms for author and writer to broaden the search results.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 904 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Não, nenhum brasileiro ganhou o Prêmio Nobel de Literatura ainda.
+--------------------------------------------------
+
+=== TECNOLOGIA ===
+---
+QUESTÃO 11: Quem criou a linguagem Python?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 22 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem criou a linguagem Python?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Criador da linguagem de codificação Python', 'Autor do idioma de programação Python']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://br.bing.com/?setlang=pt-br&cc=br&cc=BR
+Title: Pesquisa - Microsoft Bing
+Date: Unknow...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: preciso | Dicionário I...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é (resumo do conceito...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/construir
+Title: construir | Dicionár...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://tecnoblog.net/responde/o-que-e-tecnologia-confira-as-principais-areas-tecnologicas-d...
+  🔍 Executing Expanded Retrieval for: ['Criador da linguagem de codificação Python', 'Autor do idioma de programação Python']
+    + 5 docs from variation: 'Criador da linguagem de codificação Python'
+    + 5 docs from variation: 'Autor do idioma de programação Python'
+  ⚖️ Reranking 22 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: pr...
+  -- RANK 2: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha...
+  -- RANK 3: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/construir
+Title: ...
+  -- RANK 4: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é...
+  -- RANK 5: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ati...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem criou a linguagem Python? (Intent Context: Criador da linguagem de codificação Python, Autor do idioma de programação Python)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1851 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Quem criou a linguagem Python?
+  🔍 Querying Specialized Sources: Quem criou a linguagem Python? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.bleepingcomputer.com/forums/t/778993/cant-type-anything-in-any-text-field-to-log-in-to-microsoft-account/
+    🕷️ Navigating to: https://www.bleepingcomputer.com/forums/t/778993/cant-type-anything-in-any-text-field-to-log-in-to-microsoft-account/
+    ✅ Readability extracted 1182 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.bleepingcomputer.com/forums/t/798089/new-to-windows-11-how-to-set-a-login-password-instead-of-pin/
+    🕷️ Navigating to: https://www.bleepingcomputer.com/forums/t/798089/new-to-windows-11-how-to-set-a-login-password-instead-of-pin/
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 623 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.bleepingcomputer.com/forums/t/752450/running-win-10-defender-without-signing-into-a-microsoft-account/
+    🕷️ Navigating to: https://www.bleepingcomputer.com/forums/t/752450/running-win-10-defender-without-signing-into-a-microsoft-account/
+    ✅ Readability extracted 957 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1395 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Quem criou a linguagem Python?
+  🔍 Querying Specialized Sources: Quem criou a linguagem Python? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.reddit.com/r/privacy/comments/17x4qd4/temu_appthey_got_me/
+    🕷️ Navigating to: https://www.reddit.com/r/privacy/comments/17x4qd4/temu_appthey_got_me/
+    ✅ Readability extracted 5335 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.reddit.com/r/Aliexpress/comments/18x6elv/i_just_compared_everything_i_want_on_temu_vs_ali/
+    🕷️ Navigating to: https://www.reddit.com/r/Aliexpress/comments/18x6elv/i_just_compared_everything_i_want_on_temu_vs_ali/
+    ✅ Readability extracted 2623 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.reddit.com/r/TemuThings/comments/1cn1zla/is_temu_safe/
+    🕷️ Navigating to: https://www.reddit.com/r/TemuThings/comments/1cn1zla/is_temu_safe/
+    ✅ Readability extracted 1537 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 5453 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Não há informações suficientes nos dados locais.
+--------------------------------------------------
+
+---
+QUESTÃO 12: Em que ano foi criado o JavaScript?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 26 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Em que ano foi criado o JavaScript?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['In these expanded queries, Ive applied the rules as follows:', 'Rule 1: Expanded JavaScript to its full form relevant to the context, which is linguagem de programação, script de lado do cliente, and código-fonte interpretado.', 'Rule 2: Captured synonyms for JavaScript such as linguagem de programação and código-fonte interpretado.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://support.google.com/youtube/community?hl=pt-br
+Title: Comunidade YouTube
+Date: Unknow...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, Fullmetal Alchemist)...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Source: https://support.google.com/youtube/answer/3227660?hl=pt-BR&co=GENIE.Platform%3DAndroid
+Title...
+  -- DOC: Source: https://www.significados.com.br/teoria/
+Title: O que é Teoria? Entenda o conceito e seus uso...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Anime: Expanded Database (Dragon Ball, Bleach, My Hero Academia, Demon Slayer, Jujutsu Kaisen)
+DRAGO...
+  🔍 Executing Expanded Retrieval for: ['In these expanded queries, Ive applied the rules as follows:', 'Rule 1: Expanded JavaScript to its full form relevant to the context, which is linguagem de programação, script de lado do cliente, and código-fonte interpretado.', 'Rule 2: Captured synonyms for JavaScript such as linguagem de programação and código-fonte interpretado.']
+    + 5 docs from variation: 'In these expanded queries, Ive applied the rules as follows:'
+    + 5 docs from variation: 'Rule 1: Expanded JavaScript to its full form relevant to the context, which is linguagem de programação, script de lado do cliente, and código-fonte interpretado.'
+    + 5 docs from variation: 'Rule 2: Captured synonyms for JavaScript such as linguagem de programação and código-fonte interpretado.'
+  ⚖️ Reranking 26 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, ...
+  -- RANK 2: Source: https://support.google.com/youtube/community?hl=pt-br
+Title: Comunidade ...
+  -- RANK 3: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 4: Source: https://www.significados.com.br/teoria/
+Title: O que é Teoria? Entenda o...
+  -- RANK 5: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ati...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Em que ano foi criado o JavaScript? (Intent Context: In these expanded queries, Ive applied the rules as follows:, Rule 1: Expanded JavaScript to its full form relevant to the context, which is linguagem de programação, script de lado do cliente, and código-fonte interpretado., Rule 2: Captured synonyms for JavaScript such as linguagem de programação and código-fonte interpretado.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 2061 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Em que ano foi criado o JavaScript?
+  🔍 Querying Specialized Sources: Em que ano foi criado o JavaScript? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.popdaily.com.tw/forum/japan/1388088
+    🕷️ Navigating to: https://www.popdaily.com.tw/forum/japan/1388088
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 2023 chars
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.zhihu.com/question/292275114
+    🕷️ Navigating to: https://www.zhihu.com/question/292275114
+    ⚠️ Readability failed (Page.evaluate: Execution context was destroyed, most likely because of a navigation), using fallback
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.zhihu.com/question/431275715
+    🕷️ Navigating to: https://www.zhihu.com/question/431275715
+    ⚠️ Readability failed (Page.evaluate: Execution context was destroyed, most likely because of a navigation), using fallback
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 2150 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Em que ano foi criado o JavaScript?
+  🔍 Querying Specialized Sources: Em que ano foi criado o JavaScript? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.popdaily.com.tw/forum/japan/1388088
+    🕷️ Navigating to: https://www.popdaily.com.tw/forum/japan/1388088
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 2023 chars
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.zhihu.com/question/292275114
+    🕷️ Navigating to: https://www.zhihu.com/question/292275114
+    ⚠️ Readability failed (Page.evaluate: Execution context was destroyed, most likely because of a navigation), using fallback
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.zhihu.com/question/431275715
+    🕷️ Navigating to: https://www.zhihu.com/question/431275715
+    ⚠️ Readability failed (Page.evaluate: Execution context was destroyed, most likely because of a navigation), using fallback
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 2150 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Não há informações suficientes nos dados locais.
+--------------------------------------------------
+
+---
+QUESTÃO 13: Quem é considerado o pai da Ciência da Computação?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 29 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem é considerado o pai da Ciência da Computação?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['I applied the rules as follows:', 'Expanded Ciência da Computação to its likely full form, which is Informática.', 'Generated variations that capture synonyms for Computação Científica, such as Computação or simply Computador.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Source: https://www.dicio.com.br/poder/
+Title: Poder - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: Source: https://tecnoblog.net/responde/o-que-e-tecnologia-confira-as-principais-areas-tecnologicas-d...
+  -- DOC: User Identity: Holloway
+The user of this system identifies as 'Holloway'. When the user uses terms l...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://support.google.com/youtube/answer/3227660?hl=pt-BR&co=GENIE.Platform%3DAndroid
+Title...
+  -- DOC: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: 7 de setembro de 182...
+  🔍 Executing Expanded Retrieval for: ['I applied the rules as follows:', 'Expanded Ciência da Computação to its likely full form, which is Informática.', 'Generated variations that capture synonyms for Computação Científica, such as Computação or simply Computador.']
+    + 5 docs from variation: 'I applied the rules as follows:'
+    + 5 docs from variation: 'Expanded Ciência da Computação to its likely full form, which is Informática.'
+    + 5 docs from variation: 'Generated variations that capture synonyms for Computação Científica, such as Computação or simply Computador.'
+  ⚖️ Reranking 29 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido com...
+  -- RANK 2: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+  -- RANK 3: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+  -- RANK 4: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 5: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem é considerado o pai da Ciência da Computação? (Intent Context: I applied the rules as follows:, Expanded Ciência da Computação to its likely full form, which is Informática., Generated variations that capture synonyms for Computação Científica, such as Computação or simply Computador.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 282 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Quem é considerado o pai da Ciência da Computação?
+  🔍 Querying Specialized Sources: Quem é considerado o pai da Ciência da Computação? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.sinonimos.com.br/considerado/
+    🕷️ Navigating to: https://www.sinonimos.com.br/considerado/
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 1296 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.dicio.com.br/considerado/
+    🕷️ Navigating to: https://www.dicio.com.br/considerado/
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 2126 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.lexico.pt/considerado/
+    🕷️ Navigating to: https://www.lexico.pt/considerado/
+    ✅ Readability extracted 2329 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1396 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Quem é considerado o pai da Ciência da Computação?
+⚠️ SearXNG Error: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+  🔍 Querying Specialized Sources: Quem é considerado o pai da Ciência da Computação? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  ⚠️ No SearXNG results found.
+  ⚠️ Web search yielded no results.
+---GENERATE---
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Não há informações suficientes nos dados locais.
+--------------------------------------------------
+
+---
+QUESTÃO 14: Qual foi o primeiro computador eletrônico?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 25 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual foi o primeiro computador eletrônico?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['These queries aim to capture the essence of the original question by expanding acronyms, using synonyms, and rephrasing the intent in different ways.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Supercomputing: Huawei Atlas 950 SuperCluster (Complete Specifications)
+O supercomputador chinês Hua...
+  -- DOC: Source: https://tecnoblog.net/responde/o-que-e-tecnologia-confira-as-principais-areas-tecnologicas-d...
+  -- DOC: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é (resumo do conceito...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Source: https://br.bing.com/?setlang=pt-br&cc=br&cc=BR
+Title: Pesquisa - Microsoft Bing
+Date: Unknow...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://support.google.com/youtube/answer/3227660?hl=pt-BR&co=GENIE.Platform%3DAndroid
+Title...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://support.google.com/youtube/community?hl=pt-br
+Title: Comunidade YouTube
+Date: Unknow...
+  -- DOC: Tecnologia e Computação: História e Fundamentos
+LINGUAGENS DE PROGRAMAÇÃO:
+
+Python:
+- Criador: Guido...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  🔍 Executing Expanded Retrieval for: ['These queries aim to capture the essence of the original question by expanding acronyms, using synonyms, and rephrasing the intent in different ways.']
+    + 5 docs from variation: 'These queries aim to capture the essence of the original question by expanding acronyms, using synonyms, and rephrasing the intent in different ways.'
+  ⚖️ Reranking 25 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Tecnologia e Computação: História e Fundamentos
+LINGUAGENS DE PROGRAMAÇÃO:
+
+Pyth...
+  -- RANK 2: Supercomputing: Huawei Atlas 950 SuperCluster (Complete Specifications)
+O superc...
+  -- RANK 3: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha...
+  -- RANK 4: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é...
+  -- RANK 5: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platfor...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual foi o primeiro computador eletrônico? (Intent Context: These queries aim to capture the essence of the original question by expanding acronyms, using synonyms, and rephrasing the intent in different ways.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1276 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+O primeiro computador eletrônico foi o ENIAC, criado em 1945.
+--------------------------------------------------
+
+---
+QUESTÃO 15: Quem criou o Linux?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 27 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quem criou o Linux?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Criadores do kernel Linux', 'Desenvolvedores do núcleo Linux']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Source: https://www.dicio.com.br/voce-ou-voce/
+Title: Você ou voçê - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://www.automationanywhere.com/de
+Title: 
+Date: Unknown
+
+...
+  -- DOC: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, Fullmetal Alchemist)...
+  -- DOC: Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c7...
+  -- DOC: Source: https://www.lexico.pt/considerado/
+Title: Significado de Considerado - O que é, Sinónimos e ...
+  -- DOC: Source: https://br.bing.com/?setlang=pt-br&cc=br&cc=BR
+Title: Pesquisa - Microsoft Bing
+Date: Unknow...
+  -- DOC: Source: https://www.zhihu.com/question/292275114
+Title: 
+Date: Unknown
+
+知乎，让每一次点击都充满意义 —— 欢迎来到知乎，发现问...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  🔍 Executing Expanded Retrieval for: ['Criadores do kernel Linux', 'Desenvolvedores do núcleo Linux']
+    + 5 docs from variation: 'Criadores do kernel Linux'
+    + 5 docs from variation: 'Desenvolvedores do núcleo Linux'
+  ⚖️ Reranking 27 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Anime: Popular Series Database (One Piece, Death Note, Attack on Titan, Naruto, ...
+  -- RANK 2: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó id...
+  -- RANK 3: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido com...
+  -- RANK 4: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator ...
+  -- RANK 5: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quem criou o Linux? (Intent Context: Criadores do kernel Linux, Desenvolvedores do núcleo Linux)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 2061 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Quem criou o Linux?
+⚠️ SearXNG Error: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+  🔍 Querying Specialized Sources: Quem criou o Linux? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+⚠️ SearXNG Error: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+  ⚠️ No SearXNG results found.
+  ⚠️ Web search yielded no results.
+---GENERATE---
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Linus Torvalds
+--------------------------------------------------
+
+=== AVIAÇÃO MILITAR ===
+---
+QUESTÃO 16: Qual é a velocidade máxima do B-2 Spirit?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 23 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content="[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é a velocidade máxima do B-2 Spirit?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Velocidade Máxima do Bombardeiro Estratégico B-2 Spirit']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Esportes: Copas do Mundo, Olimpíadas e Recordes
+COPA DO MUNDO FIFA:
+
+Maiores Campeões:
+1. Brasil: 5 ...
+  -- DOC: Source: https://www.lexico.pt/considerado/
+Title: Significado de Considerado - O que é, Sinónimos e ...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  🔍 Executing Expanded Retrieval for: ['Velocidade Máxima do Bombardeiro Estratégico B-2 Spirit']
+    + 5 docs from variation: 'Velocidade Máxima do Bombardeiro Estratégico B-2 Spirit'
+  ⚖️ Reranking 23 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EU...
+  -- RANK 2: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator ...
+  -- RANK 3: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda L...
+  -- RANK 4: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ati...
+  -- RANK 5: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é a velocidade máxima do B-2 Spirit? (Intent Context: Velocidade Máxima do Bombardeiro Estratégico B-2 Spirit)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1377 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+A velocidade máxima do B-2 Spirit é de 1.010 km/h.
+--------------------------------------------------
+
+---
+QUESTÃO 17: Qual é o maior bombardeiro do mundo?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 20 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é o maior bombardeiro do mundo?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: []
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online de Português
+Date: U...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: Unknown
+
+maior 23 id...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: preciso | Dicionário I...
+  -- DOC: Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm
+Title: O que são...
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://www.lexico.pt/considerado/
+Title: Significado de Considerado - O que é, Sinónimos e ...
+  -- DOC: Source: https://www.lexico.pt/episodio/
+Title: Significado de Episódio - O que é, Sinónimos e Concei...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://www.dicio.com.br/protagonista/
+Title: Protagonista - Dicio, Dicionário Online de Por...
+  -- DOC: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/construir
+Title: construir | Dicionár...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  ⚖️ Reranking 20 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro...
+  -- RANK 2: Source: https://www.dicio.com.br/maior/
+Title: Maior - Dicio, Dicionário Online ...
+  -- RANK 3: Source: https://pt.m.wiktionary.org/wiki/maior
+Title: maior - Wikcionário
+Date: ...
+  -- RANK 4: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/construir
+Title: ...
+  -- RANK 5: Source: https://www.infopedia.pt/dicionarios/lingua-portuguesa/preciso
+Title: pr...
+---CHECK RELEVANCE---
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 299 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Qual é o maior bombardeiro do mundo?
+⚠️ SearXNG Error: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+  🔍 Querying Specialized Sources: Qual é o maior bombardeiro do mundo? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+⚠️ SearXNG Error: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+  ⚠️ No SearXNG results found.
+  ⚠️ Web search yielded no results.
+---GENERATE---
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+---WEB SEARCH (SearXNG + Playwright)---
+  🔍 Querying SearXNG: Qual é o maior bombardeiro do mundo?
+  🔍 Querying Specialized Sources: Qual é o maior bombardeiro do mundo? (site:reddit.com OR site:github.com OR site:stackoverflow.com OR site:ycombinator.com OR site:quora.com OR site:dev.to OR site:fandom.com)
+  🕷️ Playwright Scraping: https://www.dicio.com.br/maior/
+    🕷️ Navigating to: https://www.dicio.com.br/maior/
+    ⚠️ Navigation warning: Timeout 5000ms exceeded.
+    ✅ Readability extracted 2233 chars
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://pt.m.wiktionary.org/wiki/maior
+    🕷️ Navigating to: https://pt.m.wiktionary.org/wiki/maior
+    ✅ Readability extracted 1649 chars
+Duplicate detected. Skipping.
+  💾 Auto-ingested web content.
+  🕷️ Playwright Scraping: https://www.lexico.pt/maior/
+    🕷️ Navigating to: https://www.lexico.pt/maior/
+    ✅ Readability extracted 2057 chars
+✅ Transferred 100 docs to main
+  💾 Auto-ingested web content.
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 2326 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS REFUSAL---
+---VALIDATE_ANSWER---
+---DECISION: REFUSAL DETECTED. ATTEMPTING FALLBACK---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Não há informações suficientes nos dados locais.
+--------------------------------------------------
+
+---
+QUESTÃO 18: Qual é a velocidade máxima do F-22 Raptor?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 31 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Qual é a velocidade máxima do F-22 Raptor?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['Velocidade máxima do avião de combate F-22 Raptor', 'These queries aim to capture the users intent by:', '* Expanding the acronym F-22 to its full form, emphasizing it as a fifth-generation fighter jet.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Source: https://time.is/pt_br/Joinville
+Title: Joinville: 21:49
+Date: Unknown
+
+× Time.is Hora em Joi...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Esportes: Copas do Mundo, Olimpíadas e Recordes
+COPA DO MUNDO FIFA:
+
+Maiores Campeões:
+1. Brasil: 5 ...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Source: https://br.bing.com/
+Title: Pesquisa - Microsoft Bing
+Date: Unknown
+
+Obtenha o novo aplicati...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: História do Brasil: Proclamação da República 1889
+PROCLAMAÇÃO DA REPÚBLICA DO BRASIL:
+
+Ano: 1889
+Dat...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: Source: https://meu.inss.gov.br/
+Title: Meu INSS
+Date: Unknown
+
+Entrar com gov.br Entre com a senha ...
+  🔍 Executing Expanded Retrieval for: ['Velocidade máxima do avião de combate F-22 Raptor', 'These queries aim to capture the users intent by:', '* Expanding the acronym F-22 to its full form, emphasizing it as a fifth-generation fighter jet.']
+    + 5 docs from variation: 'Velocidade máxima do avião de combate F-22 Raptor'
+    + 5 docs from variation: 'These queries aim to capture the users intent by:'
+    + 5 docs from variation: '* Expanding the acronym F-22 to its full form, emphasizing it as a fifth-generation fighter jet.'
+  ⚖️ Reranking 31 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EU...
+  -- RANK 2: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda L...
+  -- RANK 3: História do Brasil: Eventos Importantes
+INDEPENDÊNCIA DO BRASIL (1822):
+- Data: ...
+  -- RANK 4: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrál...
+  -- RANK 5: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Qual é a velocidade máxima do F-22 Raptor? (Intent Context: Velocidade máxima do avião de combate F-22 Raptor, These queries aim to capture the users intent by:, * Expanding the acronym F-22 to its full form, emphasizing it as a fifth-generation fighter jet.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1377 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+A velocidade máxima do F-22 Raptor é de 2.410 km/h (Mach 2,25).
+--------------------------------------------------
+
+---
+QUESTÃO 19: Quantos pilotos tripulam um B-2 Spirit?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 24 docs -> Top 5
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content='[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+/home/holloway/ziva/venv/lib/python3.12/site-packages/pydantic/main.py:464: UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected 10 fields but got 6: Expected `Message` - serialized value may not be as expected [field_name='message', input_value=Message(content="[[ ## re... reasoning_content=None), input_type=Message])
+  PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [field_name='choices', input_value=Choices(finish_reason='st...reasoning_content=None)), input_type=Choices])
+  return self.__pydantic_serializer__.to_python(
+✅ DSPy Configured: LM=ollama/qwen2.5:14b, RM=ZivaRetriever(Qdrant)
+🤖 Ziva is thinking about: 'Quantos pilotos tripulam um B-2 Spirit?'...
+---CONTEXTUALIZE QUERY---
+---ROUTE QUERY---
+---DECISION: ROUTE TO QUERY EXPANSION (Semantic Upgrade)---
+---EXPAND QUERY---
+  ✨ Generated Variations: ['These queries aim to capture the original intent of the users question, which is to know how many pilots are required to operate a B-2 Spirit aircraft. The first query uses more formal language, while the second one uses a synonym for pilotos (tripulação). The third query adds an additional detail about the aircraft being stealth, which might be relevant in certain contexts.']
+---RETRIEVE---
+  📄 Retrieved 20 docs (Limit 20)
+  -- DOC: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EUA):
+- Fabricante: No...
+  -- DOC: Biologia: O Beija-Flor
+A única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird)....
+  -- DOC: Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/
+T...
+  -- DOC: Source: https://www.claro.com.br/meuperfil
+Title: Login
+Date: Unknown
+
+Meu Perfil Insira o seu CPF, ...
+  -- DOC: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator experimental de fusã...
+  -- DOC: First Aid: Treating Minor Burns
+Para queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Re...
+  -- DOC: Orientation: Finding South with the Southern Cross
+No Hemisfério Sul, o Cruzeiro do Sul (Southern Cr...
+  -- DOC: Survival Skills: Lais de Guia (Bowline)
+O Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. E...
+  -- DOC: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não sejam voadoras de l...
+  -- DOC: Source: https://www.minhaconexao.com.br/brasil-banda-larga
+Title: Brasil Banda Larga | Teste de Velo...
+  -- DOC: Source: https://play.google.com/store/apps/details?id=br.gov.dataprev.meuinss&hl=pt-BR
+Title: Meu IN...
+  -- DOC: Geografia Mundial: Capitais, Países e Continentes
+CAPITAIS IMPORTANTES:
+
+Austrália: Canberra (não Sy...
+  -- DOC: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é (resumo do conceito...
+  -- DOC: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ativar um Stargate é um...
+  -- DOC: Survival Skills: Nó de Escota (Sheet Bend)
+O Nó de Escota (Sheet Bend) é o nó ideal para unir duas c...
+  -- DOC: Source: https://tecnoblog.net/responde/o-que-e-tecnologia-confira-as-principais-areas-tecnologicas-d...
+  -- DOC: Source: https://support.google.com/youtube/community?hl=pt-br
+Title: Comunidade YouTube
+Date: Unknow...
+  -- DOC: Source: https://www.reddit.com/r/TemuThings/comments/1cn1zla/is_temu_safe/
+Title: Is temu safe : r/T...
+  -- DOC: Literatura Mundial: Autores e Obras Clássicas
+LITERATURA BRASILEIRA:
+
+Machado de Assis:
+- Dom Casmur...
+  -- DOC: Source: https://support.google.com/youtube/answer/3802431?hl=pt&co=GENIE.Platform%3DDesktop
+Title: I...
+  🔍 Executing Expanded Retrieval for: ['These queries aim to capture the original intent of the users question, which is to know how many pilots are required to operate a B-2 Spirit aircraft. The first query uses more formal language, while the second one uses a synonym for pilotos (tripulação). The third query adds an additional detail about the aircraft being stealth, which might be relevant in certain contexts.']
+    + 5 docs from variation: 'These queries aim to capture the original intent of the users question, which is to know how many pilots are required to operate a B-2 Spirit aircraft. The first query uses more formal language, while the second one uses a synonym for pilotos (tripulação). The third query adds an additional detail about the aircraft being stealth, which might be relevant in certain contexts.'
+  ⚖️ Reranking 24 documents with FlashRank...
+  ✅ Top 5 selected.
+  -- RANK 1: Aviação Militar: Aeronaves de Combate
+BOMBARDEIROS ESTRATÉGICOS:
+
+B-2 Spirit (EU...
+  -- RANK 2: Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)
+O principal reator ...
+  -- RANK 3: Source: https://www.significados.com.br/tecnologia-2/
+Title: Tecnologia: o que é...
+  -- RANK 4: Biology: Chicken Flight Capabilities
+As galinhas são capazes de voar, embora não...
+  -- RANK 5: Sci-Fi Technology: Stargate Energy Sources
+A fonte de energia principal para ati...
+---CHECK RELEVANCE---
+  ⚖️ Grading with expanded context: Quantos pilotos tripulam um B-2 Spirit? (Intent Context: These queries aim to capture the original intent of the users question, which is to know how many pilots are required to operate a B-2 Spirit aircraft. The first query uses more formal language, while the second one uses a synonym for pilotos (tripulação). The third query adds an additional detail about the aircraft being stealth, which might be relevant in certain contexts.)
+  ✅ RANK 1 AUTO-ACCEPTED (FlashRank Trust)
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---GRADE: DOCUMENT NOT RELEVANT---
+---DECIDE TO GENERATE---
+---DECISION: GENERATE---
+---GENERATE---
+  📄 Using RANK 1 only for generation (Context length: 1377 chars)
+---VALIDATE ANSWER---
+---DECISION: ANSWER IS VALID---
+---VALIDATE_ANSWER---
+---DECISION: END---
+
+🟣 ZIVA SAYS:
+--------------------------------------------------
+Um B-2 Spirit requer 2 pilotos para operar.
+--------------------------------------------------
+
+---
+QUESTÃO 20: Qual é o custo aproximado de um B-2 Spirit?
+INFO:RAGEnhancement:🧠 Active Recall initialized (boost: 1.25x)
+INFO:ZivaRerank:Reranked 24 docs -> Top 5

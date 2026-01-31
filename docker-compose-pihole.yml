@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: ziva-pihole
+    image: pihole/pihole:latest
+    ports:
+      - "5353:53/tcp"      # DNS TCP (porta alternativa para não conflitar)
+      - "5353:53/udp"      # DNS UDP
+      - "8053:80/tcp"      # Web admin interface
+    environment:
+      TZ: 'America/Sao_Paulo'
+      WEBPASSWORD: 'ziva_admin_123'
+      PIHOLE_DNS_: '1.1.1.1;8.8.8.8'  # Upstream DNS servers
+      DNSMASQ_LISTENING: 'all'
+    volumes:
+      - './pihole/etc-pihole:/etc/pihole'
+      - './pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+    networks:
+      - ziva-network
+
+networks:
+  ziva-network:
+    driver: bridge

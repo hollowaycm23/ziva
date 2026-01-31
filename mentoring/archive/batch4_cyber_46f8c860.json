@@ -1,0 +1,5 @@
+{
+    "topic": "Hacking: Nmap Scanning",
+    "content": "For network discovery, use `nmap -sS -p- <target>` for stealthy SYN scans. Always ensure you have authorization before scanning any network.",
+    "id": "batch4_cyber_46f8c860"
+}

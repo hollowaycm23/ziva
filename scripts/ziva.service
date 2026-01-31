@@ -1,0 +1,16 @@
+[Unit]
+Description=Ziva AI Orchestrator (User Service)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ziva
+ExecStart=/usr/bin/python3 %h/ziva/scripts/start_ziva.py
+Environment=PYTHONPATH=%h/ziva
+Restart=always
+RestartSec=5
+StandardOutput=append:%h/ziva/ziva_service.log
+StandardError=append:%h/ziva/ziva_service.log
+
+[Install]
+WantedBy=default.target

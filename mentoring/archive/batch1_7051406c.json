@@ -1,0 +1,5 @@
+{
+    "topic": "Linux File Safety: Shred",
+    "content": "To securely delete a file, use `shred -u filename`. Standard `rm` only unlinks the file pointer, leaving data recoverable.",
+    "id": "batch1_7051406c"
+}

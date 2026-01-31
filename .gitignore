@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+agent_venv/
+voice_venv/
+*.egg-info/
+
+# Ziva Data & Logs
+data/
+data_backup*/
+qdrant_storage_backup*/
+logs/
+tmp/
+qdrant_storage/
+embedding_cache/
+*.log
+*.pid
+ziva_sessions.db
+secrets.json
+.env
+node_modules/
+
+# Large Binaries / Archives
+*.tar
+*.tar.gz
+*.zip
+*.7z
+ziva_core.tar
+ziva_deploy.tar.gz
+ziva_deploy_full.tar.gz
+ziva_memory.tar.gz
+llama-bin.tar.gz
+llama.tar.gz
+models/
+pihole/
+research/sherlock
+research/spiderfoot

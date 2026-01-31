@@ -1,0 +1,5 @@
+{
+    "topic": "Defense: Port Security",
+    "content": "Close all unused ports. A listening service is a potential entry point. Use `ufw` or `iptables` to whitelist only necessary traffic (Default Deny Policy).",
+    "id": "batch4_cyber_bd9739cd"
+}

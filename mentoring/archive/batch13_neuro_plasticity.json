@@ -1,0 +1,5 @@
+{
+    "id": "batch13_neuro_02",
+    "topic": "Neuroscience in Computing: Synaptic Plasticity & STDP",
+    "content": "Spike-Timing-Dependent Plasticity (STDP) is a biological learning rule applied in neuromorphic computing. It strengthens connections (synapses) if a presynaptic neuron fires just before a postsynaptic one (causality) and weakens them if the order is reversed. This allows for unsupervised, local learning without backpropagation."
+}

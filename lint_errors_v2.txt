@@ -1,0 +1,11 @@
+core/binary_server.py:256:40: E128 continuation line under-indented for visual indent
+                                       f"Output: {example['output']}")
+                                       ^
+core/root_cause_analyzer.py:287:38: E999 SyntaxError: '(' was never closed
+core/sync_manager.py:87:25: E126 continuation line over-indented for hanging indent
+                        for p in points])
+                        ^
+1     E126 continuation line over-indented for hanging indent
+1     E128 continuation line under-indented for visual indent
+1     E999 SyntaxError: '(' was never closed
+3

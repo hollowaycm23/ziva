@@ -1,0 +1,5 @@
+{
+    "id": "batch13_neuro_03",
+    "topic": "Neuroscience in Computing: Neuromorphic Hardware",
+    "content": "Neuromorphic hardware, such as Intel's Loihi or IBM's TrueNorth, physically structures silicon to behave like neural tissue. They avoid the Von Neumann bottleneck by co-locating memory and processing (synapses and neurons), resulting in massive parallelism and low power consumption suitable for edge AGI."
+}

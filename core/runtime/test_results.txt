@@ -1,0 +1,4 @@
+--- TEST 1 ---
+{"id":"t1","result":"package main\n\n// ToolRequest defines the strict contract for invoking a tool.\ntype ToolRequest struct {\n\tID        string                 `json:\"id\"`\n\tToolName  string                 `json:\"tool_name\"`\n\tArguments map[string]interface{} `json:\"arguments\"`\n}\n\n// ToolResponse defines the strict contract for tool output.\ntype ToolResponse struct {\n\tID        string `json:\"id\"`\n\tResult    string `json:\"result,omitempty\"`\n\tError     string `json:\"error,omitempty\"`\n\tStatus    string `json:\"status\"` // \"success\", \"error\"\n\tTimestamp int64  `json:\"timestamp\"`\n}\n","status":"success","timestamp":1768597552}
+\n--- TEST 2 ---
+{"id":"t2","error":"Access Denied: Path '/etc/passwd' is outside sandbox '/home/holloway/ziva'","status":"error","timestamp":1768597552}

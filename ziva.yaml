@@ -1,0 +1,59 @@
+meta:
+  version: "1.0.0"
+  env: "production"
+
+# LLM Providers Configuration
+models:
+  providers:
+    lm-studio:
+      base_url: "http://100.104.242.35:1234/v1"
+      # Token is loaded from ENV: ZIVA_LLM_KEY
+      api_key_env: "ZIVA_LLM_KEY"
+      models:
+        - id: "qwen3-14b"
+          alias: "primary"
+          context_window: 32000
+        - id: "text-embedding-qwen2.5-0.5b-instruct"
+          alias: "embedder_legacy"
+          context_window: 8192
+        - id: "qwen/qwen3-vl-4b"
+          alias: "embedder"
+          context_window: 8192
+
+# Agent Configuration
+agent:
+  name: "Ziva"
+  # Format: provider/alias
+  primary_model: "lm-studio/primary"
+  coder_model: "lm-studio/primary"
+  embedding_model: "lm-studio/embedder"
+
+  memory:
+    vector_store:
+      path: "/app/data/qdrant_storage_fixed"
+      collection: "ziva_memory"
+    episodic:
+      enabled: true
+
+# Skills & Tools
+skills:
+  defaults:
+    - "web_search"
+    - "code_execution"
+    - "file_operations"
+
+  plugins:
+    telegram:
+      enabled: true
+      token_env: "TELEGRAM_BOT_TOKEN"
+
+# Browser Configuration
+browser:
+  remote_url: "ws://ziva-browser:3000"
+  local_fallback: true
+  timeout: 30000
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000

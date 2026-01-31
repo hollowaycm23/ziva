@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Path to artifacts
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+GO_BIN="$DIR/euler_gate_bin"
+PY_SCRIPT="$DIR/euler_poinsot_fallback.py"
+
+if [ -f "$GO_BIN" ]; then
+    # Run Go Binary
+    "$GO_BIN"
+else
+    # Fallback to Python
+    python3 "$PY_SCRIPT"
+fi

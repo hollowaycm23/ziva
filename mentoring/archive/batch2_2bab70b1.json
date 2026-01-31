@@ -1,0 +1,5 @@
+{
+    "topic": "Security: Sudo Usage",
+    "content": "Avoid using `sudo` inside scripts unless explicitly authorized. If root is needed, check for permissions first or use a specific helper script (like `sudo_helper.sh`).",
+    "id": "batch2_2bab70b1"
+}

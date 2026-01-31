@@ -1,0 +1,5 @@
+{
+    "id": "batch13_quantum_01",
+    "topic": "Quantum Computing: Qubits and Superposition",
+    "content": "Unlike a classical bit (0 or 1), a Qubit can exist in a state of Superposition, representing both 0 and 1 simultaneously with certain probabilities. This allows quantum computers to process a vast amount of potential outcomes in parallel, providing exponential speedups for specific problems like factorization."
+}

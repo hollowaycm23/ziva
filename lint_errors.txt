@@ -1,0 +1,25 @@
+core/binary_server.py:256:40: E128 continuation line under-indented for visual indent
+                                       f"Output: {example['output']}")
+                                       ^
+core/graph/ziva_graph.py:141:22: E999 SyntaxError: unterminated f-string literal (detected at line 141)
+core/network_optimizer.py:2:9: E999 IndentationError: unexpected indent
+        "sudo sysctl -w net.ipv4.tcp_wmem='4096 65536 134217728'"        ^
+core/query_reformulator.py:94:46: F821 undefined name 'Optional'
+    def _simplify_query(self, query: str) -> Optional[str]:
+                                             ^
+core/root_cause_analyzer.py:206:14: E999 SyntaxError: invalid syntax
+core/sync_manager.py:87:25: E126 continuation line over-indented for hanging indent
+                        for p in points])
+                        ^
+core/training_data_collector.py:110:17: F821 undefined name 're'
+        match = re.search(json_pattern, content, re.DOTALL)
+                ^
+core/training_data_collector.py:110:50: F821 undefined name 're'
+        match = re.search(json_pattern, content, re.DOTALL)
+                                                 ^
+scripts/bluetooth_control.py:57:9: E999 SyntaxError: unterminated string literal (detected at line 57)
+1     E126 continuation line over-indented for hanging indent
+1     E128 continuation line under-indented for visual indent
+4     E999 SyntaxError: unterminated f-string literal (detected at line 141)
+3     F821 undefined name 'Optional'
+9

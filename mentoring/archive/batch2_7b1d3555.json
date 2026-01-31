@@ -1,0 +1,5 @@
+{
+    "topic": "Security: SQL Injection",
+    "content": "Always use parameterized queries (`?` in sqlite3) instead of string formatting (`f'SELECT * FROM users WHERE name={name}'`) to prevent SQL injection.",
+    "id": "batch2_7b1d3555"
+}

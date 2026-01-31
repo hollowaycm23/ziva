@@ -1,0 +1,5 @@
+{
+    "topic": "PrivEsc: Cron Jobs",
+    "content": "Inspect `/etc/crontab`. If a root cron job runs a script that is writable by a standard user, that user can escalate privileges by modifying the script.",
+    "id": "batch4_cyber_195a3c4d"
+}

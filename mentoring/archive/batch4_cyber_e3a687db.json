@@ -1,0 +1,5 @@
+{
+    "topic": "WebSec: XSS (Cross Site Scripting)",
+    "content": "XSS occurs when inputs are not sanitized. Attackers inject JS. Defense: Always escape user input and use Content Security Policy (CSP) headers.",
+    "id": "batch4_cyber_e3a687db"
+}

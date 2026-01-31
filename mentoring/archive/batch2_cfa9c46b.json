@@ -1,0 +1,5 @@
+{
+    "topic": "Linux: Disk Usage",
+    "content": "Use `du -sh * | sort -rh` to find the largest directories in the current path. It is the most efficient way to clean up disk space.",
+    "id": "batch2_cfa9c46b"
+}

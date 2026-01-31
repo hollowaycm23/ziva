@@ -1,0 +1,434 @@
+[
+  {
+    "topic": "Qual ave voa para trás?",
+    "total_docs": 10,
+    "issues": [
+      {
+        "doc_id": 2,
+        "issue": "missing_keywords",
+        "text": "Biology: Chicken Flight Capabilities\nAs galinhas são capazes de voar, embora não sejam voadoras de longa distância como aves migratórias. A maior distância que uma galinha pode voar varia dependendo d",
+        "score": 0.70248014
+      },
+      {
+        "doc_id": 2,
+        "issue": "wrong_keywords",
+        "text": "Biology: Chicken Flight Capabilities\nAs galinhas são capazes de voar, embora não sejam voadoras de longa distância como aves migratórias. A maior distância que uma galinha pode voar varia dependendo d",
+        "score": 0.70248014
+      },
+      {
+        "doc_id": 3,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.dicio.com.br/voce-ou-voce/\nTitle: Você ou voçê - Dicio, Dicionário Online de Português\nDate: Unknown\n\nDicionário Online de Português Use nossas ferramentas de Inteligência Artifici",
+        "score": 0.656955
+      },
+      {
+        "doc_id": 4,
+        "issue": "missing_keywords",
+        "text": "Survival Skills: Lais de Guia (Bowline)\nO Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. Ele forma uma alça fixa que não aperta sob tensão nem desmancha facilmente. É essencial para resgates",
+        "score": 0.64340925
+      },
+      {
+        "doc_id": 5,
+        "issue": "missing_keywords",
+        "text": "First Aid: Treating Minor Burns\nPara queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Resfrie a área imediatamente com água corrente fria (não gelada) por 10-15 minutos. 2. Não aplique gel",
+        "score": 0.6415585
+      },
+      {
+        "doc_id": 6,
+        "issue": "missing_keywords",
+        "text": "Source: https://pt.wiktionary.org/wiki/voc%C3%AA\nTitle: você - Wikcionário\nDate: Unknown\n\nvocê 28 idiomas Português[editar] Pronome[editar] Singular Plural você vocês vo.cê, de tratamento, (Datação: 1",
+        "score": 0.6377237
+      },
+      {
+        "doc_id": 7,
+        "issue": "missing_keywords",
+        "text": "Source: https://meu.inss.gov.br/\nTitle: Meu INSS\nDate: Unknown\n\nEntrar com gov.br Entre com a senha gov.br ou faça o cadastro. Serviços sem senha Precisa de ajuda? Converse com a Helô Olá, sou a assis",
+        "score": 0.63576066
+      },
+      {
+        "doc_id": 8,
+        "issue": "missing_keywords",
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.620139
+      },
+      {
+        "doc_id": 9,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.minhaconexao.com.br/brasil-banda-larga\nTitle: Brasil Banda Larga | Teste de Velocidade | EAQ | Speed Test\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GT",
+        "score": 0.61942375
+      },
+      {
+        "doc_id": 10,
+        "issue": "missing_keywords",
+        "text": "Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c77f269d-2caa-4c5f-886a-fde8f985d3a3\nTitle: 404 - Conteúdo não encontrado\nDate: Unknown\n\nParticipação ",
+        "score": 0.6124541
+      }
+    ],
+    "documents": [
+      {
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.7750125
+      },
+      {
+        "text": "Biology: Chicken Flight Capabilities\nAs galinhas são capazes de voar, embora não sejam voadoras de longa distância como aves migratórias. A maior distância que uma galinha pode voar varia dependendo d",
+        "score": 0.70248014
+      },
+      {
+        "text": "Source: https://www.dicio.com.br/voce-ou-voce/\nTitle: Você ou voçê - Dicio, Dicionário Online de Português\nDate: Unknown\n\nDicionário Online de Português Use nossas ferramentas de Inteligência Artifici",
+        "score": 0.656955
+      },
+      {
+        "text": "Survival Skills: Lais de Guia (Bowline)\nO Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. Ele forma uma alça fixa que não aperta sob tensão nem desmancha facilmente. É essencial para resgates",
+        "score": 0.64340925
+      },
+      {
+        "text": "First Aid: Treating Minor Burns\nPara queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Resfrie a área imediatamente com água corrente fria (não gelada) por 10-15 minutos. 2. Não aplique gel",
+        "score": 0.6415585
+      },
+      {
+        "text": "Source: https://pt.wiktionary.org/wiki/voc%C3%AA\nTitle: você - Wikcionário\nDate: Unknown\n\nvocê 28 idiomas Português[editar] Pronome[editar] Singular Plural você vocês vo.cê, de tratamento, (Datação: 1",
+        "score": 0.6377237
+      },
+      {
+        "text": "Source: https://meu.inss.gov.br/\nTitle: Meu INSS\nDate: Unknown\n\nEntrar com gov.br Entre com a senha gov.br ou faça o cadastro. Serviços sem senha Precisa de ajuda? Converse com a Helô Olá, sou a assis",
+        "score": 0.63576066
+      },
+      {
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.620139
+      },
+      {
+        "text": "Source: https://www.minhaconexao.com.br/brasil-banda-larga\nTitle: Brasil Banda Larga | Teste de Velocidade | EAQ | Speed Test\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GT",
+        "score": 0.61942375
+      },
+      {
+        "text": "Source: https://answers.microsoft.com/pt-br/windows/forum/all/windows-10-usb-30-n%C3%A3o-funciona/c77f269d-2caa-4c5f-886a-fde8f985d3a3\nTitle: 404 - Conteúdo não encontrado\nDate: Unknown\n\nParticipação ",
+        "score": 0.6124541
+      }
+    ]
+  },
+  {
+    "topic": "beija-flor características",
+    "total_docs": 10,
+    "issues": [
+      {
+        "doc_id": 3,
+        "issue": "missing_keywords",
+        "text": "First Aid: Treating Minor Burns\nPara queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Resfrie a área imediatamente com água corrente fria (não gelada) por 10-15 minutos. 2. Não aplique gel",
+        "score": 0.578921
+      },
+      {
+        "doc_id": 3,
+        "issue": "wrong_keywords",
+        "text": "First Aid: Treating Minor Burns\nPara queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Resfrie a área imediatamente com água corrente fria (não gelada) por 10-15 minutos. 2. Não aplique gel",
+        "score": 0.578921
+      },
+      {
+        "doc_id": 4,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.lexico.pt/maior/\nTitle: Significado de Maior - O que é e Conceito no Dicionário\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-KMTCHMF\" height=\"0\" widt",
+        "score": 0.5640267
+      },
+      {
+        "doc_id": 5,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.forosecuador.ec/advanced_search?r=501240813\nTitle: Forosecuador | Noticias de Ecuador y del mundo\nDate: Unknown\n\nBy Luis agosto 5, 2025 Royal Joker opiniones (juego de casino) : ¿E",
+        "score": 0.56224966
+      },
+      {
+        "doc_id": 6,
+        "issue": "missing_keywords",
+        "text": "Sci-Fi Technology: Stargate Energy Sources\nA fonte de energia principal para ativar um Stargate é um dispositivo chamado DHD (Dispositivo de Discagem Doméstica), que contém uma fonte de energia de fus",
+        "score": 0.54359823
+      },
+      {
+        "doc_id": 7,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.claro.com.br/meuperfil\nTitle: Login\nDate: Unknown\n\nMeu Perfil Insira o seu CPF, número de celular ou outro dado de acesso Entenda seus dados de acesso CPF, celular ou outro dado Co",
+        "score": 0.5399439
+      },
+      {
+        "doc_id": 8,
+        "issue": "missing_keywords",
+        "text": "Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5342777
+      },
+      {
+        "doc_id": 9,
+        "issue": "missing_keywords",
+        "text": "Survival Skills: Lais de Guia (Bowline)\nO Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. Ele forma uma alça fixa que não aperta sob tensão nem desmancha facilmente. É essencial para resgates",
+        "score": 0.53195804
+      },
+      {
+        "doc_id": 10,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.automationanywhere.com/de\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5291226
+      }
+    ],
+    "documents": [
+      {
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.6503291
+      },
+      {
+        "text": "Biology: The Hummingbird\nThe only bird capable of true backward flight is the Hummingbird (Beija-flor). They can fly forward, backward, and hover due to their unique wing structure.",
+        "score": 0.6048832
+      },
+      {
+        "text": "First Aid: Treating Minor Burns\nPara queimaduras de primeiro grau (pele vermelha, sem bolhas): 1. Resfrie a área imediatamente com água corrente fria (não gelada) por 10-15 minutos. 2. Não aplique gel",
+        "score": 0.578921
+      },
+      {
+        "text": "Source: https://www.lexico.pt/maior/\nTitle: Significado de Maior - O que é e Conceito no Dicionário\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-KMTCHMF\" height=\"0\" widt",
+        "score": 0.5640267
+      },
+      {
+        "text": "Source: https://www.forosecuador.ec/advanced_search?r=501240813\nTitle: Forosecuador | Noticias de Ecuador y del mundo\nDate: Unknown\n\nBy Luis agosto 5, 2025 Royal Joker opiniones (juego de casino) : ¿E",
+        "score": 0.56224966
+      },
+      {
+        "text": "Sci-Fi Technology: Stargate Energy Sources\nA fonte de energia principal para ativar um Stargate é um dispositivo chamado DHD (Dispositivo de Discagem Doméstica), que contém uma fonte de energia de fus",
+        "score": 0.54359823
+      },
+      {
+        "text": "Source: https://www.claro.com.br/meuperfil\nTitle: Login\nDate: Unknown\n\nMeu Perfil Insira o seu CPF, número de celular ou outro dado de acesso Entenda seus dados de acesso CPF, celular ou outro dado Co",
+        "score": 0.5399439
+      },
+      {
+        "text": "Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5342777
+      },
+      {
+        "text": "Survival Skills: Lais de Guia (Bowline)\nO Lais de Guia (Bowline) é conhecido como o 'Rei dos Nós'. Ele forma uma alça fixa que não aperta sob tensão nem desmancha facilmente. É essencial para resgates",
+        "score": 0.53195804
+      },
+      {
+        "text": "Source: https://www.automationanywhere.com/de\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5291226
+      }
+    ]
+  },
+  {
+    "topic": "maior planeta sistema solar",
+    "total_docs": 10,
+    "issues": [
+      {
+        "doc_id": 1,
+        "issue": "missing_keywords",
+        "text": "Sci-Fi Technology: Stargate Energy Sources\nA fonte de energia principal para ativar um Stargate é um dispositivo chamado DHD (Dispositivo de Discagem Doméstica), que contém uma fonte de energia de fus",
+        "score": 0.59473455
+      },
+      {
+        "doc_id": 1,
+        "issue": "wrong_keywords",
+        "text": "Sci-Fi Technology: Stargate Energy Sources\nA fonte de energia principal para ativar um Stargate é um dispositivo chamado DHD (Dispositivo de Discagem Doméstica), que contém uma fonte de energia de fus",
+        "score": 0.59473455
+      },
+      {
+        "doc_id": 2,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.dicio.com.br/maior/\nTitle: Maior - Dicio, Dicionário Online de Português\nDate: Unknown\n\nmaior Significado de Maior substantivo masculino e feminino Pessoa que atingiu a maioridade ",
+        "score": 0.58434033
+      },
+      {
+        "doc_id": 3,
+        "issue": "missing_keywords",
+        "text": "Source: https://time.is/pt_br/Joinville\nTitle: Joinville: 21:49\nDate: Unknown\n\n× Time.is Hora em Joinville, Brasil agoraSeu relógio está 1,1 segundos atrasado.A precisão da sincronização foi de ±0,066",
+        "score": 0.5831927
+      },
+      {
+        "doc_id": 4,
+        "issue": "missing_keywords",
+        "text": "Source: https://www.lexico.pt/maior/\nTitle: Significado de Maior - O que é e Conceito no Dicionário\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-KMTCHMF\" height=\"0\" widt",
+        "score": 0.5732616
+      },
+      {
+        "doc_id": 5,
+        "issue": "missing_keywords",
+        "text": "Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)\nO principal reator experimental de fusão nuclear da China é conhecido como EAST (Experimental Advanced Superconducting Tokamak). Outro reat",
+        "score": 0.55727464
+      },
+      {
+        "doc_id": 6,
+        "issue": "missing_keywords",
+        "text": "Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm\nTitle: O que são buracos negros? - Brasil Escola\nDate: Unknown\n\nOs buracos negros são corpos celestes caracterizados",
+        "score": 0.54680026
+      },
+      {
+        "doc_id": 6,
+        "issue": "wrong_keywords",
+        "text": "Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm\nTitle: O que são buracos negros? - Brasil Escola\nDate: Unknown\n\nOs buracos negros são corpos celestes caracterizados",
+        "score": 0.54680026
+      },
+      {
+        "doc_id": 7,
+        "issue": "missing_keywords",
+        "text": "Source: https://pt.m.wiktionary.org/wiki/maior\nTitle: maior - Wikcionário\nDate: Unknown\n\nmaior 23 idiomas Português[editar] Adjetivo[editar] Singular Plural Masculino maior maiores Feminino mai.or, co",
+        "score": 0.5374645
+      },
+      {
+        "doc_id": 8,
+        "issue": "missing_keywords",
+        "text": "Biology: Chicken Flight Capabilities\nAs galinhas são capazes de voar, embora não sejam voadoras de longa distância como aves migratórias. A maior distância que uma galinha pode voar varia dependendo d",
+        "score": 0.5366795
+      },
+      {
+        "doc_id": 9,
+        "issue": "missing_keywords",
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.5312653
+      },
+      {
+        "doc_id": 10,
+        "issue": "missing_keywords",
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.530717
+      }
+    ],
+    "documents": [
+      {
+        "text": "Sci-Fi Technology: Stargate Energy Sources\nA fonte de energia principal para ativar um Stargate é um dispositivo chamado DHD (Dispositivo de Discagem Doméstica), que contém uma fonte de energia de fus",
+        "score": 0.59473455
+      },
+      {
+        "text": "Source: https://www.dicio.com.br/maior/\nTitle: Maior - Dicio, Dicionário Online de Português\nDate: Unknown\n\nmaior Significado de Maior substantivo masculino e feminino Pessoa que atingiu a maioridade ",
+        "score": 0.58434033
+      },
+      {
+        "text": "Source: https://time.is/pt_br/Joinville\nTitle: Joinville: 21:49\nDate: Unknown\n\n× Time.is Hora em Joinville, Brasil agoraSeu relógio está 1,1 segundos atrasado.A precisão da sincronização foi de ±0,066",
+        "score": 0.5831927
+      },
+      {
+        "text": "Source: https://www.lexico.pt/maior/\nTitle: Significado de Maior - O que é e Conceito no Dicionário\nDate: Unknown\n\n<iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-KMTCHMF\" height=\"0\" widt",
+        "score": 0.5732616
+      },
+      {
+        "text": "Nuclear Fusion: Chinese Tokamak Reactors (EAST, HL-2M, HH70)\nO principal reator experimental de fusão nuclear da China é conhecido como EAST (Experimental Advanced Superconducting Tokamak). Outro reat",
+        "score": 0.55727464
+      },
+      {
+        "text": "Source: https://brasilescola.uol.com.br/o-que-e/fisica/o-que-sao-buracos-negros.htm\nTitle: O que são buracos negros? - Brasil Escola\nDate: Unknown\n\nOs buracos negros são corpos celestes caracterizados",
+        "score": 0.54680026
+      },
+      {
+        "text": "Source: https://pt.m.wiktionary.org/wiki/maior\nTitle: maior - Wikcionário\nDate: Unknown\n\nmaior 23 idiomas Português[editar] Adjetivo[editar] Singular Plural Masculino maior maiores Feminino mai.or, co",
+        "score": 0.5374645
+      },
+      {
+        "text": "Biology: Chicken Flight Capabilities\nAs galinhas são capazes de voar, embora não sejam voadoras de longa distância como aves migratórias. A maior distância que uma galinha pode voar varia dependendo d",
+        "score": 0.5366795
+      },
+      {
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.5312653
+      },
+      {
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.530717
+      }
+    ]
+  },
+  {
+    "topic": "capital do Brasil",
+    "total_docs": 10,
+    "issues": [
+      {
+        "doc_id": 1,
+        "issue": "missing_keywords",
+        "text": "LHC: Philosophy & Governance\nLHC operates on a do-ocracy model: 'The one who does the work decides how it's done'. It values knowledge sharing, open hardware/software, and community empowerment. It is",
+        "score": 0.5588093
+      },
+      {
+        "doc_id": 2,
+        "issue": "missing_keywords",
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.5400371
+      },
+      {
+        "doc_id": 3,
+        "issue": "missing_keywords",
+        "text": "Identity Profile: Magno Fernando Fonseca\nMagno Fernando da Fonseca (GitHub: magnocat) is the Executive Director of MagnoCat Tecnologia, based in Artur Nogueira, SP. He uses the alias 'ongam odnanref a",
+        "score": 0.536333
+      },
+      {
+        "doc_id": 4,
+        "issue": "missing_keywords",
+        "text": "Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5274544
+      },
+      {
+        "doc_id": 5,
+        "issue": "missing_keywords",
+        "text": "LHC: History & Identity\nThe Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October 12, 2011, in Campinas, SP. Inspired by the Garoa Hacker Clube, it formalized as a non-profit associ",
+        "score": 0.5257631
+      },
+      {
+        "doc_id": 6,
+        "issue": "missing_keywords",
+        "text": "AI Mastery: Machine Learning Core (Transformers & Attention)\nModern LLMs are built on the Transformer architecture. Key mechanism: 'Self-Attention', which allows the model to weigh the importance of d",
+        "score": 0.518978
+      },
+      {
+        "doc_id": 7,
+        "issue": "missing_keywords",
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.51695347
+      },
+      {
+        "doc_id": 9,
+        "issue": "missing_keywords",
+        "text": "Source: https://meu.inss.gov.br/\nTitle: Meu INSS\nDate: Unknown\n\nEntrar com gov.br Entre com a senha gov.br ou faça o cadastro. Serviços sem senha Precisa de ajuda? Converse com a Helô Olá, sou a assis",
+        "score": 0.5099926
+      },
+      {
+        "doc_id": 10,
+        "issue": "missing_keywords",
+        "text": "LHC: Notable Projects\nKey projects developed at LHC include 'LHC/Infra' (HomeLab experiments with Kubernetes/IaC), 'Horta Automatizada' (IoT gardening), 'Contador de Ciclistas', and 'Low-cost Electron",
+        "score": 0.5091664
+      }
+    ],
+    "documents": [
+      {
+        "text": "LHC: Philosophy & Governance\nLHC operates on a do-ocracy model: 'The one who does the work decides how it's done'. It values knowledge sharing, open hardware/software, and community empowerment. It is",
+        "score": 0.5588093
+      },
+      {
+        "text": "Orientation: Finding South with the Southern Cross\nNo Hemisfério Sul, o Cruzeiro do Sul (Southern Cross) é a principal constelação de orientação. Para encontrar o Sul: 1. Localize o eixo maior da cruz",
+        "score": 0.5400371
+      },
+      {
+        "text": "Identity Profile: Magno Fernando Fonseca\nMagno Fernando da Fonseca (GitHub: magnocat) is the Executive Director of MagnoCat Tecnologia, based in Artur Nogueira, SP. He uses the alias 'ongam odnanref a",
+        "score": 0.536333
+      },
+      {
+        "text": "Source: https://abcliterario.com/2025/01/20/analise-detalhada-de-dom-casmurro-de-machado-de-assis/\nTitle: \nDate: Unknown\n\n",
+        "score": 0.5274544
+      },
+      {
+        "text": "LHC: History & Identity\nThe Laboratório Hacker de Campinas (LHC) is a hackerspace founded on October 12, 2011, in Campinas, SP. Inspired by the Garoa Hacker Clube, it formalized as a non-profit associ",
+        "score": 0.5257631
+      },
+      {
+        "text": "AI Mastery: Machine Learning Core (Transformers & Attention)\nModern LLMs are built on the Transformer architecture. Key mechanism: 'Self-Attention', which allows the model to weigh the importance of d",
+        "score": 0.518978
+      },
+      {
+        "text": "Biologia: O Beija-Flor\nA única ave capaz de voar de costas (para trás) é o Beija-flor (Hummingbird). Eles podem voar para frente, para trás e pairar no ar.",
+        "score": 0.51695347
+      },
+      {
+        "text": "Geografia Mundial: Capitais, Países e Continentes\nCAPITAIS IMPORTANTES:\n\nAustrália: Canberra (não Sydney)\nBrasil: Brasília\nCanadá: Ottawa (não Toronto)\nChina: Pequim (Beijing)\nEgito: Cairo\nEstados Uni",
+        "score": 0.51471376
+      },
+      {
+        "text": "Source: https://meu.inss.gov.br/\nTitle: Meu INSS\nDate: Unknown\n\nEntrar com gov.br Entre com a senha gov.br ou faça o cadastro. Serviços sem senha Precisa de ajuda? Converse com a Helô Olá, sou a assis",
+        "score": 0.5099926
+      },
+      {
+        "text": "LHC: Notable Projects\nKey projects developed at LHC include 'LHC/Infra' (HomeLab experiments with Kubernetes/IaC), 'Horta Automatizada' (IoT gardening), 'Contador de Ciclistas', and 'Low-cost Electron",
+        "score": 0.5091664
+      }
+    ]
+  }
+]

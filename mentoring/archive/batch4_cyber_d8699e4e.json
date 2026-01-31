@@ -1,0 +1,5 @@
+{
+    "topic": "Hacking: Gobuster/Dirb",
+    "content": "Directory bruteforcing helps find hidden admin panels. Use `gobuster dir -u <url> -w <wordlist>` to discover unlinked resources.",
+    "id": "batch4_cyber_d8699e4e"
+}

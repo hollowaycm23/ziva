@@ -1,0 +1,5 @@
+{
+    "id": "batch13_neuro_01",
+    "topic": "Neuroscience in Computing: Spiking Neural Networks (SNNs)",
+    "content": "Spiking Neural Networks (SNNs) mimic biological brains more closely than traditional ANNs by using discrete 'spikes' for communication rather than continuous values. In SNNs, neurons only fire when their membrane potential exceeds a threshold, enabling extreme energy efficiency and event-driven processing, similar to the human brain."
+}

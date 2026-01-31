@@ -1,0 +1,5 @@
+{
+    "topic": "Security: Path Traversal",
+    "content": "When accepting filenames as input, validate that they do not contain `../` or absolute paths pointing to system directories like `/etc/shadow`.",
+    "id": "batch2_4918f2aa"
+}

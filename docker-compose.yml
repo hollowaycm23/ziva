@@ -1,0 +1,151 @@
+services:
+  ziva-core:
+    build: .
+    container_name: ziva-core
+    entrypoint: /app/scripts/start_docker.sh
+    networks:
+      - ziva-net
+    ports:
+      - "8000:8000" # API
+      - "9000:9000" # P2P
+    volumes:
+      - ./logs:/app/logs
+      - ./db:/app/db # Persist SQLite
+      - ./brain:/app/brain # Artifacts
+      - ./data:/app/data # Database for MessageDaemon
+      - ./inbox:/app/inbox # P2P Inbox
+      - ./outbox:/app/outbox # P2P Outbox
+      - ./core:/app/core # Hot reload code
+      - ./api:/app/api # Hot reload code
+      - ./network:/app/network # Hot reload code
+      - ./scripts:/app/scripts # Hot reload scripts
+      - ./agent:/app/agent # Hot reload tools manager
+      - ./extensions:/app/extensions # Hot reload plugins
+      - ./ziva.yaml:/app/ziva.yaml # Configuração Centralizada
+    environment:
+      - ZIVA_VERBOSE=true
+      - ZIVA_LLM_BACKEND=lm_studio
+      - ZIVA_LLM_BASE_URL=http://100.104.242.35:1234/v1
+      - ZIVA_LLM_MODEL=qwen3-14b
+      - ZIVA_LLM_KEY=sk-lm-UEDH6Etk:JaxZhiSKFQes9SoQgmHN
+      - MODEL_NAME=qwen3-14b
+      - QDRANT_URL=http://ziva-qdrant:6333
+      - PLAYWRIGHT_WS_ENDPOINT=ws://ziva-browser:3000
+    depends_on:
+      - qdrant
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Access host LM Studio
+
+  qdrant:
+    image: qdrant/qdrant
+    container_name: ziva-qdrant
+    networks:
+      - ziva-net
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+
+  searxng:
+    # New SearXNG service
+    image: searxng/searxng
+    container_name: ziva-searxng
+    networks:
+      - ziva-net
+    ports:
+      - "8080:8080" # SearXNG web interface
+    environment:
+      - SEARXNG_SECRET_KEY=your_very_secret_key_here # IMPORTANT: Change this in production!
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    volumes:
+      - searxng_data:/data # For persistence
+      - ./searxng_settings.yml:/etc/searxng/settings.yml # Custom settings
+
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: ziva-kiwix
+    networks:
+      - ziva-net
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./data/kiwix:/data
+    command: "wikipedia_pt_all_nopic_2025-11.zim"
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ziva-openwebui
+    ports:
+      - "3000:8080"
+    environment:
+      - OPENAI_API_BASE_URL=http://ziva-core:8000/v1
+      - OPENAI_API_KEY=ziva_secret_key_2026
+      - OLLAMA_BASE_URL= # Disable Ollama
+      - WEBUI_SECRET_KEY=ziva-secure-key-2026
+      - WEBUI_AUTH=False
+    networks:
+      - ziva-net
+    volumes:
+      - open-webui-data:/app/backend/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+
+  letta-db:
+    image: pgvector/pgvector:pg16
+    container_name: ziva-letta-db
+    environment:
+      POSTGRES_PASSWORD: letta_password
+      POSTGRES_USER: letta_user
+      POSTGRES_DB: lettadb
+    ports:
+      - "5432:5432"
+  letta-server:
+    image: lettaai/letta:latest
+    container_name: ziva-letta-server
+    environment:
+      - LETTA_STORAGE_TYPE=sqlite
+      - LETTA_RECALL_STORAGE_TYPE=sqlite
+      - LETTA_ARCHIVAL_STORAGE_TYPE=sqlite
+      - LETTA_METADATA_STORAGE_TYPE=sqlite
+      - OPENAI_API_BASE=http://100.104.242.35:1234/v1
+      - OPENAI_API_KEY=sk-lm-UEDH6Etk:JaxZhiSKFQes9SoQgmHN
+      - LETTA_LLM_MODEL=qwen3-14b
+      - LETTA_LLM_ENDPOINT=http://100.104.242.35:1234/v1
+      - LETTA_LLM_ENDPOINT_TYPE=openai
+    volumes:
+      - ./ziva.yaml:/app/ziva.yaml
+      - letta_data:/root/.letta
+    ports:
+      - "8283:8283"
+    networks:
+      - ziva-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  ziva-browser:
+    image: browserless/chrome:latest
+    container_name: ziva-browser
+    networks:
+      - ziva-net
+    ports:
+      - "3001:3000" # Porta 3000 do container mapeada para 3001 no host
+    environment:
+      - MAX_CONCURRENT_SESSIONS=5
+      - MAX_QUEUE_LENGTH=10
+      - PREBOOT_CHROME=true
+      - KEEP_ALIVE=true
+      - CONNECTION_TIMEOUT=30000
+    restart: always
+
+volumes:
+  qdrant_data:
+  searxng_data:
+  kiwix_data:
+  open-webui-data:
+  letta_pg_data: # PostgreSQL data for Letta
+  letta_data: # Letta server data
+
+networks:
+  ziva-net:
+    external: true
