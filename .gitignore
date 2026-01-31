@@ -16,6 +16,7 @@ data_backup*/
 qdrant_storage_backup*/
 logs/
 tmp/
+training/
 qdrant_storage/
 embedding_cache/
 *.log
@@ -40,3 +41,10 @@ models/
 pihole/
 research/sherlock
 research/spiderfoot
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.so
+*.dll
+*.dylib
