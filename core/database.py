@@ -256,9 +256,14 @@ class DatabaseManager:
     def _row_to_job(self, row):
         if row:
             return {
-                "id": row[0], "type": row[1], "payload": json.loads(row[2]),
-                "status": row[3], "assigned_node": row[4], "result": row[5],
-                "created_at": row[6], "updated_at": row[7]
+                "id": row["id"],
+                "type": row["type"],
+                "payload": json.loads(row["payload"]),
+                "status": row["status"],
+                "assigned_node": row["assigned_node"],
+                "result": row["result"],
+                "created_at": row["created_at"],
+                "updated_at": row["updated_at"]
             }
         return None
 

@@ -26,9 +26,11 @@ class EpisodicMemory:
             logger.info(f"Connected to episodic collection: {self.collection}")
         except Exception:
             logger.info(f"Creating episodic collection: {self.collection}")
+            import os
+            vector_size = int(os.getenv("QDRANT_VECTOR_SIZE", "768"))
             self.client.create_collection(
                 collection_name=self.collection,
-                vectors_config=VectorParams(size=768, distance=Distance.COSINE)
+                vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE)
             )
 
     def recall(self, query: str, threshold: float = 0.90):

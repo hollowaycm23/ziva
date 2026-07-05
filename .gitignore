@@ -24,6 +24,13 @@ secrets.json
 .env
 *.zim
 
+# Environment
+.env
+secrets.json
+
+# Node
+node_modules/
+
 # Large Binaries / Archives
 *.tar
 *.tar.gz

@@ -12,6 +12,10 @@ from enum import Enum
 from typing import Dict, Optional, Any
 from datetime import datetime
 from dataclasses import dataclass
+from agent.tools import ToolManager
+from core.vector_store import VectorStore
+from core.database import DatabaseManager
+from core.model_loader import get_loader
 
 logger = logging.getLogger("BaseAgent")
 
@@ -92,26 +96,20 @@ class BaseAgent(ABC):
 
     @property
     def tool_manager(self):
-        """Lazy load ToolManager."""
         if self._tool_manager is None:
-            from agent.tools import ToolManager
             self._tool_manager = ToolManager()
             self._tool_manager.load_tools()
         return self._tool_manager
 
     @property
     def vector_store(self):
-        """Lazy load VectorStore."""
         if self._vector_store is None:
-            from core.vector_store import VectorStore
             self._vector_store = VectorStore()
         return self._vector_store
 
     @property
     def database(self):
-        """Lazy load DatabaseManager."""
         if self._database is None:
-            from core.database import DatabaseManager
             self._database = DatabaseManager()
         return self._database
 
@@ -177,12 +175,7 @@ class BaseAgent(ABC):
             return {"error": str(e)}
 
     def load_model(self, model_name: str) -> bool:
-        """
-        Load LLM model via ModelLoader.
-        """
-        from core.model_loader import get_loader
         loader = get_loader()
-
         success = loader.load_model(model_name, self.agent_id)
         if success:
             self.model_name = model_name
@@ -191,15 +184,11 @@ class BaseAgent(ABC):
         else:
             logger.error(
                 f"Agent {self.agent_id} failed to load model {model_name}")
-
         return success
 
     def unload_model(self):
-        """Unload current model."""
         if not self.model_loaded:
             return
-
-        from core.model_loader import get_loader
         loader = get_loader()
         loader.unload_model(self.agent_id)
 

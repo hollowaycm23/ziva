@@ -6,7 +6,7 @@ meta:
 models:
   providers:
     lm-studio:
-      base_url: "http://100.104.242.35:1234/v1"
+      base_url: "${ZIVA_LLM_BASE_URL:-http://localhost:1234/v1}"
       # Token is loaded from ENV: ZIVA_LLM_KEY
       api_key_env: "ZIVA_LLM_KEY"
       models:

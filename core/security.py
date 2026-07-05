@@ -28,7 +28,8 @@ def save_secrets(data):
 
 
 def hash_key(key: str) -> str:
-    return hashlib.sha256(key.encode()).hexdigest()
+    salt = os.getenv("HASH_SALT", "ziva-static-salt-change-me").encode()
+    return hashlib.sha256(salt + key.encode()).hexdigest()
 
 
 async def verify_api_key(

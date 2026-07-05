@@ -49,8 +49,10 @@ class JobDispatcher:
 
     def _send_to_remote(self, job, node_id):
         import time
+        import os
         filename = f"job_{job['id']}_{int(time.time())}.json"
-        filepath = f"/home/holloway/ziva/outbox/{filename}"
+        outbox_dir = os.getenv("ZIVA_OUTBOX_DIR", "/app/outbox")
+        filepath = f"{outbox_dir}/{filename}"
 
         task_packet = {
             "type": "job_execution",

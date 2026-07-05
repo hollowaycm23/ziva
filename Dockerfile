@@ -43,7 +43,6 @@ WORKDIR /app
 
 # 4. Copiar requirements e instalar
 COPY requirements.txt .
-# Se tiver requirements específicos para visão/torch, adicionar aqui
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
     pip install rich requests psutil qdrant-client sentence-transformers
@@ -55,8 +54,7 @@ COPY . .
 EXPOSE 8000
 EXPOSE 9000
 
-# 7. Script de Inicialização (Foreground)
-# Precisamos de um script que não faça bypass para background como o start.sh original
+# 7. Script de Inicialização
 COPY scripts/start_docker.sh /app/start_docker.sh
 RUN chmod +x /app/start_docker.sh
 

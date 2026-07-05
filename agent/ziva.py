@@ -1,4 +1,5 @@
 import time
+import os
 from datetime import datetime
 import json
 import logging
@@ -25,8 +26,10 @@ class ZivaAgent:
     gerenciamento de conhecimento (RAG).
     """
 
-    def __init__(self, profile_path="/home/holloway/perfil.txt",
-                 compact_profile_path="/home/holloway/perfil_compact.txt"):
+    def __init__(self, profile_path=None,
+                 compact_profile_path=None):
+        profile_path = profile_path or os.getenv("ZIVA_PROFILE_PATH", "/app/perfil.txt")
+        compact_profile_path = compact_profile_path or os.getenv("ZIVA_COMPACT_PROFILE_PATH", "/app/perfil_compact.txt")
         """
         Inicializa o agente carregando perfil e subsistemas.
 
@@ -62,9 +65,8 @@ class ZivaAgent:
 
         # Validação de Sistema (Startup Check)
         from core.validator import SystemValidator
-        missing_deps = SystemValidator.check_dependencies(
-            "/home/holloway/ziva/requirements.txt"
-        )
+        req_path = os.getenv("ZIVA_REQUIREMENTS_PATH", "/app/requirements.txt")
+        missing_deps = SystemValidator.check_dependencies(req_path)
         if missing_deps:
             logger.critical(
                 f"Dependências ausentes/conflitantes: {missing_deps}")
@@ -123,7 +125,17 @@ class ZivaAgent:
         """Main Agent Loop - Processes jobs, events, and P2P signals."""
         logger.info("🚀 Ziva Main Loop Started. Waiting for jobs...")
 
-        while True:
+        import signal
+        self._running = True
+
+        def _handle_stop(signum, frame):
+            logger.info("Shutdown signal received, stopping main loop...")
+            self._running = False
+
+        signal.signal(signal.SIGTERM, _handle_stop)
+        signal.signal(signal.SIGINT, _handle_stop)
+
+        while self._running:
             try:
                 # 1. P2P Sync Check (Opportunistic)
                 if self.p2p_node and int(
@@ -136,10 +148,10 @@ class ZivaAgent:
                 # 2. Self-Learning Check (Periodic: Every 1 hour)
                 if int(time.time()) % 3600 == 0:
                     try:
-                        logger.info("🧠 Executing periodic self-learning cycle...")
+                        logger.info("Executing periodic self-learning cycle...")
                         new_knowledge = self.learner.run_cycle()
                         if new_knowledge:
-                            logger.info(f"✨ Auto-learned {len(new_knowledge)} new insights!")
+                            logger.info(f"Auto-learned {len(new_knowledge)} new insights!")
                             self.broadcast_knowledge(new_knowledge)
                     except Exception as e:
                         logger.error(f"Error in self-learning cycle: {e}")
@@ -148,19 +160,17 @@ class ZivaAgent:
                 job = self.dispatcher.get_next_job()
 
                 if job:
-                    logger.info(f"⚡ Processing Job {job['id']}: {job['type']}")
+                    logger.info(f"Processing Job {job['id']}: {job['type']}")
                     result = self.process_job(job)
                     self.dispatcher.complete_job(job['id'], result)
                 else:
-                    # Idle state
                     time.sleep(1)
-            except KeyboardInterrupt:
-                break
+
             except Exception as e:
                 logger.error(f"Error in main loop: {e}")
                 time.sleep(5)
 
-        logger.info("🛑 Ziva Main Loop stopped.")
+        logger.info("Ziva Main Loop stopped gracefully.")
 
     def process_incoming_messages(self):
         """
@@ -399,7 +409,8 @@ LEMBRE-SE: Você é um EXECUTOR, não um professor. Aja imediatamente!
                     f"knowledge_{insight.get('origin_job', 'sync')}_{int(time.time())}.json"
                 )
                 # Salva para Outbox
-                outbox_path = Path(f"/home/holloway/ziva/outbox/{filename}")
+                outbox_dir = os.getenv("ZIVA_OUTBOX_DIR", "/app/outbox")
+                outbox_path = Path(f"{outbox_dir}/{filename}")
                 outbox_path.parent.mkdir(parents=True, exist_ok=True)
 
                 packet = {

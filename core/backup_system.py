@@ -1,4 +1,5 @@
 import time
+import os
 import shutil
 import logging
 import threading
@@ -14,8 +15,10 @@ class SessionBackup:
     persisted state.
     """
 
-    def __init__(self, db_path: str = "/home/holloway/ziva/data/ziva.db",
-                 backup_dir: str = "/home/holloway/ziva/backups/sessions"):
+    def __init__(self, db_path: str = None,
+                 backup_dir: str = None):
+        db_path = db_path or os.getenv("ZIVA_DB_PATH", "/app/data/ziva.db")
+        backup_dir = backup_dir or os.getenv("ZIVA_BACKUP_DIR", "/app/backups/sessions")
         self.db_path = Path(db_path)
         self.backup_dir = Path(backup_dir)
         self.backup_dir.mkdir(parents=True, exist_ok=True)

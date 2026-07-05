@@ -291,11 +291,14 @@ NUNCA use frases como "não sei" ou "não tenho informação".
 
 Resposta:"""
             try:
+                import os
                 import requests
+                ollama_url = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
+                ollama_model = os.getenv("OLLAMA_FALLBACK_MODEL", "qwen2.5:7b")
                 response = requests.post(
-                    "http://127.0.0.1:11434/api/generate",
+                    f"{ollama_url}/api/generate",
                     json={
-                        "model": "qwen2.5:7b",
+                        "model": ollama_model,
                         "prompt": prompt,
                         "stream": False
                     },

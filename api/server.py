@@ -44,9 +44,10 @@ app = FastAPI(
 )
 
 # Enable CORS for VS Code Extension
+ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:8000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In development, allow all. Could be restricted.
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -316,7 +317,7 @@ def chat(payload: ChatMessage):
             "response": response,
             "session_id": session_id,
             "task_type": "graph_execution",
-            "model_used": "qwen2.5-coder:7b",
+            "model_used": os.getenv("ZIVA_LLM_MODEL", "qwen3-14b"),
             "context_used": 1
         }
 

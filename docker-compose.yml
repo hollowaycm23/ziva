@@ -22,15 +22,17 @@ services:
       - ./agent:/app/agent # Hot reload tools manager
       - ./extensions:/app/extensions # Hot reload plugins
       - ./ziva.yaml:/app/ziva.yaml # Configuração Centralizada
+    env_file:
+      - .env
     environment:
-      - ZIVA_VERBOSE=true
-      - ZIVA_LLM_BACKEND=lm_studio
-      - ZIVA_LLM_BASE_URL=http://100.104.242.35:1234/v1
-      - ZIVA_LLM_MODEL=qwen3-14b
-      - ZIVA_LLM_KEY=sk-lm-UEDH6Etk:JaxZhiSKFQes9SoQgmHN
-      - MODEL_NAME=qwen3-14b
-      - QDRANT_URL=http://ziva-qdrant:6333
-      - PLAYWRIGHT_WS_ENDPOINT=ws://ziva-browser:3000
+      - ZIVA_VERBOSE=${ZIVA_VERBOSE:-true}
+      - ZIVA_LLM_BACKEND=${ZIVA_LLM_BACKEND:-lm_studio}
+      - ZIVA_LLM_BASE_URL=${ZIVA_LLM_BASE_URL:-http://host.docker.internal:1234/v1}
+      - ZIVA_LLM_MODEL=${ZIVA_LLM_MODEL:-qwen3-14b}
+      - ZIVA_LLM_KEY=${ZIVA_LLM_KEY}
+      - MODEL_NAME=${MODEL_NAME:-qwen3-14b}
+      - QDRANT_URL=${QDRANT_URL:-http://ziva-qdrant:6333}
+      - PLAYWRIGHT_WS_ENDPOINT=${PLAYWRIGHT_WS_ENDPOINT:-ws://ziva-browser:3000}
     depends_on:
       - qdrant
     extra_hosts:
@@ -55,7 +57,7 @@ services:
     ports:
       - "8080:8080" # SearXNG web interface
     environment:
-      - SEARXNG_SECRET_KEY=your_very_secret_key_here # IMPORTANT: Change this in production!
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
       - SEARXNG_BASE_URL=http://localhost:8080/
     volumes:
       - searxng_data:/data # For persistence
@@ -79,9 +81,9 @@ services:
       - "3000:8080"
     environment:
       - OPENAI_API_BASE_URL=http://ziva-core:8000/v1
-      - OPENAI_API_KEY=ziva_secret_key_2026
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OLLAMA_BASE_URL= # Disable Ollama
-      - WEBUI_SECRET_KEY=ziva-secure-key-2026
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
       - WEBUI_AUTH=False
     networks:
       - ziva-net
@@ -95,9 +97,9 @@ services:
     image: pgvector/pgvector:pg16
     container_name: ziva-letta-db
     environment:
-      POSTGRES_PASSWORD: letta_password
-      POSTGRES_USER: letta_user
-      POSTGRES_DB: lettadb
+      POSTGRES_PASSWORD: ${LETTA_DB_PASSWORD}
+      POSTGRES_USER: ${LETTA_DB_USER:-letta_user}
+      POSTGRES_DB: ${LETTA_DB_NAME:-lettadb}
     ports:
       - "5432:5432"
   letta-server:
@@ -108,10 +110,10 @@ services:
       - LETTA_RECALL_STORAGE_TYPE=sqlite
       - LETTA_ARCHIVAL_STORAGE_TYPE=sqlite
       - LETTA_METADATA_STORAGE_TYPE=sqlite
-      - OPENAI_API_BASE=http://100.104.242.35:1234/v1
-      - OPENAI_API_KEY=sk-lm-UEDH6Etk:JaxZhiSKFQes9SoQgmHN
+      - OPENAI_API_BASE=${ZIVA_LLM_BASE_URL:-http://host.docker.internal:1234/v1}
+      - OPENAI_API_KEY=${ZIVA_LLM_KEY}
       - LETTA_LLM_MODEL=qwen3-14b
-      - LETTA_LLM_ENDPOINT=http://100.104.242.35:1234/v1
+      - LETTA_LLM_ENDPOINT=${ZIVA_LLM_BASE_URL:-http://host.docker.internal:1234/v1}
       - LETTA_LLM_ENDPOINT_TYPE=openai
     volumes:
       - ./ziva.yaml:/app/ziva.yaml

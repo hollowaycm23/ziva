@@ -26,17 +26,27 @@ class HardwareValidator:
         }
 
         try:
-            with open('/proc/meminfo', 'r') as f:
-                for line in f:
-                    if 'MemTotal' in line:
-                        kb = int(re.search(r'\d+', line).group())
-                        specs['ram_total_gb'] = round(kb / (1024 * 1024), 2)
-                        break
-            with open('/proc/cpuinfo', 'r') as f:
-                for line in f:
-                    if 'model name' in line:
-                        specs['cpu_model'] = line.split(':')[1].strip()
-                        break
+            if os.path.exists('/proc/meminfo'):
+                with open('/proc/meminfo', 'r') as f:
+                    for line in f:
+                        if 'MemTotal' in line:
+                            kb = int(re.search(r'\d+', line).group())
+                            specs['ram_total_gb'] = round(kb / (1024 * 1024), 2)
+                            break
+            elif os.name == 'nt':
+                import subprocess
+                result = subprocess.run(['wmic', 'memorychip', 'get', 'Capacity'], capture_output=True, text=True)
+                total_bytes = sum(int(x) for x in result.stdout.strip().split('\n')[1:] if x.strip())
+                specs['ram_total_gb'] = round(total_bytes / (1024**3), 2)
+            if os.path.exists('/proc/cpuinfo'):
+                with open('/proc/cpuinfo', 'r') as f:
+                    for line in f:
+                        if 'model name' in line:
+                            specs['cpu_model'] = line.split(':')[1].strip()
+                            break
+            elif os.name == 'nt':
+                import platform
+                specs['cpu_model'] = platform.processor() or 'Unknown'
         except Exception as e:
             logger.error(f"Erro ao ler CPU/RAM: {e}")
 

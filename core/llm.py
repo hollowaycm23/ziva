@@ -98,9 +98,7 @@ class LLMService:
         }
         
         try:
-            # Enforce model limit of 2048 (characters for safety, though it is usually 2048 tokens)
-            # Adding a newline to help with some GGUF tokenizers that expect a separator
-            safe_text = text[:2048] + "\n"
+            safe_text = text.encode('utf-8')[:2048].decode('utf-8', errors='ignore') + "\n"
             payload = {
                 "model": target_model,
                 "input": safe_text
@@ -122,8 +120,21 @@ class LLMService:
             logger.error(f"Embedding API Error: {e}")
             return []
 
-    # Local Management Stubs (Deprecated/Removed)
-    def start_server(self): pass
-    def stop_server(self): pass
-    def health_check(self): return True
-    def update_model(self, path): return True
+    def start_server(self):
+        logger.warning("start_server() is deprecated. Use external LLM provider.")
+
+    def stop_server(self):
+        logger.warning("stop_server() is deprecated. Use external LLM provider.")
+
+    def health_check(self) -> bool:
+        try:
+            url = f"{self.api_base}/models"
+            resp = requests.get(url, headers={"Authorization": f"Bearer {self.api_key}"}, timeout=5)
+            return resp.status_code == 200
+        except Exception as e:
+            logger.warning(f"Health check failed: {e}")
+            return False
+
+    def update_model(self, path):
+        logger.warning("update_model() is deprecated. Configure model in ziva.yaml or env vars.")
+        return True

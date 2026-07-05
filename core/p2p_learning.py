@@ -381,7 +381,7 @@ class GabrielleConnector:
             self.sock.sendall(b"PING")
             response = self.sock.recv(1024)
             return b"PONG" in response
-        except BaseException:
+        except Exception:
             self.is_connected = False
             return False
 

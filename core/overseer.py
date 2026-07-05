@@ -1,10 +1,13 @@
 
 import json
 import os
+import logging
 from typing import Dict, List, Any
 from dataclasses import dataclass
 from collections import defaultdict
 import glob
+
+logger = logging.getLogger("Overseer")
 
 @dataclass
 class HealthReport:
@@ -22,36 +25,12 @@ class Overseer:
     """
     
     
-    def __init__(self, log_dir: str = "/home/holloway/ziva/logs"):
-        self.log_dir = log_dir
-        # Lazy load worker
-        self.kgc_worker = None
-
-    def _get_worker(self):
-        if not self.kgc_worker:
-            from core.workers.kgc_worker import KGCompletionWorker
-            self.kgc_worker = KGCompletionWorker()
-        return self.kgc_worker
+    def __init__(self, log_dir: str = None):
+        self.log_dir = log_dir or os.getenv("ZIVA_LOG_DIR", "/app/logs")
 
     def trigger_gardener(self, specific_topic: str = None):
-        """
-        Aciona o ciclo do jardineiro (KGC) para preencher lacunas.
-        """
-        try:
-            worker = self._get_worker()
-            topic = specific_topic or "General Knowledge"
-            print(f"🌱 Overseer: Acionando Gardener para '{topic}'...")
-            
-            facts = worker.process_topic(topic, limit=3)
-            
-            if facts:
-                print(f"✅ Overseer: Gardener colheu {len(facts)} novos fatos.")
-                # Futuro: worker.synthesize_to_memory(facts)
-            else:
-                print("🍂 Overseer: Nenhuma nova informação extraída.")
-                
-        except Exception as e:
-            print(f"❌ Overseer: Falha no Gardener: {e}")
+        logger.info(f"Gardener cycle triggered for topic: {specific_topic or 'General'}")
+        # KGC worker module not yet implemented - placeholder for Phase D
 
         
     def analyze_telemetry(self, last_n_lines: int = 1000) -> HealthReport:
