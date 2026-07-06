@@ -11,7 +11,7 @@ class SearXNGClient:
         if base_url is None:
             import os
             # Default to docker hostname, fallback to localhost if env var not set
-            base_url = os.getenv("SEARXNG_URL", "http://ziva-searxng:8080")
+            base_url = os.getenv("SEARXNG_URL", "http://localhost:8082")
         self.base_url = base_url.rstrip("/")
         self.headers = {
             "User-Agent": ("Mozilla/5.0 (X11; Linux x86_64; rv:109.0) "

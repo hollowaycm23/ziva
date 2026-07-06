@@ -1,5 +1,6 @@
 import yaml
 import os
+import re
 import logging
 from typing import Any, Dict, Optional
 
@@ -27,6 +28,7 @@ class Config:
         try:
             with open(config_path, 'r') as f:
                 self._config = yaml.safe_load(f)
+            self._resolve_env_vars(self._config)
             logger.info(f"✅ Configuration loaded from {config_path}")
         except FileNotFoundError:
             logger.warning(f"⚠️ Config file not found at {config_path}. Using Environment defaults.")
@@ -34,6 +36,19 @@ class Config:
         except Exception as e:
             logger.error(f"❌ Failed to load config: {e}")
             self._config = {}
+
+    @classmethod
+    def _resolve_env_vars(cls, obj):
+        pattern = re.compile(r'\$\{(\w+):-([^}]*)\}')
+        if isinstance(obj, str):
+            return pattern.sub(lambda m: os.getenv(m.group(1), m.group(2)), obj)
+        elif isinstance(obj, dict):
+            for k, v in obj.items():
+                obj[k] = cls._resolve_env_vars(v)
+        elif isinstance(obj, list):
+            for i, v in enumerate(obj):
+                obj[i] = cls._resolve_env_vars(v)
+        return obj
 
     @classmethod
     def get(cls, path: str, default: Any = None) -> Any:
@@ -85,7 +100,7 @@ class Config:
             api_key = provider_config.get("api_key")
             if not api_key and "api_key_env" in provider_config:
                 env_var = provider_config["api_key_env"]
-                api_key = os.getenv(env_var)
+                api_key = os.getenv(env_var, "not-needed") or "not-needed"  # Ollama doesn't need auth but SDK requires a non-None key
                 
             return {
                 "base_url": provider_config["base_url"],

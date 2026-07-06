@@ -19,6 +19,8 @@ qdrant_storage*/
 embedding_cache/
 *.log
 *.pid
+server_*.txt
+backups/sessions/*.db
 ziva_sessions.db
 secrets.json
 .env
@@ -26,6 +28,7 @@ secrets.json
 
 # Environment
 .env
+.env.production
 secrets.json
 
 # Node

@@ -69,7 +69,7 @@ if llm_config:
     )
 else:
     # Fallback/Legacy
-    backend = os.getenv("ZIVA_LLM_BACKEND", "ollama").lower()
+    backend = os.getenv("ZIVA_LLM_BACKEND", "lm_studio").lower()
     if backend == "lm_studio":
         base_url = os.getenv("ZIVA_LLM_BASE_URL", "http://100.104.242.35:1234/v1")
         llm = ChatOpenAI(
@@ -313,7 +313,7 @@ def get_system_services(state: AgentState):
         {"name": "SSH Alternativo (Tailscale/Custom)", "port": 2222},
         {"name": "Ollama (LLM Backend)", "port": 11434},
         {"name": "Qdrant (Vector Database)", "port": 6333},
-        {"name": "SearXNG (Web Search)", "port": 8080},
+        {"name": "SearXNG (Web Search)", "port": 8082},
         {"name": "Kiwix (Offline Wikipedia)", "port": 8081},
         {"name": "Binary Server (P2P Sync)", "port": 9000},
         {"name": "Ziva API (FastAPI)", "port": 8000},

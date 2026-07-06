@@ -1,6 +1,7 @@
 """
 Sync Manager - Gerencia sincronização entre Ziva e Gabrielle usando staging DB
 """
+import os
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
 import time
@@ -41,6 +42,7 @@ class SyncManager:
     def _ensure_collections(self):
         collections = {
             c.name for c in self.client.get_collections().collections}
+        vec_size = int(os.getenv("QDRANT_VECTOR_SIZE", "768"))
         if self.main_collection not in collections:
             if "knowledge" in collections:
                 print(f"📦 Migrando 'knowledge' → '{self.main_collection}'...")
@@ -49,13 +51,13 @@ class SyncManager:
                 self.client.create_collection(
                     collection_name=self.main_collection,
                     vectors_config=VectorParams(
-                        size=2560, distance=Distance.COSINE, on_disk=False))
+                        size=vec_size, distance=Distance.COSINE, on_disk=False))
                 print(f"✅ Created collection: {self.main_collection}")
         if self.staging_collection not in collections:
             self.client.create_collection(
                 collection_name=self.staging_collection,
                 vectors_config=VectorParams(
-                    size=2560, distance=Distance.COSINE, on_disk=False))
+                    size=vec_size, distance=Distance.COSINE, on_disk=False))
             print(f"✅ Created collection: {self.staging_collection}")
         if self.log_collection not in collections:
             self.client.create_collection(
@@ -82,16 +84,11 @@ class SyncManager:
                 break
             self.client.upsert(
                 collection_name=new_name,
-                points=[{
-                    "id": p.id, "vector": p.vector, "payload": p.payload}
-                    for p in points])
+                points=[{"id": p.id, "vector": p.vector, "payload": p.payload}
+                        for p in points])
         print(f"✅ Migrated {old_name} → {new_name}")
 
-    def add_to_staging(
-            self,
-            text: str,
-            embedding: List[float],
-            metadata: Dict = None) -> str:
+    def add_to_staging(self, text: str, embedding: List[float], metadata: Dict = None) -> str:
         """
         Adiciona novo documento ao staging.
         """
@@ -119,7 +116,7 @@ class SyncManager:
             collection_name=self.main_collection,
             points=[PointStruct(id=p.id, vector=p.vector, payload=p.payload)
                     for p in points])
-        
+
         # Remove from staging after successful transfer
         self.client.delete(
             collection_name=self.staging_collection,

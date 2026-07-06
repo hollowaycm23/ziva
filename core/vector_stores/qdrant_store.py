@@ -25,10 +25,11 @@ class QdrantVectorStore(VectorStoreBase):
         try:
             self.client.get_collection(self.collection_name)
         except Exception:
+            vec_size = int(os.getenv("QDRANT_VECTOR_SIZE", "768"))
             self.client.create_collection(
                 collection_name=self.collection_name,
                 vectors_config=VectorParams(
-                    size=2560, distance=Distance.COSINE),
+                    size=vec_size, distance=Distance.COSINE),
             )
 
     def add_text(self, text: str, embedding: List[float], metadata: Optional[Dict] = None) -> Optional[str]:

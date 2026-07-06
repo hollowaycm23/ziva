@@ -32,9 +32,9 @@ echo "📨 Iniciando Message Daemon (P2P Sync)..."
 python3 -c "
 import logging
 logging.basicConfig(level=logging.INFO)
+from network.daemon import MessageDaemon
+daemon = MessageDaemon()
 try:
-    from network.daemon import MessageDaemon
-    daemon = MessageDaemon()
     daemon.run()
 except Exception as e:
     logging.error(f'Message Daemon error: {e}')
@@ -65,7 +65,7 @@ sleep 2
 # Check se Message Daemon ainda está rodando
 if ! ps -p $DAEMON_PID > /dev/null 2>&1; then
     echo "⚠️ Message Daemon falhou ao iniciar"
-    tail -10 /app/logs/message_daemon.log || true
+    tail -10 /app/logs/message_daemon.log
 fi
 
 # Iniciar API Server em foreground (mantém container vivo)

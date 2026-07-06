@@ -26,7 +26,7 @@ class SearchConnector:
     Conector unificado para ferramentas de busca externa
     """
 
-    def __init__(self, searxng_url: str = "http://localhost:8080",
+    def __init__(self, searxng_url: str = "http://localhost:8082",
                  kiwix_url: str = "http://localhost:8081"):
         self.searxng_url = searxng_url
         self.kiwix_url = kiwix_url

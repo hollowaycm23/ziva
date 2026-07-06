@@ -9,6 +9,24 @@ from typing import List, Dict, Optional, Any
 
 logger = logging.getLogger("UnifiedSearch")
 
+def _ddg_search(query: str, max_results: int = 5) -> list:
+    try:
+        from ddgs import DDGS
+    except ImportError:
+        from duckduckgo_search import DDGS
+    results = []
+    with DDGS() as ddgs:
+        ddg_gen = ddgs.text(query, max_results=max_results)
+        if ddg_gen:
+            for r in ddg_gen:
+                results.append({
+                    "title": r.get("title"),
+                    "url": r.get("href"),
+                    "source": "duckduckgo",
+                    "description": r.get("body")
+                })
+    return results
+
 # Mark explicitly as Ziva Tool function
 def unified_web_search(
     query: str,
@@ -84,7 +102,7 @@ def unified_web_search(
             results["results"].extend(std_results)
             results["total"] = len(std_results)
             logger.info(f"✅ SearxNG returned {len(std_results)} results")
-            # Don't return here, proceed to deep scraping if desired
+            return results
     except Exception as e:
         logger.warning(f"⚠️ SearxNG failed: {e}")
 
@@ -108,25 +126,23 @@ def unified_web_search(
 
     # ==================== STRATEGY 3: DUCKDUCKGO ====================
     try:
-        from duckduckgo_search import DDGS
+        try:
+            from ddgs import DDGS
+        except ImportError:
+            from duckduckgo_search import DDGS
+        from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
         logger.info("🦆 Trying DuckDuckGo Search...")
-        with DDGS() as ddgs:
-            ddg_gen = ddgs.text(query, max_results=max_results)
-            ddg_results = []
-            if ddg_gen:
-                for r in ddg_gen:
-                    ddg_results.append({
-                        "title": r.get("title"),
-                        "url": r.get("href"),
-                        "source": "duckduckgo",
-                        "description": r.get("body")
-                    })
-            if ddg_results:
-                results["primary_engine"] = "duckduckgo"
-                results["sources_used"].append("duckduckgo")
-                results["results"].extend(ddg_results)
-                results["total"] = len(ddg_results)
-                # Proceed to deep scraping
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(_ddg_search, query, max_results)
+            try:
+                ddg_results = future.result(timeout=15)
+                if ddg_results:
+                    results["primary_engine"] = "duckduckgo"
+                    results["sources_used"].append("duckduckgo")
+                    results["results"].extend(ddg_results)
+                    results["total"] = len(ddg_results)
+            except FuturesTimeout:
+                logger.warning("⚠️ DuckDuckGo search timed out")
     except ImportError:
          logger.warning("⚠️ duckduckgo_search module not installed.")
     except Exception as e:
@@ -136,6 +152,8 @@ def unified_web_search(
     if results["results"]:
         try:
             from core.tools.scraper import PlaywrightScraper
+            from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
+            
             scraper = PlaywrightScraper()
             logger.info(f"🕷️ Starting Deep Scraping for top {min(3, len(results['results']))} results...")
             
@@ -144,20 +162,22 @@ def unified_web_search(
                 url = res.get("url")
                 if url and url != "#":
                     logger.info(f"   [{i+1}] Scraping: {url}")
-                    scrape_res = scraper.scrape(url)
-                    if scrape_res.get("status") == "success":
-                        content = scrape_res.get("content", "")
-                        # Store in result object for tool output
-                        res["deep_content"] = content
-                        deep_context += f"--- CONTEÚDO ÍNTEGRO ({res['title']}) ---\n{content[:5000]}\n\n"
-                    else:
-                        logger.warning(f"   ⚠️ Scrape failed for {url}: {scrape_res.get('error')}")
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        future = executor.submit(scraper.scrape, url)
+                        try:
+                            scrape_res = future.result(timeout=20)
+                            if scrape_res.get("status") == "success":
+                                content = scrape_res.get("content", "")
+                                res["deep_content"] = content
+                                deep_context += f"--- CONTEÚDO ÍNTEGRO ({res['title']}) ---\n{content[:5000]}\n\n"
+                            else:
+                                logger.warning(f"   ⚠️ Scrape failed for {url}: {scrape_res.get('error')}")
+                        except FuturesTimeout:
+                            logger.warning(f"   ⚠️ Scrape timed out for {url}")
             
             if deep_context:
-                # Add to results for synthesis
                 results["deep_context"] = deep_context
                 
-                # AUTO-INDEXING with deep content
                 try:
                     from core.config import config
                     from core.llm import LLMService
@@ -168,8 +188,7 @@ def unified_web_search(
                     
                     rag = get_rag_helper()
                     embedder = LLMService(model=model_name)
-                    # Use deep context for better RAG
-                    emb = embedder.embedding(deep_context[:10000]) # Cap for embedding
+                    emb = embedder.embedding(deep_context[:10000])
                     if emb:
                         rag.vector_store.add_text(deep_context[:15000], emb, {
                             "source": "unified_web_search_playwright",
@@ -187,4 +206,4 @@ def unified_web_search(
 
     return results
 
-unified_web_search._is_ziva_tool = True
+

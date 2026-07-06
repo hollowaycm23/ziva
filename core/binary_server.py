@@ -252,13 +252,12 @@ class BinaryServer:
                 if cursor.rowcount > 0:
                     added += 1
                     if rag:
-                        text_to_index = (f"Instruction: {example['instruction']}\n"
-                                         f"Output: {example['output']}")
+                        text_to_index = (
+                            f"Instruction: {example['instruction']}\n"
+                            f"Output: {example['output']}")
                         emb = rag.get_embedding(text_to_index)
                         if emb:
-                            rag.store.add_text(
-                                text_to_index, emb,
-                                metadata={"source": "p2p_sync"})
+                            rag.store.add_text(text_to_index, emb, metadata={"source": "p2p_sync"})
             except Exception as e:
                 logger.error(f"Erro ao processar exemplo: {e}")
         conn.commit()

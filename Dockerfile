@@ -1,19 +1,35 @@
-# Base Image: Python 3.10 Slim (Leve e compatível)
+# Multi-stage Dockerfile (Fixed)
+# Builds Go runtime + Python environment
+
+# ===== STAGE 1: Build Go Runtime =====
+FROM golang:1.23-alpine AS go-builder
+
+WORKDIR /build
+
+# Copiar arquivos Go
+COPY core/runtime/go.mod ./
+COPY core/runtime/go.sum* ./
+COPY core/runtime/*.go ./
+
+# Build o executável
+RUN go build -o ziva_runtime -ldflags="-s -w" . || echo "⚠️ Go build skipped (optional)"
+
+# ===== STAGE 2: Python Runtime =====
 FROM python:3.10-slim
 
-# Metadados
 LABEL maintainer="Ziva AI Team"
-LABEL version="2.4"
-LABEL description="Ziva Autonomous Agent Container"
+LABEL version="2.5"
+LABEL description="Ziva Autonomous Agent Container (Fixed)"
 
 # Variáveis de Ambiente
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     DEBIAN_FRONTEND=noninteractive \
-    VIRTUAL_ENV=/opt/venv
+    VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
 
-# 1. Instalar dependências de sistema
+# 1. Instalar dependências de sistema (slim)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
@@ -34,29 +50,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Configurar Ambiente Virtual
+# 2. Criar Ambiente Virtual
 RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# 3. Workdir
+# 3. Configurar Workdir
 WORKDIR /app
 
-# 4. Copiar requirements e instalar
+# 4. Copiar e instalar requirements
 COPY requirements.txt .
-RUN pip install --upgrade pip && \
+RUN pip install --upgrade pip setuptools wheel && \
     pip install -r requirements.txt && \
-    pip install rich requests psutil qdrant-client sentence-transformers
+    pip install rich requests psutil qdrant-client sentence-transformers uvicorn[standard]
 
-# 5. Copiar Código Fonte
+# 5. Copiar código-fonte
 COPY . .
 
-# 6. Expor Portas (API = 8000, P2P = 9000)
-EXPOSE 8000
-EXPOSE 9000
-
-# 7. Script de Inicialização
-COPY scripts/start_docker.sh /app/start_docker.sh
+# 7. Copiar e configurar scripts
+COPY scripts/start_docker_fixed.sh /app/start_docker.sh
 RUN chmod +x /app/start_docker.sh
+
+# 8. Expor Portas
+EXPOSE 8000 9000
+
+# 9. Healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:8000/v1/health || exit 1
 
 # Entrypoint
 ENTRYPOINT ["/app/start_docker.sh"]

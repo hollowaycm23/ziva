@@ -1,18 +1,13 @@
 import os
 import requests
 import logging
-import json
 
 logger = logging.getLogger("ZivaLLM")
 
-# Configuration via Environment
-# Valid Choices: "openai", "gemini", "deepseek", "groq", "custom"
-PROVIDER = os.getenv("LLM_PROVIDER", "custom") 
-API_KEY = os.getenv("OPENAI_API_KEY") or os.getenv("ZIVA_LLM_KEY") or "ziva_secret_key_2026"
-# Use ZIVA_LLM_BASE_URL (configured in docker-compose.yml for LM Studio)
-API_BASE = os.getenv("ZIVA_LLM_BASE_URL") or os.getenv("LLM_BASE_URL", "http://localhost:1234/v1") 
-MODEL_NAME = os.getenv("ZIVA_LLM_MODEL") or os.getenv("MODEL_NAME", "qwen3-14b")
-EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL", "qwen/qwen3-vl-4b")
+PROVIDER = os.getenv("LLM_PROVIDER", "custom")
+_DEFAULT_API_KEY = os.getenv("OPENAI_API_KEY") or os.getenv("ZIVA_LLM_KEY") or os.getenv("LLM_KEY", "ziva_secret_key_2026")
+_DEFAULT_API_BASE = os.getenv("ZIVA_LLM_BASE_URL") or os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
+_DEFAULT_MODEL = os.getenv("ZIVA_LLM_MODEL") or os.getenv("MODEL_NAME", "deepseek-coder-v2:16b")
 
 
 class LLMService:
@@ -21,13 +16,13 @@ class LLMService:
     """
 
     def __init__(self, model=None, base_url=None, api_key=None):
-        self.model = model or MODEL_NAME
-        self.embedding_model = EMBEDDING_MODEL_NAME
-        self.api_key = api_key or API_KEY
-        self.api_base = (base_url or API_BASE).rstrip('/')
-        
+        self.model = model or os.getenv("ZIVA_LLM_MODEL") or os.getenv("MODEL_NAME", _DEFAULT_MODEL)
+        self.embedding_model = os.getenv("EMBEDDING_MODEL", "nomic-embed-text:latest")
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY") or os.getenv("ZIVA_LLM_KEY") or os.getenv("LLM_KEY", "ziva_secret_key_2026")
+        self.api_base = (base_url or os.getenv("ZIVA_LLM_BASE_URL") or os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")).rstrip('/')
+
         if not self.api_key:
-            logger.warning("⚠️ No API Key found for External LLM. Set OPENAI_API_KEY or ZIVA_LLM_KEY.")
+            logger.warning("⚠️ No API Key found for External LLM. Set OPENAI_API_KEY, ZIVA_LLM_KEY or LLM_KEY.")
 
     def is_running(self):
         """Always true for external APIs unless we want to ping."""
@@ -39,12 +34,12 @@ class LLMService:
         Generate completion using External API.
         """
         target_model = model if model else self.model
-        
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
-        
+
         # OpenAI Compatible Payload
         payload = {
             "model": target_model,
@@ -62,7 +57,7 @@ class LLMService:
             content = [{"type": "text", "text": prompt}]
             for img_b64 in images:
                 content.append({
-                    "type": "image_url", 
+                    "type": "image_url",
                     "image_url": {"url": f"data:image/jpeg;base64,{img_b64}"}
                 })
             payload["messages"][0]["content"] = content
@@ -70,7 +65,7 @@ class LLMService:
         try:
             url = f"{self.api_base}/chat/completions"
             resp = requests.post(url, headers=headers, json=payload, timeout=120)
-            
+
             if resp.status_code == 200:
                 data = resp.json()
                 if "choices" in data and len(data["choices"]) > 0:
@@ -79,7 +74,7 @@ class LLMService:
             else:
                 logger.error(f"LLM API Error ({resp.status_code}): {resp.text}")
                 return f"Error: {resp.status_code} - {resp.text}"
-                
+
         except Exception as e:
             logger.error(f"Connection Error to External LLM: {e}")
             return ""
@@ -91,28 +86,33 @@ class LLMService:
         """
         # Use configured embedding model if not provided
         target_model = model if model else self.embedding_model
-        
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
-        
+
         try:
             safe_text = text.encode('utf-8')[:2048].decode('utf-8', errors='ignore') + "\n"
-            payload = {
-                "model": target_model,
-                "input": safe_text
-            }
-            
-            # Primary attempt: OpenAI Compatible
-            url = f"{self.api_base}/embeddings"
-            resp = requests.post(url, headers=headers, json=payload, timeout=60)
-            
+            payload = {"model": target_model, "input": safe_text}
+
+            # Try Ollama /api/embed first (fast, direct)
+            ollama_base = self.api_base.replace("/v1", "").replace("/api", "")
+            ollama_url = f"{ollama_base}/api/embed"
+            resp = requests.post(ollama_url, json=payload, timeout=120)
             if resp.status_code == 200:
                 data = resp.json()
-                if "data" in data and len(data["data"]) > 0:
-                    return data["data"][0]["embedding"]
-            
+                if "embeddings" in data and len(data["embeddings"]) > 0:
+                    return data["embeddings"][0]
+
+            # Fallback: OpenAI Compatible /v1/embeddings
+            url = f"{self.api_base}/embeddings"
+            resp2 = requests.post(url, headers=headers, json=payload, timeout=30)
+            if resp2.status_code == 200:
+                data2 = resp2.json()
+                if "data" in data2 and len(data2["data"]) > 0:
+                    return data2["data"][0]["embedding"]
+
             logger.error(f"Embedding failed. Status: {resp.status_code}, Response: {resp.text}")
             return []
 

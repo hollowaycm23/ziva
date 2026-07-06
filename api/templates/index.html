@@ -3,62 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIVA / SYSTEM DASHBOARD</title>
+    <title>ZIVA — Dashboard</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Simple Markdown Parser (optional, using crude implementation within main.js for no-dep) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <div class="glass-container">
-        <!-- Sidebar / Vitals -->
+    <div class="app">
+        <!-- Sidebar (full height) -->
         <aside class="sidebar">
-            <div class="logo">
-                <h1>ZIVA v2.4</h1>
-                <span class="status-indicator online">ONLINE</span>
-            </div>
-
-            <div class="vitals">
-                <div class="vital-card">
-                    <h3>CPU</h3>
-                    <div class="progress-bar"><div id="cpu-bar" style="width: 0%"></div></div>
-                    <span id="cpu-val">0%</span>
-                </div>
-                <div class="vital-card">
-                    <h3>RAM</h3>
-                    <div class="progress-bar"><div id="ram-bar" style="width: 0%"></div></div>
-                    <span id="ram-val">0%</span>
-                </div>
-                <div class="vital-card">
-                    <h3>DISK</h3>
-                    <div class="progress-bar"><div id="disk-bar" style="width: 0%"></div></div>
-                    <span id="disk-val">0%</span>
+            <div class="sidebar-header">
+                <div class="logo-icon">Z</div>
+                <span class="logo-text">ZIVA</span>
+                <div class="status-badge">
+                    <span class="dot"></span>
+                    ON
                 </div>
             </div>
 
-            <div class="memory-inspector">
-                <h3>🧠 Active Context</h3>
+            <nav class="sidebar-tabs">
+                <button class="stab-btn active" data-tab="chat">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Chat
+                </button>
+                <button class="stab-btn" data-tab="monitor">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Monitor
+                </button>
+                <button class="stab-btn" data-tab="system">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    System
+                </button>
+            </nav>
+
+            <div class="sidebar-section">
+                <h3>Vitals</h3>
+                <div class="vital-item">
+                    <div class="vital-icon cpu">⚡</div>
+                    <div class="vital-info">
+                        <div class="label">CPU</div>
+                        <div class="vital-track"><div id="cpu-bar" class="fill cyan" style="width:0%"></div></div>
+                    </div>
+                    <span id="cpu-val" class="vital-value">0%</span>
+                </div>
+                <div class="vital-item">
+                    <div class="vital-icon ram">🧠</div>
+                    <div class="vital-info">
+                        <div class="label">RAM</div>
+                        <div class="vital-track"><div id="ram-bar" class="fill amber" style="width:0%"></div></div>
+                    </div>
+                    <span id="ram-val" class="vital-value">0%</span>
+                </div>
+                <div class="vital-item">
+                    <div class="vital-icon disk">💾</div>
+                    <div class="vital-info">
+                        <div class="label">DISK</div>
+                        <div class="vital-track"><div id="disk-bar" class="fill blue" style="width:0%"></div></div>
+                    </div>
+                    <span id="disk-val" class="vital-value">0%</span>
+                </div>
+                <div class="vital-item">
+                    <div class="vital-icon gpu">🎮</div>
+                    <div class="vital-info">
+                        <div class="label">GPU</div>
+                        <div class="vital-track"><div id="gpu-bar" class="fill purple" style="width:0%"></div></div>
+                        <div class="gpu-sub">
+                            <span class="sub-item">MEM <span id="gpu-mem-val">0%</span></span>
+                        </div>
+                    </div>
+                    <span id="gpu-val" class="vital-value">0%</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Context</h3>
                 <ul id="memory-list">
-                    <li>Waiting for data...</li>
+                    <li style="color:var(--text-muted);font-style:italic;">Waiting...</li>
                 </ul>
             </div>
         </aside>
 
-        <!-- Main Chat Area -->
-        <main class="chat-interface">
-            <div id="chat-history" class="chat-history">
-                <div class="message system">
-                    <p>System initialized. Polymath & Vision modules ready.</p>
+        <!-- Content -->
+        <main class="content">
+            <!-- Chat Panel -->
+            <div id="panel-chat" class="tab-panel active">
+                <div id="chat-history" class="chat-messages">
+                    <div class="message system">System initialized. Modules ready.</div>
+                </div>
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <textarea id="user-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
+                    </div>
+                    <button id="send-btn" class="btn btn-send">Enviar</button>
+                    <button id="stop-btn" class="btn btn-stop" style="display:none;">Parar</button>
                 </div>
             </div>
-            
-            <div class="input-area">
-                <textarea id="user-input" placeholder="Enter command or query... (Shift+Enter for new line)"></textarea>
-                <button id="send-btn">SEND</button>
+
+            <!-- Monitor Panel -->
+            <div id="panel-monitor" class="tab-panel">
+                <div class="monitor-header">
+                    <h2>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        System Monitor
+                    </h2>
+                    <span id="monitor-ts" class="last-update">—</span>
+                </div>
+                <div id="monitor-grid" class="monitor-grid"></div>
+            </div>
+
+            <!-- System Panel -->
+            <div id="panel-system" class="tab-panel">
+                <div class="system-header">
+                    <h2>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        System Info
+                    </h2>
+                </div>
+                <div id="system-grid" class="system-grid"></div>
             </div>
         </main>
     </div>
-
     <script src="/static/js/main.js"></script>
 </body>
 </html>

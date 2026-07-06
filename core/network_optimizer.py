@@ -1,15 +1,15 @@
 import socket
 import struct
-import math
 import logging
 
 logger = logging.getLogger("NetworkOptimizer")
+
 
 class NetworkOptimizer:
     """
     Utilitário para otimização de rede e compressão de dados.
     """
-    
+
     # Comandos para otimização via sysctl (Linux)
     OPTIMIZATION_COMMANDS = [
         "sudo sysctl -w net.ipv4.tcp_rmem='4096 87380 134217728'",
@@ -24,14 +24,14 @@ class NetworkOptimizer:
         try:
             # Desabilitar algoritmo de Nagle (menor latência)
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            
+
             # Aumentar buffers se possível (pode falhar dependendo do OS/Permissões)
             try:
                 sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 1024 * 1024)
                 sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 1024 * 1024)
             except Exception:
                 pass
-                
+
             return sock
         except Exception as e:
             logger.warning(f"Falha ao otimizar socket: {e}")
@@ -63,7 +63,7 @@ class NetworkOptimizer:
 
         # Pack into bytes (signed char)
         q_bytes = struct.pack(f'{len(q_vals)}b', *q_vals)
-        
+
         return q_bytes, scale
 
     @staticmethod
@@ -76,5 +76,5 @@ class NetworkOptimizer:
 
         count = len(q_bytes)
         q_vals = struct.unpack(f'{count}b', q_bytes)
-        
+
         return [float(x) * scale for x in q_vals]

@@ -55,7 +55,6 @@ class TrainingDataCollector:
 
         conn.commit()
 
-
     def collect_from_sessions(self, min_quality: float = 0.7) -> int:
         """
         Coleta dados de treinamento de sessões completadas.
@@ -71,7 +70,6 @@ class TrainingDataCollector:
         ''')
 
         interactions = cursor.fetchall()
-
 
         collected = 0
         current_session = None
@@ -104,9 +102,6 @@ class TrainingDataCollector:
         return collected
 
     def _extract_tool_call(self, content: str) -> Optional[str]:
-        """
-        Extrai JSON de tool call do conteúdo.
-        """
         json_pattern = r'```json\s*(\{.*?\})\s*```'
         match = re.search(json_pattern, content, re.DOTALL)
         if match:
@@ -201,7 +196,6 @@ class TrainingDataCollector:
         finally:
             pass
 
-
     def get_training_dataset(self, task_type: Optional[str] = None,
                              min_quality: float = 0.7,
                              limit: Optional[int] = None) -> List[Dict]:
@@ -249,7 +243,7 @@ class TrainingDataCollector:
         ''', (min_quality,))
         task_distribution = {row[0]: row[1] for row in cursor.fetchall()}
         if not task_distribution:
-    
+
             return []
         num_types = len(task_distribution)
         quota_per_type = max(1, target_size // num_types)

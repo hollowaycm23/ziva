@@ -4,11 +4,9 @@ Integra busca semântica no Qdrant com geração de respostas
 """
 
 import logging
-import requests
 from typing import List, Dict, Optional
 from core.vector_stores.factory import get_vector_store
 from core.reranker import get_reranker
-from sentence_transformers import SentenceTransformer
 
 
 logger = logging.getLogger("RAGHelper")
@@ -23,24 +21,22 @@ class RAGHelper:
     Busca contexto relevante no Qdrant antes de gerar respostas
     """
 
-    def __init__(self, ollama_url: str = "http://127.0.0.1:11434"):
+    def __init__(self, ollama_url: str = None):
         """
         Inicializa RAG Helper
         """
         self.vector_store = get_vector_store()
         self.ollama_url = ollama_url
-        self._encoder = None  # Lazy-loaded via property
+        self._encoder = None
         logger.info("✅ RAG Helper inicializado (Multilingual - Lazy Load)")
 
     def get_embedding(self, text: str) -> List[float]:
-        """
-        Gera embedding usando LLMservice (consistente com resto do sistema - 768d)
-        """
         try:
             from core.llm import LLMService
-            llm = LLMService()
-            # Precisamos usar o mesmo modelo que criou a collection (provavelmente nomic ou ziva-base)
-            # Assumindo nomic-embed-text que geralmente e 768
+            if self.ollama_url:
+                llm = LLMService(base_url=self.ollama_url)
+            else:
+                llm = LLMService()
             return llm.embedding(text)
         except Exception as e:
             logger.error(f"Error generating embedding: {e}")
@@ -68,13 +64,11 @@ class RAGHelper:
                 logger.warning("Embedding vazio ou falha na geração")
                 return []
 
-            # Buscar no armazenamento vetorial
-            # Retrieve more candidates for reranking
             candidates_limit = limit * RERANK_OVERSAMPLING_FACTOR
             results = self.vector_store.search(
-                embedding, 
+                embedding,
                 limit=candidates_limit,
-                query_text=query # Ativa busca híbrida se suportado pelo backend
+                query_text=query
             )
 
             # --- Active Recall Logic (Sprint 28) ---
@@ -221,21 +215,20 @@ Responda usando o contexto acima quando relevante. Se o contexto não for útil,
         while True:
             try:
                 docs, next_offset = self.vector_store.scroll(limit=batch_size, offset=offset)
-                
+
                 if not docs:
                     break
-                    
+
                 yield docs
-                
+
                 if next_offset is None:
                     break
-                    
+
                 offset = next_offset
-                
+
             except Exception as e:
                 logger.error(f"Erro ao iterar collection: {e}")
                 break
-
 
 
 # Singleton global

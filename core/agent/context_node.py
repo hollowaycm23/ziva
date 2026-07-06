@@ -46,10 +46,11 @@ def contextualize_node(state):
         
         # We use the raw LLMService to avoid LangChain overhead here if needed, 
         # but let's stick to a simple prompt
-        rewritten = llm.chat([
-            {"role": "system", "content": ctx_sys_msg},
-            {"role": "user", "content": ctx_human_msg}
-        ]).strip()
+        rewritten = llm.completion(
+            f"{ctx_sys_msg}\n\n{ctx_human_msg}",
+            temperature=0.1,
+            max_tokens=256
+        ).strip()
         
         if rewritten and len(rewritten) > 3 and rewritten != state["input"]:
             logger.info(f"🔄 Standalone Query: {rewritten}")

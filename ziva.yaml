@@ -5,9 +5,21 @@ meta:
 # LLM Providers Configuration
 models:
   providers:
+    ollama:
+      base_url: "${ZIVA_LLM_BASE_URL:-http://localhost:11434/v1}"
+      api_key_env: "ZIVA_LLM_KEY"
+      models:
+        - id: "qwen3:14b"
+          alias: "primary"
+          context_window: 32000
+        - id: "qwen3:14b"
+          alias: "coder"
+          context_window: 32000
+        - id: "qwen3-embedding:0.6b"
+          alias: "embedder"
+          context_window: 8192
     lm-studio:
       base_url: "${ZIVA_LLM_BASE_URL:-http://localhost:1234/v1}"
-      # Token is loaded from ENV: ZIVA_LLM_KEY
       api_key_env: "ZIVA_LLM_KEY"
       models:
         - id: "qwen3-14b"
@@ -23,10 +35,9 @@ models:
 # Agent Configuration
 agent:
   name: "Ziva"
-  # Format: provider/alias
-  primary_model: "lm-studio/primary"
-  coder_model: "lm-studio/primary"
-  embedding_model: "lm-studio/embedder"
+  primary_model: "ollama/primary"
+  coder_model: "ollama/coder"
+  embedding_model: "ollama/embedder"
 
   memory:
     vector_store:

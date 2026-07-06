@@ -18,10 +18,10 @@ def get_embedding_ollama(text, model="nomic-embed-text:latest"):
     Gera embedding usando Ollama diretamente.
     """
     try:
-        url = "http://localhost:11434/api/embeddings"
+        url = "http://localhost:11434/api/embed"
         payload = {
             "model": model,
-            "prompt": text
+            "input": text
         }
         resp = requests.post(url, json=payload, timeout=30)
         

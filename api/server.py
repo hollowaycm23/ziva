@@ -1,3 +1,14 @@
+import sys
+import os
+import logging
+import time
+from typing import Optional, Dict, Any, List
+from contextlib import asynccontextmanager
+
+# Load .env file BEFORE any other imports that read env vars
+from dotenv import load_dotenv
+load_dotenv()
+
 from typing import List
 from core.sync_manager import SyncManager
 from fastapi.responses import HTMLResponse
@@ -8,12 +19,6 @@ from core.security import verify_api_key, verify_dashboard_access
 from agent.ziva import ZivaAgent
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
-import sys
-import os
-import logging
-import time
-from typing import Optional, Dict, Any, List
-from contextlib import asynccontextmanager
 from core.llm import LLMService
 
 # Add project root to path
@@ -167,8 +172,8 @@ class ChatCompletionResponse(BaseModel):
 # ----------------------------------
 
 
-@app.post("/chat", dependencies=[Depends(verify_api_key)])
-def chat(payload: ChatMessage):
+@app.post("/chat", dependencies=[Depends(verify_dashboard_access)])
+def chat(payload: ChatMessage, username: str = Depends(verify_dashboard_access)):
     """Interactive chat with Ziva through the API."""
     try:
         current_agent = get_agent()
@@ -274,7 +279,7 @@ def chat(payload: ChatMessage):
                     else payload.message
                 )
 
-                initial_state = {"input": full_input}
+                initial_state = {"input": full_input, "rag_context": "", "retry_count": 0}
 
                 final_state = graph_app.invoke(
                     initial_state, config={"recursion_limit": 100}
@@ -303,7 +308,7 @@ def chat(payload: ChatMessage):
             (session_id, "assistant", response, time.time())
         )
 
-        if tool_output and not tool_output.get("error"):
+        if tool_output and (isinstance(tool_output, dict) and not tool_output.get("error")):
             cursor.execute(
                 "INSERT INTO interactions (session_id, role, content, "
                 "timestamp) VALUES (?, ?, ?, ?)",
@@ -377,28 +382,28 @@ async def health_check():
             "healthy": check_port("100.104.242.35", 1234, timeout=2)
         },
         "qdrant": {
-            "status": "running" if check_port("ziva-qdrant", 6333) else "down",
-            "host": "ziva-qdrant",
+            "status": "running" if check_port("localhost", 6333) else "down",
+            "host": "localhost",
             "port": 6333,
-            "healthy": check_port("ziva-qdrant", 6333)
+            "healthy": check_port("localhost", 6333)
         },
         "searxng": {
-            "status": "running" if check_port("ziva-searxng", 8080) else "down",
-            "host": "ziva-searxng",
-            "port": 8080,
-            "healthy": check_port("ziva-searxng", 8080)
+            "status": "running" if check_port("localhost", 8082) else "down",
+            "host": "localhost",
+            "port": 8082,
+            "healthy": check_port("localhost", 8082)
         },
         "kiwix": {
-            "status": "running" if check_port("ziva-kiwix", 8080) else "down",
-            "host": "ziva-kiwix",
-            "port": 8080,
-            "healthy": check_port("ziva-kiwix", 8080)
+            "status": "running" if check_port("localhost", 8081) else "down",
+            "host": "localhost",
+            "port": 8081,
+            "healthy": check_port("localhost", 8081)
         },
         "openwebui": {
-            "status": "running" if check_port("ziva-openwebui", 8080) else "down", # OpenWebUI interno usa 8080
-            "host": "ziva-openwebui",
-            "port": 8080,
-            "healthy": check_port("ziva-openwebui", 8080)
+            "status": "running" if check_port("localhost", 3000) else "down",
+            "host": "localhost",
+            "port": 3000,
+            "healthy": check_port("localhost", 3000)
         },
         "message_daemon": {
             "status": "running",
@@ -516,10 +521,29 @@ def get_stats():
 
     total, used, free = shutil.disk_usage("/")
 
+    gpu = {}
+    try:
+        import pynvml
+        pynvml.nvmlInit()
+        device_count = pynvml.nvmlDeviceGetCount()
+        for i in range(device_count):
+            handle = pynvml.nvmlDeviceGetHandleByIndex(i)
+            name = pynvml.nvmlDeviceGetName(handle)
+            util = pynvml.nvmlDeviceGetUtilizationRates(handle)
+            mem = pynvml.nvmlDeviceGetMemoryInfo(handle)
+            gpu[name] = {
+                "gpu_util": util.gpu,
+                "mem_util": (mem.used / mem.total) * 100
+            }
+        pynvml.nvmlShutdown()
+    except Exception:
+        gpu = {"error": "No NVIDIA GPU detected or pynvml failed"}
+
     return {
         "cpu": psutil.cpu_percent(interval=None),
         "ram": psutil.virtual_memory().percent,
         "disk": (used / total) * 100,
+        "gpu": gpu,
         "models_loaded": ["ziva-base"]
     }
 
@@ -538,21 +562,34 @@ def get_memory(limit: int = 10):
     }
 
 
-try:
-    app.mount("/static", StaticFiles(directory="api/static"), name="static")
-except Exception:
-    pass
+dashboard_dist = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                              "dashboard", "dist")
+if os.path.isdir(dashboard_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(dashboard_dist, "assets")), name="dashboard_assets")
 
+    @app.get("/", response_class=HTMLResponse,
+             dependencies=[Depends(verify_dashboard_access)])
+    async def read_root_ui():
+        index_path = os.path.join(dashboard_dist, "index.html")
+        if os.path.exists(index_path):
+            with open(index_path, "r") as f:
+                return f.read()
+        return "<h1>Ziva Dashboard not built</h1><p>Run 'npm run build' in the dashboard/ directory.</p>"
+else:
+    try:
+        app.mount("/static", StaticFiles(directory="api/static"), name="static")
+    except Exception:
+        pass
 
-@app.get("/", response_class=HTMLResponse,
-         dependencies=[Depends(verify_dashboard_access)])
-async def read_root_ui():
-    index_path = os.path.join(os.path.dirname(__file__),
-                              "templates", "index.html")
-    if os.path.exists(index_path):
-        with open(index_path, "r") as f:
-            return f.read()
-    return "<h1>Ziva API is Online</h1><p>Dashboard files not found.</p>"
+    @app.get("/", response_class=HTMLResponse,
+             dependencies=[Depends(verify_dashboard_access)])
+    async def read_root_ui():
+        index_path = os.path.join(os.path.dirname(__file__),
+                                  "templates", "index.html")
+        if os.path.exists(index_path):
+            with open(index_path, "r") as f:
+                return f.read()
+        return "<h1>Ziva API is Online</h1><p>Dashboard files not found.</p>"
 
 
 class KnowledgePayload(BaseModel):

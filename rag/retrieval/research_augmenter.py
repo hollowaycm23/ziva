@@ -80,21 +80,31 @@ class ResearchAugmenter:
 
             # Sugerir fontes (placeholder)
             if 'sources' in weaknesses:
-                # Usar connector de busca
                 try:
                     from extensions.search_connector import get_search_connector
                     search = get_search_connector()
 
                     if search.searxng_ok:
                         logger.info("🔍 Buscando fontes externas...")
-                        web_results = search.search_web(query, limit=3)
+                        queries = [query]
+                        date_hints = ["2022", "2023", "2024", "2025", "2026"]
+                        if not any(y in query for y in date_hints):
+                            queries.append(f"{query} {date_hints[0]}")
+                        all_results = []
+                        seen_urls = set()
+                        for q in queries:
+                            web_results = search.search_web(q, limit=5)
+                            for r in web_results:
+                                if r.url not in seen_urls:
+                                    seen_urls.add(r.url)
+                                    all_results.append(r)
 
-                        if web_results:
+                        if all_results:
                             formatted_sources = "\n".join(
-                                [f"- [{r.title}]({r.url}): {r.snippet[:150]}..." for r in web_results]
+                                [f"- [{r.title}]({r.url}): {r.snippet[:500]}" for r in all_results]
                             )
                             additional_info['web_sources'] = formatted_sources
-                            logger.info(f"   Fontes encontradas: {len(web_results)}")
+                            logger.info(f"   Fontes encontradas: {len(all_results)} (de {len(queries)} queries)")
                     else:
                         additional_info['sources_needed'] = True
                 except ImportError:
@@ -116,28 +126,24 @@ class ResearchAugmenter:
         """
         try:
             import requests
-            # Assume Kiwix running at localhost:8081
-            # Standard kiwix-serve search endpoint might vary based on setup (usually /search?pattern=...)
-            # For this implementation, we try a common pattern.
+            from bs4 import BeautifulSoup
             resp = requests.get(
                 "http://localhost:8081/search",
-                params={
-                    "pattern": query,
-                    "content": "wikipedia_en_all_maxi"},
-                timeout=2)
-
-            # Note: Parsing HTML from kiwix-serve is messy without an API.
-            # If standard kiwix-serve is used, it returns HTML. Use a simple text extraction for now or assume API mode if enabled.
-            # Ideally we would parse the HTML or use the OPDS feed.
-            # Simplified for prototype:
-
+                params={"pattern": query},
+                timeout=5)
             if resp.status_code == 200:
-                # Placeholder: In real implementation, parse the HTML result
-                # list
-                return f"[Kiwix Search for '{query}' - Status 200 - OK]"
+                soup = BeautifulSoup(resp.text, 'html.parser')
+                results = []
+                for result in soup.select('.result, .article, li.result')[:5]:
+                    text = result.get_text(strip=True)
+                    if text and len(text) > 20:
+                        results.append(text[:300])
+                if results:
+                    return "\n\n".join(results)
+                return ""
             return ""
         except ImportError:
-            logger.error("Requests module missing for Kiwix search")
+            logger.error("Requests or BeautifulSoup missing for Kiwix search")
             return ""
         except Exception as e:
             logger.debug(f"Kiwix search failed: {e}")
@@ -195,6 +201,14 @@ class ResearchAugmenter:
             var_info = additional_info['variations']
             parts.append(f"\nInformações relacionadas ({var_info['count']} fontes):")
             parts.append(var_info['context'])
+
+        # Web sources
+        if 'web_sources' in additional_info:
+            parts.append(f"Informações web:\n{additional_info['web_sources']}")
+
+        # Kiwix (offline knowledge)
+        if 'kiwix' in additional_info:
+            parts.append(f"Conhecimento offline:\n{additional_info['kiwix'].get('context', '')}")
 
         # Sources needed
         if additional_info.get('sources_needed'):

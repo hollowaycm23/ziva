@@ -6,9 +6,10 @@ try:
     DBUS_AVAILABLE = True
 except ImportError:
     DBUS_AVAILABLE = False
-    # Define dummy classes/functions to prevent NameError if imported but not used
-    class DBusGMainLoop: 
+
+    class DBusGMainLoop:
         def __init__(self, **kwargs): pass
+
     def dbus_SystemBus(): return None
     sys_modules_mock = True
 
@@ -25,7 +26,7 @@ try:
     else:
         raise ImportError("DBus modules not installed")
 except Exception as e:
-    # If not running on Linux/DBus environment, may fail. 
+    # If not running on Linux/DBus environment, may fail.
     # Just printing warning as this is a script.
     print(f"Warning: Failed to initialize DBus: {e}")
     bus = None
@@ -77,7 +78,7 @@ def scan_devices():
         dev_manager_interface.Set('org.bluez.Adapter1', 'Discovering', True)
         print('Scanning for devices...')
         loop = gobject.MainLoop()
-        
+
         # Em um loop real, precisaríamos de um callback para paralisar a busca.
         # Aqui vamos apenas simular um wait ou deixar rodando até user interromper.
         # Simplificação para manter funcionalidade original
@@ -89,7 +90,7 @@ def scan_devices():
             # gobject iteration pode bloquear. Cuidado.
             # loop.run() seria o correto com callbacks.
             loop.get_context().iteration(True)
-            
+
         dev_manager_interface.Set('org.bluez.Adapter1', 'Discovering', False)
     except Exception as e:
         print(f"Scan error: {e}")
@@ -114,7 +115,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     command = sys.argv[1]
-    
+
     if bus is None:
         print("DBus system bus not available. Exiting.")
         sys.exit(1)
