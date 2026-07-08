@@ -67,7 +67,7 @@ class KiwixClient:
                     results.append({
                         "title": title, "url": full_url, "content": snippet
                     })
-                except BaseException:
+                except Exception:
                     continue
 
         except Exception as e:
@@ -87,6 +87,6 @@ class KiwixClient:
                 text = re.sub(r'<[^>]+>', ' ', text)
                 text = re.sub(r'\s+', ' ', text).strip()
                 return text[:5000]
-        except BaseException:
+        except Exception:
             pass
         return ""

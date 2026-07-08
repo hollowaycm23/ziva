@@ -4,6 +4,7 @@ Integra busca semântica no Qdrant com geração de respostas
 """
 
 import logging
+import threading
 from typing import List, Dict, Optional
 from core.vector_stores.factory import get_vector_store
 from core.reranker import get_reranker
@@ -233,13 +234,16 @@ Responda usando o contexto acima quando relevante. Se o contexto não for útil,
 
 # Singleton global
 _rag_helper = None
+_rag_helper_lock = threading.Lock()
 
 
 def get_rag_helper() -> RAGHelper:
     """Retorna instância singleton do RAG Helper"""
     global _rag_helper
     if _rag_helper is None:
-        _rag_helper = RAGHelper()
+        with _rag_helper_lock:
+            if _rag_helper is None:
+                _rag_helper = RAGHelper()
     return _rag_helper
 
 

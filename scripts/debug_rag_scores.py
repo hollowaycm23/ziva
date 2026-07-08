@@ -51,7 +51,7 @@ def inspect_scores(query: str):
             import math
             try:
                 sigmoid = 1 / (1 + math.exp(-score))
-            except:
+            except Exception:
                 sigmoid = 0.0
             print(f"    -> Sigmoid Prob: {sigmoid:.4f}")
 

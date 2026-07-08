@@ -74,7 +74,7 @@ def configure_dspy():
         
         if backend == "lm_studio":
             base_url = os.getenv("ZIVA_LLM_BASE_URL", "http://localhost:1234/v1")
-            lm_model_name = os.getenv("ZIVA_LLM_MODEL", "qwen3-14b")
+            lm_model_name = os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3")
             lm = dspy.LM(
                 model=f"openai/{lm_model_name}",
                 api_base=base_url,
@@ -95,7 +95,7 @@ def configure_dspy():
         else:
              # Default fallback
             base_url = os.getenv("ZIVA_LLM_BASE_URL", "http://100.104.242.35:1234/v1")
-            lm_model_name = os.getenv("ZIVA_LLM_MODEL", "qwen3-14b")
+            lm_model_name = os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3")
             lm = dspy.LM(
                 model=f"openai/{lm_model_name}",
                 api_base=base_url,

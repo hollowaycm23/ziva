@@ -28,7 +28,10 @@ def save_secrets(data):
 
 
 def hash_key(key: str) -> str:
-    salt = os.getenv("HASH_SALT", "ziva-static-salt-change-me").encode()
+    salt_str = os.getenv("HASH_SALT", "")
+    if not salt_str:
+        logger.warning("HASH_SALT is empty — using empty salt, security is degraded")
+    salt = salt_str.encode()
     return hashlib.sha256(salt + key.encode()).hexdigest()
 
 

@@ -4,7 +4,7 @@ from pathlib import Path
 
 logger = logging.getLogger("NodeRegistry")
 
-REGISTRY_FILE = Path("/home/holloway/ziva/data/nodes.json")
+REGISTRY_FILE = Path(__file__).parent.parent / "data" / "nodes.json"
 
 
 class NodeRegistry:

@@ -61,6 +61,9 @@ class EmbeddingCache:
         """Armazena embedding no cache"""
         text_hash = self._get_hash(text)
         cache_file = self.cache_dir / f"{text_hash}.pkl"
+        # Convert list to numpy array if needed
+        if isinstance(embedding, list):
+            embedding = np.array(embedding, dtype=np.float32)
         with open(cache_file, 'wb') as f:
             pickle.dump(embedding, f)
         self.index[text_hash] = {
@@ -93,6 +96,13 @@ class EmbeddingCache:
             'hit_rate': hit_rate,
             'cache_size_mb': cache_size / (1024 * 1024)
         }
+
+
+_cache = EmbeddingCache()
+
+
+def get_embedding_cache() -> EmbeddingCache:
+    return _cache
 
 
 if __name__ == "__main__":

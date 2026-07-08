@@ -6,6 +6,8 @@ Conecta com SearxNG (Web) e Kiwix (Offline Knowledge)
 import logging
 import requests
 import json
+import threading
+import time
 from typing import List, Dict, Optional
 from dataclasses import dataclass
 
@@ -30,24 +32,43 @@ class SearchConnector:
                  kiwix_url: str = "http://localhost:8081"):
         self.searxng_url = searxng_url
         self.kiwix_url = kiwix_url
-        self._check_availability()
+        self._searxng_ok = None
+        self._kiwix_ok = None
+        self._last_check = 0.0
+        self._check_ttl = 30.0
 
-    def _check_availability(self):
-        """Verifica quais serviços estão online"""
-        self.searxng_ok = False
-        self.kiwix_ok = False
+    def _check_availability(self, force=False):
+        """Verifica quais serviços estão online (lazy com TTL)"""
+        now = time.time()
+        if not force and (now - self._last_check) < self._check_ttl:
+            return
+        self._last_check = now
 
         try:
             requests.get(self.searxng_url, timeout=2)
-            self.searxng_ok = True
-        except BaseException:
-            logger.warning(f"SearxNG offline em {self.searxng_url}")
+            self._searxng_ok = True
+        except Exception:
+            if self._searxng_ok is not False:
+                logger.warning(f"SearxNG offline em {self.searxng_url}")
+            self._searxng_ok = False
 
         try:
             requests.get(self.kiwix_url, timeout=2)
-            self.kiwix_ok = True
-        except BaseException:
-            logger.warning(f"Kiwix offline em {self.kiwix_url}")
+            self._kiwix_ok = True
+        except Exception:
+            if self._kiwix_ok is not False:
+                logger.warning(f"Kiwix offline em {self.kiwix_url}")
+            self._kiwix_ok = False
+
+    @property
+    def searxng_ok(self):
+        self._check_availability()
+        return self._searxng_ok or False
+
+    @property
+    def kiwix_ok(self):
+        self._check_availability()
+        return self._kiwix_ok or False
 
     def search_web(self, query: str, limit: int = 5) -> List[SearchResult]:
         """
@@ -108,6 +129,9 @@ class SearchConnector:
 
         return results
 
+    def close(self):
+        pass
+
     def robust_search(self, query: str) -> Dict[str, List[SearchResult]]:
         """
         Realiza busca combinada (Web + Knowledge)
@@ -120,12 +144,15 @@ class SearchConnector:
 
 # Singleton
 _connector = None
+_connector_lock = threading.Lock()
 
 
 def get_search_connector() -> SearchConnector:
     global _connector
     if _connector is None:
-        _connector = SearchConnector()
+        with _connector_lock:
+            if _connector is None:
+                _connector = SearchConnector()
     return _connector
 
 

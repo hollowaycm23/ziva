@@ -73,7 +73,7 @@ else:
     if backend == "lm_studio":
         base_url = os.getenv("ZIVA_LLM_BASE_URL", "http://100.104.242.35:1234/v1")
         llm = ChatOpenAI(
-            model=os.getenv("ZIVA_LLM_MODEL", "qwen3-14b"),
+            model=os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3"),
             openai_api_base=base_url,
             openai_api_key=os.getenv("ZIVA_LLM_KEY", "lm-studio"),
             temperature=0,

@@ -12,11 +12,13 @@ export function fetchMetrics() { return get('/metrics').catch(() => null); }
 export function fetchAgents() { return get('/api/v1/agents/status').catch(() => null); }
 export function fetchSyncStats() { return get('/sync/stats').catch(() => null); }
 
-export async function sendChat(message, signal) {
+export async function sendChat(message, signal, sessionId = null) {
+  const body = { message, compact: true };
+  if (sessionId) body.session_id = sessionId;
   const res = await fetch('/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: AUTH },
-    body: JSON.stringify({ message, compact: true }),
+    body: JSON.stringify(body),
     signal,
   });
   return res.json();

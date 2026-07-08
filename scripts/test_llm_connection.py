@@ -6,7 +6,7 @@ from core.dspy_config import configure_dspy
 # Force LM Studio backend for this test
 os.environ["ZIVA_LLM_BACKEND"] = "lm_studio"
 os.environ["ZIVA_LLM_BASE_URL"] = "http://localhost:1234/v1"
-os.environ["ZIVA_LLM_MODEL"] = "qwen3-14b"
+os.environ["ZIVA_LLM_MODEL"] = "batiai/qwen3.6-35b:iq3"
 
 print("--- Testing LM Studio Connection ---")
 

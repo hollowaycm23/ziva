@@ -1,8 +1,7 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue, Range, MatchAny
+from qdrant_client.models import Distance, VectorParams, PointStruct
 import uuid
 import time
-from pathlib import Path
 from core.sync_manager import SyncManager
 
 # Assuming local Qdrant for now.
@@ -53,6 +52,7 @@ class VectorStore:
     def add_text(self, text, embedding, metadata=None):
         """
         Adiciona um texto vetorizado ao STAGING (não bloqueia main).
+        Passa pelo governance (trust scoring, AI detection) antes de inserir.
 
         Args:
             text (str): O conteúdo textual original.
@@ -60,23 +60,35 @@ class VectorStore:
             metadata (dict, optional): Metadados adicionais.
 
         Returns:
-            str: ID do ponto inserido ou None se for duplicata.
+            str: ID do ponto inserido ou None se for rejeitado.
         """
-        # Verificar duplicidade apenas no staging (rápido)
+        try:
+            from core.governance import get_governance
+            gov = get_governance()
+            approved, score, reason = gov.assess(text, metadata or {})
+            if not approved:
+                import logging as _lg
+                _lg.getLogger("Governance").info(
+                    f"Ingestion rejected by governance: {reason} (score={score})"
+                )
+                return None
+            metadata = gov.enrich_metadata(metadata, score, text)
+        except Exception:
+            import logging as _lg
+            _lg.getLogger("Governance").warning("Governance check failed, allowing ingestion")
+
         if self.exists_similar(embedding, threshold=0.95):
             import os
             if os.getenv("ZIVA_VERBOSE", "false").lower() == "true":
                 print("Duplicate detected. Skipping.")
             return None
 
-        # Adicionar ao staging (sem lock na main)
         point_id = self.sync_manager.add_to_staging(
             text=text,
             embedding=embedding,
             metadata=metadata
         )
 
-        # Transferir para main imediatamente (pode ser background no futuro)
         transferred = self.sync_manager.transfer_staging_to_main()
         if transferred > 0:
             import os

@@ -2,8 +2,35 @@ import sys
 import os
 import logging
 import time
-from typing import Optional, Dict, Any, List
+import threading
+import asyncio
+import concurrent.futures
+from typing import Optional, Dict, Any, List, Callable
 from contextlib import asynccontextmanager
+
+def _run_with_timeout(fn: Callable, timeout: int = 60, default=None):
+    """Run fn in a daemon thread with timeout. Truly abandons thread on timeout."""
+    result = []
+    exception = []
+    done = threading.Event()
+
+    def worker():
+        try:
+            result.append(fn())
+        except Exception as e:
+            exception.append(e)
+        finally:
+            done.set()
+
+    t = threading.Thread(target=worker, daemon=True)
+    t.start()
+    finished = done.wait(timeout=timeout)
+    if not finished:
+        logging.getLogger("Server").warning("⏱️ Server _run_with_timeout: timed out after %ds", timeout)
+        return default
+    if exception:
+        raise exception[0]
+    return result[0] if result else default
 
 # Load .env file BEFORE any other imports that read env vars
 from dotenv import load_dotenv
@@ -16,17 +43,23 @@ from fastapi.staticfiles import StaticFiles
 from core.autonomic import autonomic_system
 from fastapi.middleware.cors import CORSMiddleware
 from core.security import verify_api_key, verify_dashboard_access
+from core.security_middleware import SecurityMiddleware
+from core.security_config import sanitize_input
 from agent.ziva import ZivaAgent
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from core.llm import LLMService
+from core.plugin_system import get_plugin_system
+from agent.tools import ToolManager
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Init Logging
-logging.basicConfig(level=logging.INFO)
+from core.logging_setup import setup_logging, set_request_id, log_event
+from core.graph_metrics import get_node_metrics
+setup_logging()
 logger = logging.getLogger("ZivaAPI")
 
 
@@ -35,10 +68,34 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("🚀 Ziva API Starting up...")
     autonomic_system.start()
+
+    # Initialize plugin system
+    tool_manager = ToolManager()
+    plugin_system = get_plugin_system(tool_manager)
+    plugin_count = plugin_system.load_all()
+    logger.info(f"Plugin system initialized: {plugin_count} plugins loaded")
+    plugin_system.run_hook("on_startup")
+
     yield
     # Shutdown
     logger.info("🛑 Ziva API Shutting down...")
+    plugin_system.run_hook("on_shutdown")
     autonomic_system.stop()
+    # Cleanup search connector sessions
+    try:
+        from extensions.search_connector import _connector
+        if _connector is not None:
+            _connector.close()
+    except Exception:
+        pass
+    # Cleanup AniList session
+    try:
+        from core.tools.anilist_anime import _anilist_client
+        if _anilist_client is not None:
+            _anilist_client.close()
+    except Exception:
+        pass
+    logger.info("✅ Ziva API shutdown complete")
 
 
 app = FastAPI(
@@ -58,14 +115,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(SecurityMiddleware)
+
 # Singleton Agent (Lazy Load or Injected)
 agent = None
+agent_lock = threading.Lock()
 
 
 def get_agent():
     global agent
     if agent is None:
-        agent = ZivaAgent()
+        with agent_lock:
+            if agent is None:
+                agent = ZivaAgent()
     return agent
 
 
@@ -175,6 +237,10 @@ class ChatCompletionResponse(BaseModel):
 @app.post("/chat", dependencies=[Depends(verify_dashboard_access)])
 def chat(payload: ChatMessage, username: str = Depends(verify_dashboard_access)):
     """Interactive chat with Ziva through the API."""
+    req_id = set_request_id()
+    log_event("chat_start", session_id=payload.session_id, message_len=len(payload.message))
+    payload.message = sanitize_input(payload.message)
+    start_time = time.time()
     try:
         current_agent = get_agent()
         conn = current_agent.db._get_conn()
@@ -263,31 +329,100 @@ def chat(payload: ChatMessage, username: str = Depends(verify_dashboard_access))
 
             else:
                 from core.graph.ziva_graph import app as graph_app
+                from langchain_core.messages import HumanMessage, AIMessage
 
                 cursor.execute(
                     "SELECT role, content FROM interactions WHERE session_id = ? "
-                    "ORDER BY timestamp DESC LIMIT 5", (session_id,))
+                    "ORDER BY timestamp DESC LIMIT 10", (session_id,))
                 history_rows = cursor.fetchall()
-                conversation_history = "\n".join(
-                    [f"{row[0].capitalize()}: {row[1]}"
-                     for row in reversed(history_rows)]
-                )
 
-                full_input = (
-                    f"History:\n{conversation_history}\n\nUser Request: "
-                    f"{payload.message}" if conversation_history
-                    else payload.message
-                )
+                messages = []
+                for row in reversed(history_rows):
+                    role, content = row
+                    if role == "user":
+                        messages.append(HumanMessage(content=content))
+                    elif role == "assistant":
+                        messages.append(AIMessage(content=content))
 
-                initial_state = {"input": full_input, "rag_context": "", "retry_count": 0}
+                initial_state = {
+                    "input": payload.message,
+                    "rag_context": "",
+                    "retry_count": 0,
+                    "messages": messages
+                }
 
-                final_state = graph_app.invoke(
-                    initial_state, config={"recursion_limit": 100}
-                )
+                final_state = _run_with_timeout(
+                    lambda: graph_app.invoke(initial_state, {"recursion_limit": 100}),
+                    timeout=180)
+                if final_state is None:
+                    logger.error("Graph execution timed out after 180s")
+                    response = "A consulta demorou muito. Tente novamente com uma pergunta mais direta."
+                    tool_output = {}
+                    conn.commit()
+                    return {
+                        "response": response,
+                        "session_id": session_id,
+                        "task_type": "graph_execution",
+                        "model_used": os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3"),
+                        "context_used": 0
+                    }
 
                 response = final_state.get(
                     "response", "No response generated.")
                 tool_output = final_state.get("tool_output", {})
+
+                # Background cognitive processing (non-blocking)
+                def _run_cognitive(state_snapshot):
+                    try:
+                        from core.graph.ziva_graph import summarization_node, learning_node, metacognition_node
+                        from core.logging_setup import log_event
+                        from core.graph_metrics import track_node
+                        summarization_node(state_snapshot)
+                        learning_node(state_snapshot)
+                        cognitive_result = metacognition_node(state_snapshot)
+                        score = cognitive_result.get("reflection_score", 0) if isinstance(cognitive_result, dict) else 0
+                        log_event("cognitive_pipeline_complete", score=score)
+                        try:
+                            from core.training_data import get_collector
+                            collector = get_collector()
+                            topics = []
+                            if state_snapshot.get("task_type"):
+                                topics = [state_snapshot["task_type"]]
+                            collector.add_example(
+                                query=state_snapshot.get("input", ""),
+                                response=state_snapshot.get("response", ""),
+                                metadata={
+                                    "confidence": state_snapshot.get("task_confidence", 0.5),
+                                    "tool_success": not bool(state_snapshot.get("tool_needed", False)) or bool(state_snapshot.get("tool_output", "")),
+                                    "session_id": state_snapshot.get("session_id"),
+                                },
+                                topics=topics,
+                            )
+                        except Exception as e:
+                            logger.debug(f"Training data collection failed: {e}")
+                    except Exception as e:
+                        logger.debug(f"Background cognitive pipeline: {e}")
+                    try:
+                        from core.memory.hierarchical_memory import get_hierarchical_memory
+                        hm = get_hierarchical_memory()
+                        hm.store_interaction(state_snapshot.get("session_id", "unknown"), state_snapshot.get("input", ""), state_snapshot.get("response", ""))
+                    except Exception as e:
+                        logger.debug(f"Hierarchical memory store failed: {e}")
+                import threading
+                cognitive_state = {
+                    "input": payload.message,
+                    "response": response,
+                    "rag_context": final_state.get("rag_context", ""),
+                    "messages": final_state.get("messages", []),
+                    "long_term_summary": final_state.get("long_term_summary", ""),
+                    "session_id": session_id,
+                    "task_type": final_state.get("task_type", ""),
+                    "task_confidence": final_state.get("task_confidence", 0.5),
+                    "tool_needed": final_state.get("tool_needed", False),
+                    "tool_output": final_state.get("tool_output", ""),
+                }
+                threading.Thread(target=_run_cognitive, args=(cognitive_state,), daemon=True).start()
+
 
                 logger.info(
                     f"Graph execution complete. Response len: {len(response)}"
@@ -318,17 +453,23 @@ def chat(payload: ChatMessage, username: str = Depends(verify_dashboard_access))
 
         conn.commit()
 
+        elapsed = time.time() - start_time
+        log_event("chat_complete", session_id=session_id, duration_ms=round(elapsed * 1000), response_len=len(response))
+
         return {
             "response": response,
             "session_id": session_id,
             "task_type": "graph_execution",
-            "model_used": os.getenv("ZIVA_LLM_MODEL", "qwen3-14b"),
-            "context_used": 1
+            "model_used": os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3"),
+            "context_used": 1,
+            "duration_ms": round(elapsed * 1000)
         }
 
     except HTTPException:
         raise
     except Exception as e:
+        duration = time.time() - start_time
+        log_event("chat_error", duration_ms=round(duration * 1000), error=str(e))
         logger.exception("Chat endpoint error")
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -370,7 +511,7 @@ async def health_check():
             result = sock.connect_ex((host, port))
             sock.close()
             return result == 0
-        except:
+        except OSError:
             return False
     
     # Check services
@@ -428,6 +569,8 @@ async def openai_chat_completions(request: ChatCompletionRequest):
     """OpenAI-compatible endpoint for Ziva Agent."""
     import uuid
     import time
+    req_id = set_request_id()
+    start_time = time.time()
     from core.graph.ziva_graph import app as graph_app
     from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
@@ -452,7 +595,7 @@ async def openai_chat_completions(request: ChatCompletionRequest):
             # If we pass 'input', the graph handles it.
             
         elif msg.role == "user":
-            langchain_messages.append(HumanMessage(content=msg.content))
+            langchain_messages.append(HumanMessage(content=sanitize_input(msg.content)))
         elif msg.role == "assistant":
             langchain_messages.append(AIMessage(content=msg.content))
             
@@ -460,7 +603,7 @@ async def openai_chat_completions(request: ChatCompletionRequest):
     last_user_input = ""
     for msg in reversed(request.messages):
         if msg.role == "user":
-            last_user_input = msg.content
+            last_user_input = sanitize_input(msg.content)
             break
             
     # If using pure graph invocation
@@ -475,9 +618,12 @@ async def openai_chat_completions(request: ChatCompletionRequest):
     }
     
     try:
-        # Execute Graph
+        # Execute Graph with timeout
         # Note: Non-streaming for now to ensure stability with tools
-        final_state = await graph_app.ainvoke(graph_input, config={"recursion_limit": 50})
+        final_state = await asyncio.wait_for(
+            graph_app.ainvoke(graph_input, config={"recursion_limit": 50}),
+            timeout=300
+        )
         
         # Extract Response
         # The final answer is usually the last AIMessage in 'messages' or 'response' key
@@ -490,6 +636,53 @@ async def openai_chat_completions(request: ChatCompletionRequest):
              final_response_text = last_msg.content
         else:
              final_response_text = "No response generated."
+
+        # Background cognitive processing
+        def _run_cognitive(state):
+            try:
+                from core.graph.ziva_graph import summarization_node, learning_node, metacognition_node
+                summarization_node(state)
+                learning_node(state)
+                metacognition_node(state)
+                try:
+                    from core.training_data import get_collector
+                    collector = get_collector()
+                    topics = []
+                    if state.get("task_type"):
+                        topics = [state["task_type"]]
+                    collector.add_example(
+                        query=state.get("input", ""),
+                        response=state.get("response", ""),
+                        metadata={
+                            "confidence": state.get("task_confidence", 0.5),
+                            "tool_success": not bool(state.get("tool_needed", False)) or bool(state.get("tool_output", "")),
+                        },
+                        topics=topics,
+                    )
+                except Exception as e:
+                    logger.debug(f"Training data collection failed: {e}")
+            except Exception as e:
+                logger.debug(f"Background cognitive: {e}")
+            try:
+                from core.memory.hierarchical_memory import get_hierarchical_memory
+                hm = get_hierarchical_memory()
+                hm.store_interaction(state.get("session_id", "unknown"), state.get("input", ""), state.get("response", ""))
+            except Exception as e:
+                logger.debug(f"Hierarchical memory store failed: {e}")
+        import threading
+        threading.Thread(target=_run_cognitive, args=({
+            "input": last_user_input,
+            "response": final_response_text,
+            "rag_context": final_state.get("rag_context", ""),
+            "messages": final_state.get("messages", []),
+            "long_term_summary": final_state.get("long_term_summary", ""),
+            "task_type": final_state.get("task_type", ""),
+            "task_confidence": final_state.get("task_confidence", 0.5),
+            "tool_needed": final_state.get("tool_needed", False),
+            "tool_output": final_state.get("tool_output", ""),
+        },), daemon=True).start()
+
+        log_event("chat_complete", duration_ms=round((time.time() - start_time) * 1000), response_len=len(final_response_text))
 
         # Construct OpenAI Response
         resp_id = f"chatcmpl-{uuid.uuid4()}"
@@ -560,6 +753,13 @@ def get_memory(limit: int = 10):
              "type": "doc"}
         ]
     }
+
+
+@app.get("/memory/stats")
+async def memory_stats():
+    from core.memory.hierarchical_memory import get_hierarchical_memory
+    hm = get_hierarchical_memory()
+    return hm.get_stats()
 
 
 dashboard_dist = os.path.join(os.path.dirname(os.path.dirname(__file__)),
@@ -682,6 +882,49 @@ def receive_rag_batch(payload: RAGBatchPayload):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/p2p/status")
+async def p2p_status():
+    """Get P2P network status."""
+    try:
+        from core.p2p_learning import P2PLearningNode
+        p2p = P2PLearningNode()
+        peers = p2p.get_connected_peers() if hasattr(p2p, 'get_connected_peers') else []
+        return {
+            "status": "active",
+            "peers_count": len(peers),
+            "peers": peers,
+        }
+    except Exception as e:
+        return {"status": "inactive", "error": str(e)}
+
+
+@app.post("/p2p/sync")
+async def p2p_sync():
+    """Trigger P2P knowledge sync."""
+    try:
+        from core.p2p_learning import P2PLearningNode
+        p2p = P2PLearningNode()
+        if hasattr(p2p, 'sync_knowledge'):
+            result = p2p.sync_knowledge()
+            return {"success": True, "result": str(result)}
+        return {"success": False, "reason": "sync_knowledge not available"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.get("/p2p/peers")
+async def p2p_peers():
+    """List P2P peers."""
+    try:
+        from core.p2p_learning import P2PLearningNode
+        p2p = P2PLearningNode()
+        if hasattr(p2p, 'get_connected_peers'):
+            peers = p2p.get_connected_peers()
+            return {"peers": peers}
+        return {"peers": []}
+    except Exception as e:
+        return {"peers": [], "error": str(e)}
+
 
 @app.get("/api/vitals", dependencies=[Depends(verify_dashboard_access)])
 def get_system_vitals():
@@ -706,30 +949,43 @@ def get_system_vitals():
 
 @app.get("/metrics")
 def get_metrics():
-    """Returns real-time system metrics for the dashboard."""
+    """Returns comprehensive real-time system metrics."""
     import psutil
     import subprocess
 
     metrics = {
         "cpu": psutil.cpu_percent(),
+        "cpu_per_core": psutil.cpu_percent(percpu=True),
         "ram": psutil.virtual_memory().percent,
+        "ram_gb": round(psutil.virtual_memory().used / (1024**3), 1),
+        "ram_total_gb": round(psutil.virtual_memory().total / (1024**3), 1),
         "gpu": None,
         "gpu_temp": None,
+        "gpu_mem_used_gb": None,
+        "gpu_mem_total_gb": None,
         "services": {
             "api": "Online",
             "ollama": "Check..."
-        }
+        },
+        "node_metrics": get_node_metrics(),
+        "vram_threshold_warning": False
     }
 
     try:
         gpu_stats = subprocess.check_output(
             ["nvidia-smi",
-             "--query-gpu=utilization.gpu,temperature.gpu",
+             "--query-gpu=utilization.gpu,temperature.gpu,memory.used,memory.total",
              "--format=csv,noheader,nounits"],
             encoding="utf-8"
         ).strip().split(",")
         metrics["gpu"] = float(gpu_stats[0])
         metrics["gpu_temp"] = float(gpu_stats[1])
+        metrics["gpu_mem_used_gb"] = round(float(gpu_stats[2]) / 1024, 1)
+        metrics["gpu_mem_total_gb"] = round(float(gpu_stats[3]) / 1024, 1)
+        if metrics["gpu_mem_used_gb"] and metrics["gpu_mem_total_gb"]:
+            vram_pct = (metrics["gpu_mem_used_gb"] / metrics["gpu_mem_total_gb"]) * 100
+            metrics["vram_pct"] = round(vram_pct, 1)
+            metrics["vram_threshold_warning"] = vram_pct > 85
     except Exception:
         pass
 
@@ -1301,6 +1557,72 @@ async def get_sync_stats():
     except Exception as e:
         logger.error(f"Get sync stats error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Mount static dashboard
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+os.makedirs(static_dir, exist_ok=True)
+app.mount("/dashboard", StaticFiles(directory=static_dir, html=True), name="dashboard")
+
+
+@app.get("/list_tools")
+async def list_tools():
+    from core.dynamic_tools.registry import get_registry
+    registry = get_registry()
+    tools = registry.list_tools()
+    result = []
+    for name, meta in sorted(tools.items()):
+        result.append({
+            "name": name,
+            "version": meta.version,
+            "description": meta.description,
+            "usage_count": meta.usage_count,
+            "success_rate": meta.success_rate,
+        })
+    return {"tools": result}
+
+
+@app.post("/delete_tool")
+async def delete_tool(data: dict):
+    name = data.get("name", "")
+    from core.dynamic_tools.registry import get_registry
+    registry = get_registry()
+    deleted = registry.delete(name)
+    return {"success": deleted}
+
+
+@app.get("/training/stats")
+async def training_stats():
+    from core.training_data import get_collector
+    collector = get_collector()
+    return collector.get_stats()
+
+
+@app.post("/training/create_job")
+async def create_tuning_job(data: dict = {}):
+    from core.auto_tuner import get_tuner
+    tuner = get_tuner()
+    base_model = data.get("base_model", "batiai/qwen3.6-35b:iq3")
+    job_id = tuner.create_job(base_model=base_model)
+    if job_id:
+        return {"success": True, "job_id": job_id}
+    return {"success": False, "reason": "Not enough training examples (need 50+)"}
+
+
+@app.post("/training/run_job")
+async def run_tuning_job(data: dict):
+    from core.auto_tuner import get_tuner
+    tuner = get_tuner()
+    job_id = data.get("job_id", "")
+    success = tuner.run_job(job_id)
+    return {"success": success}
+
+
+@app.get("/training/jobs")
+async def list_jobs():
+    from core.auto_tuner import get_tuner
+    tuner = get_tuner()
+    return {"jobs": tuner.list_jobs()}
 
 
 if __name__ == "__main__":

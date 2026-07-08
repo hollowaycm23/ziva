@@ -29,7 +29,7 @@ def run_docker_container(image: str, command: str, env: str = "{}", allow_networ
 
     try:
         env_dict = json.loads(env)
-    except:
+    except Exception:
         return "Erro: 'env' deve ser um JSON válido."
 
     # Parse command safely

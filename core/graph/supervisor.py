@@ -1,8 +1,10 @@
+import logging
 from langgraph.prebuilt import create_react_agent
 import os
+import concurrent.futures
 from typing import Annotated, Sequence, TypedDict
 
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import BaseMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_ollama import ChatOllama
 from langgraph.graph import StateGraph, END
@@ -10,6 +12,8 @@ from langgraph.graph.message import add_messages
 
 from agent.tools import ToolManager
 from core.tool_wrapper import get_langchain_tools
+
+logger = logging.getLogger(__name__)
 
 
 class AgentState(TypedDict):
@@ -67,7 +71,13 @@ def create_agent_node(agent_llm, name: str, tools: list = []):
     agent_executor = create_react_agent(agent_llm, tools, prompt=role_prompt)
 
     def agent_node(state: AgentState):
-        result = agent_executor.invoke(state)
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            future = pool.submit(agent_executor.invoke, state)
+            try:
+                result = future.result(timeout=180)
+            except concurrent.futures.TimeoutError:
+                logger.error(f"Agent node {name} timed out")
+                return {"messages": [AIMessage(content=f"{name} timed out")]}
         old_len = len(state["messages"])
         new_messages = result["messages"][old_len:]
         return {"messages": new_messages}

@@ -147,7 +147,7 @@ class ElasticsearchVectorStore(VectorStoreBase):
         if not hits and scroll_id:
             try:
                 self.client.clear_scroll(scroll_id=scroll_id)
-            except:
+            except Exception:
                 pass
             scroll_id = None
             

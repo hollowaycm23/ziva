@@ -99,7 +99,7 @@ def show_status():
                     if "concluído com sucesso" in line:
                         last_sync = line.split(" - ")[0]
                         break
-        except:
+        except Exception:
             pass
     print(f"  {CYAN}🔄 Último Backup:{RESET} {YELLOW}{last_sync}{RESET}")
     print("-" * 60)

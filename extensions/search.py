@@ -21,40 +21,28 @@ def web_search(query: str) -> str:
         str: Resultados formatados em markdown.
     """
     try:
-        # Delegate to the robust unified_web_search
-        results_dict = unified_web_search(query, max_results=5)
-        
-        # Format the output string expected by the LLM
+        results_dict = unified_web_search(query, max_results=5, deep_scrape=False)
+
         if not results_dict:
-             return "Nenhum resultado encontrado."
-             
+            return "Nenhum resultado encontrado nas fontes disponíveis."
+
+        results_list = results_dict.get("results", [])
+        if not results_list:
+            return f"NÃO ENCONTREI resultados para '{query}'. O termo pode estar incorreto. NÃO invente produtos ou links."
+
         output = f"Resultados para '{query}':\n\n"
-        
-        # Unified search returns a dict usually, but let's check its return type in unified_search.py
-        # Logged output said: "Resultados para ... - **[Title]..."
-        # Wait, unified_web_search returns a Dict according to signature, 
-        # but internal implementation formats markdown string?
-        # Let's check unified_search.py implementation or assume it returns Dict and we format.
-        # Actually, let's look at unified_search.py again to be sure what it returns.
-        # But for now, assuming it returns Dict with 'results' list or similar is risky without checking.
-        # Previous log 'unified_web_search' call from fast_rag.py worked.
-        # Let's check fast_rag.py usage.
-        # fast_rag.py uses: results = unified_web_search(query) -> Returns Dict.
-        # format_search_results(results['results'])
-        
-        if "results" in results_dict:
-            for res in results_dict["results"]:
-                title = res.get("title", "Sem título")
-                url = res.get("url", "#")
-                content = res.get("description", res.get("snippet", "Sem descrição"))
-                output += f"- **[{title}]({url})**\n  {content}\n\n"
-        
+
+        for res in results_list:
+            title = res.get("title", "Sem título")
+            url = res.get("url", "#")
+            content = res.get("description", res.get("snippet", "Sem descrição"))
+            output += f"- **[{title}]({url})**\n  {content}\n\n"
+
         if "deep_context" in results_dict:
             output += f"\n### CONTEÚDO EXTRAÍDO (PLAYWRIGHT):\n{results_dict['deep_context']}\n"
-            
         elif "error" in results_dict:
             return f"Erro na busca: {results_dict['error']}"
-            
+
         return output
 
     except Exception as e:

@@ -20,7 +20,7 @@ MAX_MODEL_LEN = int(os.getenv('ZIVA_MAX_MODEL_LEN', '2048'))
 LLM_DTYPE = os.getenv('ZIVA_DTYPE', 'float16')
 LM_STUDIO_BASE_URL = os.getenv('LM_STUDIO_BASE_URL', 'http://localhost:1234/v1')
 LM_STUDIO_API_KEY = os.getenv('LM_STUDIO_API_KEY', 'lm-studio')
-LM_STUDIO_MODEL = os.getenv('LM_STUDIO_MODEL', 'qwen3-14b')
+LM_STUDIO_MODEL = os.getenv('LM_STUDIO_MODEL', 'batiai/qwen3.6-35b:iq3')
 TIMEOUT_SECONDS = int(os.getenv('ZIVA_TIMEOUT', '120'))
 
 # Setup logging

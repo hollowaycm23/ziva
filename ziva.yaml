@@ -9,12 +9,12 @@ models:
       base_url: "${ZIVA_LLM_BASE_URL:-http://localhost:11434/v1}"
       api_key_env: "ZIVA_LLM_KEY"
       models:
-        - id: "qwen3:14b"
+        - id: "qwen2.5:7b"
           alias: "primary"
-          context_window: 32000
-        - id: "qwen3:14b"
+          context_window: 32768
+        - id: "qwen2.5:7b"
           alias: "coder"
-          context_window: 32000
+          context_window: 32768
         - id: "qwen3-embedding:0.6b"
           alias: "embedder"
           context_window: 8192
@@ -41,7 +41,7 @@ agent:
 
   memory:
     vector_store:
-      path: "/app/data/qdrant_storage_fixed"
+      path: "data/qdrant_storage"
       collection: "ziva_memory"
     episodic:
       enabled: true

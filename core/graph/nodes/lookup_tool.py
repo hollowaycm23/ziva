@@ -45,7 +45,7 @@ def lookup_tool_node(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     node_name = "lookup_tool_node"
     Auditor.log_event(
-        "NODE_START", { "node": node_name, "input": state.get("input")})
+        "NODE_START", {"node": node_name, "input": state.get("input")})
 
     try:
         full_input = state.get("input", "")

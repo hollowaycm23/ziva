@@ -28,7 +28,7 @@ class ToolManager:
             # Caminho relativo à raiz do projeto (assumindo agent/tools.py)
             self.extensions_path = Path(__file__).parent.parent / "extensions"
         
-        print(f"🐛 DEBUG ToolManager Path: {self.extensions_path.resolve()}")
+        logger.info(f"ToolManager Path: {self.extensions_path.resolve()}")
         self.loaded_tools = {}
 
     def load_tools(self):

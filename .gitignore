@@ -33,6 +33,7 @@ secrets.json
 
 # Node
 node_modules/
+dashboard/dist/
 
 # Large Binaries / Archives
 *.tar

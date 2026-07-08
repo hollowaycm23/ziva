@@ -6,6 +6,7 @@ export function useChat() {
     { role: 'system', content: 'System initialized. Modules ready.' }
   ])
   const [sending, setSending] = useState(false)
+  const sessionIdRef = useRef(null)
   const controllerRef = useRef(null)
 
   const append = useCallback((msg) => {
@@ -21,7 +22,8 @@ export function useChat() {
     controllerRef.current = controller
 
     try {
-      const data = await sendChat(text, controller.signal)
+      const data = await sendChat(text, controller.signal, sessionIdRef.current)
+      if (data.session_id) sessionIdRef.current = data.session_id
       append({
         role: 'assistant',
         content: data.error ? `⚠️ Error: ${data.error}` : data.response,

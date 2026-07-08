@@ -8,7 +8,7 @@ from openai import OpenAI
 # Configurações
 LM_STUDIO_URL = os.getenv("ZIVA_LLM_BASE_URL", "http://localhost:1234/v1")
 SEARXNG_URL = os.getenv("ZIVA_SEARXNG_URL", "http://localhost:8080")
-MODEL_NAME = os.getenv("ZIVA_LLM_MODEL", "qwen3-14b")
+MODEL_NAME = os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3")
 
 client = OpenAI(base_url=LM_STUDIO_URL, api_key="ziva-local")
 

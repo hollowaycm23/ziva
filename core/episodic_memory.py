@@ -5,6 +5,7 @@ from core.config import config
 import uuid
 import time
 import logging
+import numpy as np
 
 logger = logging.getLogger("EpisodicMemory")
 
@@ -40,6 +41,8 @@ class EpisodicMemory:
         """
         try:
             vector = self.embedder.embedding(query)
+            if isinstance(vector, np.ndarray):
+                vector = vector.tolist()
             if not vector:
                 return None
 
@@ -73,6 +76,8 @@ class EpisodicMemory:
         """
         try:
             vector = self.embedder.embedding(query)
+            if isinstance(vector, np.ndarray):
+                vector = vector.tolist()
             if not vector:
                 return False
 

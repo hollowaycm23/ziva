@@ -1,0 +1,121 @@
+✅ CHECKLIST DE DEPLOYMENT - ZIVA DOCKER CORRIGIDO
+================================================
+
+FASE 1: PRÉ-DEPLOYMENT
+- [ ] Docker 20.10+ instalado
+- [ ] Docker Compose 2.0+ instalado
+- [ ] 16GB+ RAM disponível
+- [ ] ~50GB espaço em disco livre
+- [ ] Arquivos .env, docker-compose.yml, Dockerfile verificados
+
+FASE 2: CONFIGURAÇÃO
+- [ ] Executar: bash scripts/init_env.sh (gerar secrets)
+- [ ] Editar .env com valores personalizados (OPENAI_API_KEY, etc)
+- [ ] Executar: bash scripts/check_docker_config.sh (validar)
+- [ ] Network ziva-net criada ou será auto-criada
+
+FASE 3: BUILD
+- [ ] Executar: docker build -t ziva:latest .
+  (Multi-stage: Go runtime compilado + Python environment)
+- [ ] Build status: SEM ERROS
+
+FASE 4: DEPLOY
+- [ ] Executar: docker-compose up -d
+- [ ] Aguardar 60 segundos para inicialização
+- [ ] Verificar: docker ps (9 containers "Up")
+
+FASE 5: VALIDAÇÃO
+Containers:
+- [ ] ziva-core (port 8000, 9000)
+- [ ] ziva-ollama (port 11434)
+- [ ] ziva-qdrant (port 6333)
+- [ ] ziva-searxng (port 8082)
+- [ ] ziva-kiwix (port 8081)
+- [ ] ziva-openwebui (port 3000)
+- [ ] ziva-letta-db (port 5432)
+- [ ] ziva-letta-server (port 8283)
+- [ ] ziva-browser (port 3001)
+
+Health Checks:
+- [ ] curl http://localhost:8000/v1/health (✅ 200 OK)
+- [ ] curl http://localhost:11434/api/tags (✅ modelos listados)
+- [ ] curl http://localhost:6333/health (✅ "ok")
+- [ ] docker logs ziva-core (SEM ERROS)
+
+FASE 6: TESTES FUNCIONAIS
+- [ ] Acessar http://localhost:3000 (Open WebUI)
+- [ ] Acessar http://localhost:8000 (Dashboard Ziva)
+- [ ] Testar chat com message
+- [ ] Verificar logs sem erros críticos
+
+FASE 7: PRODUÇÃO (OPCIONAL)
+- [ ] Configurar backup periódico
+- [ ] Configurar logging centralizado
+- [ ] Configurar alertas de saúde
+- [ ] Documentar runbooks
+
+PROBLEMAS COMUNS E SOLUÇÕES
+===========================
+
+❌ "service "ollama-server" not found"
+→ Você está usando docker-compose.yml OLD
+→ Solução: Atualizar para nova versão
+
+❌ "network "ziva-net" not found"
+→ Network não foi criada
+→ Solução: docker network create ziva-net
+
+❌ "connection refused" na porta 11434
+→ Ollama não inicializou ainda
+→ Solução: Aguardar 30s adicional
+
+❌ "CrashLoopBackOff" em ziva-core
+→ Ver logs: docker logs ziva-core
+→ Problemas comuns:
+   - ZIVA_LLM_BASE_URL incorreta
+   - Falta de QDRANT_URL
+   - Diretórios /app/data, /app/logs sem permissão
+
+SCRIPTS ÚTEIS
+=============
+
+Diagnosticar:
+  bash scripts/check_docker_config.sh
+
+Deploy com teste:
+  bash scripts/deploy_and_test.sh
+
+Ver logs:
+  docker logs -f ziva-core
+  docker-compose logs -f
+
+Limpeza completa:
+  docker-compose down -v
+  docker network rm ziva-net 2>/dev/null || true
+  rm -rf ./qdrant_storage ./logs ./data ./db ./inbox ./outbox
+
+Reiniciar específico:
+  docker restart ziva-core
+  docker-compose restart
+
+RECURSOS
+========
+
+Documentação:
+  - DOCKER_SETUP.md (guia completo)
+  - DOCKER_CONFIG_ISSUES.md (análise de problemas)
+  - DOCKER_CORRECTED_FILES.md (mudanças aplicadas)
+
+Monitoramento:
+  - http://localhost:3000 (Open WebUI)
+  - http://localhost:8000 (API)
+  - http://localhost:6333/dashboard (Qdrant)
+
+Backup:
+  docker run --rm -v ziva_db:/data -v $(pwd)/backups:/backup \
+    busybox tar czf /backup/ziva_db_$(date +%s).tar.gz /data
+
+STATUS: ✅ PRONTO PARA DEPLOY
+
+Data: 2025-01-14
+Versão: 2.5 (Com correções)

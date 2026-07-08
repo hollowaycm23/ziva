@@ -4,6 +4,7 @@ Melhora respostas com pesquisa adicional
 """
 
 import logging
+import threading
 from typing import Dict, List
 from core.rag_helper import get_rag_helper
 
@@ -134,10 +135,13 @@ class ResearchAugmenter:
             if resp.status_code == 200:
                 soup = BeautifulSoup(resp.text, 'html.parser')
                 results = []
-                for result in soup.select('.result, .article, li.result')[:5]:
-                    text = result.get_text(strip=True)
-                    if text and len(text) > 20:
-                        results.append(text[:300])
+                for li in soup.select('div.results li')[:5]:
+                    a = li.find('a')
+                    if a:
+                        title = a.get_text(strip=True)
+                        href = a.get('href', '')
+                        full_url = f"http://localhost:8081{href}" if href.startswith('/') else href
+                        results.append(f"{title}\n   Fonte: {full_url}")
                 if results:
                     return "\n\n".join(results)
                 return ""
@@ -219,13 +223,16 @@ class ResearchAugmenter:
 
 # Singleton
 _augmenter = None
+_augmenter_lock = threading.Lock()
 
 
 def get_research_augmenter() -> ResearchAugmenter:
     """Retorna instância singleton"""
     global _augmenter
     if _augmenter is None:
-        _augmenter = ResearchAugmenter()
+        with _augmenter_lock:
+            if _augmenter is None:
+                _augmenter = ResearchAugmenter()
     return _augmenter
 
 

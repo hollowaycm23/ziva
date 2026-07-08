@@ -4,6 +4,7 @@ Provides access to AniList's GraphQL API for anime information.
 """
 import requests
 import logging
+import threading
 from typing import Dict, List, Optional
 
 logger = logging.getLogger("AniListAnime")
@@ -20,6 +21,9 @@ class AniListClient:
     def __init__(self):
         self.url = "https://graphql.anilist.co"
         self.session = requests.Session()
+
+    def close(self):
+        self.session.close()
 
     def search_anime(self, query: str, limit: int = 5) -> List[Dict]:
         """
@@ -217,11 +221,14 @@ class AniListClient:
 
 # Global instance
 _client = None
+_client_lock = threading.Lock()
 
 
 def get_anilist_client() -> AniListClient:
     """Get or create global AniList client instance."""
     global _client
     if _client is None:
-        _client = AniListClient()
+        with _client_lock:
+            if _client is None:
+                _client = AniListClient()
     return _client

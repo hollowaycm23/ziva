@@ -2,12 +2,17 @@ import threading
 import time
 import logging
 import traceback
+import subprocess
 from datetime import datetime
 
 from core.thought_police import ThoughtPolice
 from core.dreamer import Dreamer
+from core.logging_setup import log_event
 
 logger = logging.getLogger("AutonomicSystem")
+
+VRAM_WARNING_THRESHOLD = 85
+VRAM_CRITICAL_THRESHOLD = 95
 
 
 class AutonomicSystem:
@@ -64,16 +69,37 @@ class AutonomicSystem:
                 if (now - self.last_dream_cycle).total_seconds(
                 ) > self.INTERVAL_DREAM_CYCLE:
                     self._run_cogenitive_task("Dream Phase", Dreamer().dream)
-                    from core.learner import Learner
+                    from core.learning import SelfLearner
+                    learner = SelfLearner()
                     self._run_cogenitive_task(
-                        "Neuro-Plasticity (Study)", Learner().study_session)
+                        "Neuro-Plasticity (Study)", learner.run_cycle)
                     self.last_dream_cycle = now
+
+                self._check_vram()
 
                 time.sleep(60)
 
             except Exception as e:
                 logger.error(f"❌ Autonomic System Failure: {e}")
                 time.sleep(60)
+
+    def _check_vram(self):
+        try:
+            result = subprocess.check_output(
+                ["nvidia-smi", "--query-gpu=memory.used,memory.total",
+                 "--format=csv,noheader,nounits"],
+                encoding="utf-8", timeout=5
+            ).strip().split(",")
+            used = float(result[0])
+            total = float(result[1])
+            pct = (used / total) * 100 if total > 0 else 0
+            if pct > VRAM_CRITICAL_THRESHOLD:
+                log_event("vram_critical", vram_pct=round(pct, 1), used_mb=used, total_mb=total)
+                logger.critical(f"🔥 VRAM CRITICAL: {pct:.0f}% ({used:.0f}/{total:.0f} MB)")
+            elif pct > VRAM_WARNING_THRESHOLD:
+                logger.warning(f"⚠️ VRAM Warning: {pct:.0f}% ({used:.0f}/{total:.0f} MB)")
+        except Exception:
+            pass
 
     def _run_cogenitive_task(self, name: str, task_func):
         """Helper to run a task safely."""

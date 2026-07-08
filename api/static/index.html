@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ziva Dashboard</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #21262d;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text2: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --yellow: #d29922;
+  --orange: #d15704;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  flex-shrink: 0;
+}
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.header h1 span { color: var(--text2); font-weight: 400; }
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.tab {
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+.tab:hover { color: var(--text); background: var(--bg3); }
+.tab.active { color: var(--accent); border-color: var(--accent); background: rgba(88,166,255,0.1); }
+.main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+.tab-content { display: none; flex: 1; overflow: auto; padding: 20px; }
+.tab-content.active { display: flex; flex-direction: column; }
+/* Chat */
+.chat-container { display: flex; flex-direction: column; height: 100%; max-width: 900px; margin: 0 auto; width: 100%; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 12px 0; display: flex; flex-direction: column; gap: 12px; }
+.chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 10px; line-height: 1.5; font-size: 14px; word-wrap: break-word; animation: fadeIn 0.2s; }
+.chat-msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+.chat-msg.ai { align-self: flex-start; background: var(--bg3); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.chat-msg.system { align-self: center; background: transparent; color: var(--text2); font-size: 12px; border: 1px dashed var(--border); }
+.chat-msg .time { font-size: 11px; opacity: 0.6; margin-top: 4px; display: block; }
+.chat-input-row { display: flex; gap: 8px; padding: 12px 0; }
+.chat-input-row input { flex: 1; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; font-family: var(--font); }
+.chat-input-row input:focus { border-color: var(--accent); }
+.chat-input-row button { padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: opacity 0.2s; font-family: var(--font); }
+.chat-input-row button:hover { opacity: 0.85; }
+.chat-input-row button:disabled { opacity: 0.4; cursor: not-allowed; }
+.session-bar { display: flex; gap: 8px; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 8px; flex-shrink: 0; }
+.session-bar label { font-size: 12px; color: var(--text2); }
+.session-bar input { padding: 4px 8px; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 12px; width: 100px; font-family: var(--font-mono); }
+.session-bar button { padding: 4px 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--text); cursor: pointer; font-size: 11px; }
+.session-bar button:hover { border-color: var(--accent); }
+/* Tools */
+.tools-container { max-width: 900px; margin: 0 auto; width: 100%; }
+.tools-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.tools-header h2 { font-size: 16px; font-weight: 600; }
+.tool-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; transition: border-color 0.2s; }
+.tool-card:hover { border-color: var(--text2); }
+.tool-card .tool-name { font-weight: 600; font-size: 14px; color: var(--accent); font-family: var(--font-mono); }
+.tool-card .tool-desc { font-size: 13px; color: var(--text2); margin: 4px 0 8px; }
+.tool-card .tool-meta { display: flex; gap: 16px; font-size: 11px; color: var(--text2); }
+.tool-card .tool-meta span { display: flex; align-items: center; gap: 4px; }
+.tool-card .tool-actions { margin-top: 8px; display: flex; gap: 8px; }
+.tool-card .tool-actions button { padding: 4px 12px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg3); color: var(--text); cursor: pointer; font-size: 12px; font-family: var(--font); }
+.tool-card .tool-actions button:hover { border-color: var(--red); color: var(--red); }
+.tool-card .tool-code { margin-top: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; max-height: 200px; overflow: auto; white-space: pre-wrap; display: none; }
+.tool-card .tool-code.show { display: block; }
+.tool-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.tool-form h3 { font-size: 14px; margin-bottom: 10px; }
+.tool-form label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+.tool-form input, .tool-form textarea { width: 100%; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 13px; margin-bottom: 10px; outline: none; font-family: var(--font); }
+.tool-form textarea { min-height: 120px; font-family: var(--font-mono); resize: vertical; }
+.tool-form input:focus, .tool-form textarea:focus { border-color: var(--accent); }
+.tool-form .form-error { color: var(--red); font-size: 12px; margin-bottom: 8px; }
+.tool-form button[type="submit"] { padding: 8px 20px; background: var(--green); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; font-family: var(--font); }
+.tool-form button[type="submit"]:hover { opacity: 0.85; }
+/* Metrics */
+.metrics-container { max-width: 1000px; margin: 0 auto; width: 100%; }
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.gauge-container { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
+.gauge-container h3 { font-size: 13px; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
+.gauge { width: 120px; height: 120px; margin: 0 auto; position: relative; }
+.gauge svg { transform: rotate(-90deg); }
+.gauge .bg { fill: none; stroke: var(--bg3); stroke-width: 8; }
+.gauge .fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+.gauge .center-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 22px; font-weight: 700; font-family: var(--font-mono); }
+.gauge .center-label { position: absolute; top: calc(50% + 16px); left: 50%; transform: translate(-50%, -50%); font-size: 10px; color: var(--text2); }
+.bar-chart { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; grid-column: 1 / -1; }
+.bar-chart h3 { font-size: 13px; color: var(--text2); margin-bottom: 12px; font-weight: 500; }
+.bar-chart .bars { display: flex; gap: 4px; align-items: flex-end; height: 140px; }
+.bar-chart .bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.bar-chart .bar { width: 100%; max-width: 30px; border-radius: 3px 3px 0 0; min-height: 2px; transition: height 0.5s ease; }
+.bar-chart .bar-label { font-size: 9px; color: var(--text2); margin-top: 4px; white-space: nowrap; }
+.node-table { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.node-table h3 { font-size: 13px; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
+.node-table table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.node-table th { text-align: left; padding: 6px 8px; color: var(--text2); font-weight: 500; border-bottom: 1px solid var(--border); }
+.node-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); font-family: var(--font-mono); }
+.node-table tr:last-child td { border-bottom: none; }
+/* Memory */
+.memory-container { max-width: 900px; margin: 0 auto; width: 100%; }
+.memory-search { display: flex; gap: 8px; margin-bottom: 16px; }
+.memory-search input { flex: 1; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; font-family: var(--font); }
+.memory-search input:focus { border-color: var(--accent); }
+.memory-search button { padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; font-family: var(--font); }
+.memory-search button:hover { opacity: 0.85; }
+.memory-search button:disabled { opacity: 0.4; cursor: not-allowed; }
+.memory-result { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+.memory-result .mem-score { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-family: var(--font-mono); font-weight: 600; margin-bottom: 4px; }
+.memory-result .mem-text { font-size: 13px; line-height: 1.5; margin-bottom: 4px; }
+.memory-result .mem-meta { font-size: 11px; color: var(--text2); display: flex; gap: 12px; flex-wrap: wrap; }
+.memory-result .mem-meta span { display: flex; align-items: center; gap: 4px; }
+.memory-pagination { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 12px; }
+.memory-pagination button { padding: 6px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--text); cursor: pointer; font-size: 12px; font-family: var(--font); }
+.memory-pagination button:hover { border-color: var(--accent); }
+.memory-pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
+.memory-pagination span { font-size: 12px; color: var(--text2); }
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
+.empty-state { text-align: center; color: var(--text2); padding: 40px 20px; font-size: 14px; }
+.error-state { text-align: center; color: var(--red); padding: 20px; font-size: 14px; }
+@media (max-width: 700px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .tabs { gap: 2px; }
+  .tab { padding: 6px 10px; font-size: 12px; }
+  .chat-msg { max-width: 95%; }
+  .header h1 { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Ziva <span>Dashboard</span></h1>
+  <div class="tabs">
+    <button class="tab active" data-tab="chat">Chat</button>
+    <button class="tab" data-tab="tools">Tools</button>
+    <button class="tab" data-tab="metrics">Metrics</button>
+    <button class="tab" data-tab="memory">Memory</button>
+  </div>
+</div>
+<div class="main">
+  <div class="tab-content active" id="tab-chat">
+    <div class="chat-container">
+      <div class="session-bar">
+        <label>Session:</label>
+        <input type="text" id="session-input" placeholder="auto">
+        <button id="session-new">New</button>
+      </div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+        <button id="chat-send">Send</button>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-tools">
+    <div class="tools-container">
+      <div class="tools-header"><h2>Dynamic Tools</h2><span id="tool-count" style="font-size:12px;color:var(--text2)"></span></div>
+      <div class="tool-form">
+        <h3>New Tool</h3>
+        <div class="form-error" id="tool-form-error"></div>
+        <label for="tool-name">Name</label>
+        <input type="text" id="tool-name" placeholder="my_tool">
+        <label for="tool-desc">Description</label>
+        <input type="text" id="tool-desc" placeholder="What this tool does">
+        <label for="tool-code">Code</label>
+        <textarea id="tool-code" placeholder="def run(args):&#10;    return {'result': 'hello'}"></textarea>
+        <button type="submit" id="tool-create-btn">Create Tool</button>
+      </div>
+      <div id="tools-list"></div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-metrics">
+    <div class="metrics-container">
+      <div class="metrics-grid">
+        <div class="gauge-container"><h3>RAM</h3><div class="gauge" id="ram-gauge"></div></div>
+        <div class="gauge-container"><h3>VRAM</h3><div class="gauge" id="vram-gauge"></div></div>
+      </div>
+      <div class="bar-chart"><h3>CPU per Core</h3><div class="bars" id="cpu-bars"></div></div>
+      <div class="node-table"><h3>Node Metrics</h3><table><thead><tr><th>Node</th><th>Count</th><th>Avg (ms)</th><th>Last (ms)</th></tr></thead><tbody id="node-metrics-body"></tbody></table></div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-memory">
+    <div class="memory-container">
+      <div class="memory-search">
+        <input type="text" id="memory-input" placeholder="Search knowledge base..." autocomplete="off">
+        <button id="memory-search-btn">Search</button>
+      </div>
+      <div id="memory-results"></div>
+      <div class="memory-pagination" id="memory-pagination" style="display:none">
+        <button id="mem-prev">Prev</button>
+        <span id="mem-page-info"></span>
+        <button id="mem-next">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const API_BASE = window.location.origin;
+  let sessionId = null;
+  let memResults = [];
+  let memPage = 0;
+  const MEM_PAGE_SIZE = 10;
+  let metricsInterval = null;
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      if (tab.dataset.tab === 'metrics') { startMetrics(); } else { stopMetrics(); }
+      if (tab.dataset.tab === 'tools') { loadTools(); }
+    });
+  });
+
+  // ---------- Chat ----------
+  function addChatMessage(role, content) {
+    const el = document.createElement('div');
+    el.className = 'chat-msg ' + role;
+    el.textContent = content;
+    const time = document.createElement('span');
+    time.className = 'time';
+    time.textContent = new Date().toLocaleTimeString();
+    el.appendChild(time);
+    document.getElementById('chat-messages').appendChild(el);
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.getElementById('chat-send').addEventListener('click', sendChat);
+  document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+
+  document.getElementById('session-new').addEventListener('click', () => {
+    sessionId = null;
+    document.getElementById('session-input').value = '';
+    document.getElementById('chat-messages').innerHTML = '';
+    addChatMessage('system', 'New session started');
+  });
+
+  async function sendChat() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    const btn = document.getElementById('chat-send');
+    btn.disabled = true;
+    addChatMessage('user', msg);
+    try {
+      const body = { message: msg, compact: true, mode: 'standard' };
+      if (sessionId) body.session_id = sessionId;
+      const resp = await fetch(API_BASE + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (!resp.ok) { addChatMessage('system', 'Error: ' + resp.status); return; }
+      const data = await resp.json();
+      if (data.session_id) { sessionId = data.session_id; document.getElementById('session-input').value = sessionId; }
+      addChatMessage('ai', data.response || '(no response)');
+    } catch (e) {
+      addChatMessage('system', 'Network error: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      document.getElementById('chat-input').focus();
+    }
+  }
+
+  // ---------- Tools ----------
+  async function loadTools() {
+    const container = document.getElementById('tools-list');
+    try {
+      const resp = await fetch(API_BASE + '/list_tools');
+      if (!resp.ok) { container.innerHTML = '<div class="error-state">Failed to load tools</div>'; return; }
+      const data = await resp.json();
+      const tools = data.tools || [];
+      document.getElementById('tool-count').textContent = tools.length + ' tool' + (tools.length !== 1 ? 's' : '');
+      if (tools.length === 0) { container.innerHTML = '<div class="empty-state">No dynamic tools registered</div>'; return; }
+      container.innerHTML = tools.map(t => {
+        const rate = t.success_rate !== undefined ? (t.success_rate * 100).toFixed(0) + '%' : 'N/A';
+        const color = t.success_rate >= 0.8 ? 'var(--green)' : t.success_rate >= 0.5 ? 'var(--yellow)' : 'var(--red)';
+        return '<div class="tool-card" data-name="' + esc(t.name) + '">' +
+          '<div class="tool-name">' + esc(t.name) + '</div>' +
+          '<div class="tool-desc">' + esc(t.description || 'No description') + '</div>' +
+          '<div class="tool-meta">' +
+            '<span>v' + (t.version || 1) + '</span>' +
+            '<span>Uses: ' + (t.usage_count || 0) + '</span>' +
+            '<span style="color:' + color + '">Rate: ' + rate + '</span>' +
+          '</div>' +
+          '<div class="tool-actions">' +
+            '<button class="tool-toggle-code">Show Code</button>' +
+            '<button class="tool-delete">Delete</button>' +
+          '</div>' +
+          '<div class="tool-code">' + esc(t.code || '') + '</div>' +
+        '</div>';
+      }).join('');
+      container.querySelectorAll('.tool-toggle-code').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const code = btn.closest('.tool-card').querySelector('.tool-code');
+          code.classList.toggle('show');
+          btn.textContent = code.classList.contains('show') ? 'Hide Code' : 'Show Code';
+        });
+      });
+      container.querySelectorAll('.tool-delete').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const name = btn.closest('.tool-card').dataset.name;
+          if (!confirm('Delete tool "' + name + '"?')) return;
+          try {
+            const resp = await fetch(API_BASE + '/delete_tool', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name }) });
+            if (resp.ok) { loadTools(); }
+          } catch (e) { alert('Failed to delete: ' + e.message); }
+        });
+      });
+    } catch (e) {
+      container.innerHTML = '<div class="error-state">Error: ' + e.message + '</div>';
+    }
+  }
+
+  document.getElementById('tool-create-btn').addEventListener('click', async () => {
+    const name = document.getElementById('tool-name').value.trim();
+    const desc = document.getElementById('tool-desc').value.trim();
+    const code = document.getElementById('tool-code').value.trim();
+    const errEl = document.getElementById('tool-form-error');
+    errEl.textContent = '';
+    if (!name) { errEl.textContent = 'Name is required'; return; }
+    if (!code) { errEl.textContent = 'Code is required'; return; }
+    try {
+      const resp = await fetch(API_BASE + '/dynamic_tools/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, description: desc, code }) });
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({}));
+        errEl.textContent = errData.detail || 'Error ' + resp.status;
+        return;
+      }
+      document.getElementById('tool-name').value = '';
+      document.getElementById('tool-desc').value = '';
+      document.getElementById('tool-code').value = '';
+      loadTools();
+    } catch (e) { errEl.textContent = 'Network error: ' + e.message; }
+  });
+
+  // ---------- Metrics ----------
+  function startMetrics() {
+    if (metricsInterval) return;
+    fetchMetrics();
+    metricsInterval = setInterval(fetchMetrics, 10000);
+  }
+
+  function stopMetrics() {
+    if (metricsInterval) { clearInterval(metricsInterval); metricsInterval = null; }
+  }
+
+  async function fetchMetrics() {
+    try {
+      const resp = await fetch(API_BASE + '/metrics');
+      if (!resp.ok) return;
+      const data = await resp.json();
+      renderMetrics(data);
+    } catch (_) {}
+  }
+
+  function renderGauge(el, pct, label, color) {
+    const r = 50, cx = 60, cy = 60, circ = 2 * Math.PI * r;
+    const offset = circ - (Math.min(pct, 100) / 100) * circ;
+    el.innerHTML = '<svg width="120" height="120" viewBox="0 0 120 120">' +
+      '<circle class="bg" cx="' + cx + '" cy="' + cy + '" r="' + r + '"/>' +
+      '<circle class="fill" cx="' + cx + '" cy="' + cy + '" r="' + r + '" stroke="' + color + '" stroke-dasharray="' + circ + '" stroke-dashoffset="' + offset + '"/>' +
+    '</svg>' +
+    '<div class="center-text" style="color:' + color + '">' + Math.round(pct) + '%</div>' +
+    '<div class="center-label">' + label + '</div>';
+  }
+
+  function renderMetrics(data) {
+    // RAM gauge
+    const ramPct = data.ram || 0;
+    const ramColor = ramPct > 85 ? 'var(--red)' : ramPct > 60 ? 'var(--yellow)' : 'var(--green)';
+    const ramLabel = (data.ram_gb || '?') + ' / ' + (data.ram_total_gb || '?') + ' GB';
+    renderGauge(document.getElementById('ram-gauge'), ramPct, ramLabel, ramColor);
+
+    // VRAM gauge
+    const vramPct = data.vram_pct || 0;
+    const vramColor = vramPct > 85 ? 'var(--red)' : vramPct > 60 ? 'var(--yellow)' : 'var(--green)';
+    const vramLabel = (data.gpu_mem_used_gb || '?') + ' / ' + (data.gpu_mem_total_gb || '?') + ' GB';
+    renderGauge(document.getElementById('vram-gauge'), vramPct, vramLabel, vramColor);
+
+    // CPU per core bars
+    const cores = data.cpu_per_core || [];
+    const barsEl = document.getElementById('cpu-bars');
+    barsEl.innerHTML = cores.map((val, i) => {
+      const h = Math.max(2, val * 1.3);
+      const color = val > 85 ? 'var(--red)' : val > 60 ? 'var(--yellow)' : 'var(--accent)';
+      return '<div class="bar-wrapper"><div class="bar" style="height:' + h + 'px;background:' + color + '"></div><div class="bar-label">' + val + '%</div></div>';
+    }).join('');
+
+    // Node metrics
+    const nodes = data.node_metrics || {};
+    const tbody = document.getElementById('node-metrics-body');
+    const entries = Object.entries(nodes);
+    if (entries.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text2);text-align:center">No data</td></tr>';
+    } else {
+      tbody.innerHTML = entries.map(([name, m]) =>
+        '<tr><td>' + esc(name) + '</td><td>' + (m.count || 0) + '</td><td>' + (m.avg ? m.avg.toFixed(1) : '—') + '</td><td>' + (m.last ? m.last.toFixed(1) : '—') + '</td></tr>'
+      ).join('');
+    }
+  }
+
+  // ---------- Memory ----------
+  async function searchMemory() {
+    const input = document.getElementById('memory-input');
+    const q = input.value.trim();
+    if (!q) return;
+    const btn = document.getElementById('memory-search-btn');
+    btn.disabled = true;
+    const container = document.getElementById('memory-results');
+    container.innerHTML = '<div style="text-align:center;padding:20px"><div class="spinner"></div></div>';
+    try {
+      const resp = await fetch(API_BASE + '/memory/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query: q, limit: 50 }) });
+      if (!resp.ok) { container.innerHTML = '<div class="error-state">Error ' + resp.status + '</div>'; return; }
+      const data = await resp.json();
+      memResults = data.results || [];
+      memPage = 0;
+      renderMemPage();
+    } catch (e) {
+      container.innerHTML = '<div class="error-state">Network error: ' + e.message + '</div>';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function renderMemPage() {
+    const container = document.getElementById('memory-results');
+    const pagination = document.getElementById('memory-pagination');
+    if (memResults.length === 0) {
+      container.innerHTML = '<div class="empty-state">No results found</div>';
+      pagination.style.display = 'none';
+      return;
+    }
+    const start = memPage * MEM_PAGE_SIZE;
+    const pageItems = memResults.slice(start, start + MEM_PAGE_SIZE);
+    container.innerHTML = pageItems.map(r => {
+      const score = r.score || r.distance || 0;
+      const scoreColor = score > 0.7 ? 'var(--green)' : score > 0.4 ? 'var(--yellow)' : 'var(--text2)';
+      const text = r.text || r.content || r.payload?.text || JSON.stringify(r);
+      const meta = r.metadata || r.payload || {};
+      const metaParts = [];
+      if (meta.source) metaParts.push('source: ' + esc(meta.source));
+      if (meta.type) metaParts.push('type: ' + esc(meta.type));
+      if (meta.timestamp) metaParts.push(new Date(meta.timestamp * 1000).toLocaleDateString());
+      return '<div class="memory-result">' +
+        '<div class="mem-score" style="background:' + scoreColor + '20;color:' + scoreColor + '">' + (typeof score === 'number' ? score.toFixed(3) : score) + '</div>' +
+        '<div class="mem-text">' + esc(typeof text === 'string' ? text.slice(0, 300) : JSON.stringify(text).slice(0, 300)) + '</div>' +
+        (metaParts.length ? '<div class="mem-meta">' + metaParts.map(p => '<span>' + p + '</span>').join('') + '</div>' : '') +
+      '</div>';
+    }).join('');
+    const totalPages = Math.ceil(memResults.length / MEM_PAGE_SIZE);
+    document.getElementById('mem-page-info').textContent = 'Page ' + (memPage + 1) + ' of ' + totalPages;
+    document.getElementById('mem-prev').disabled = memPage === 0;
+    document.getElementById('mem-next').disabled = memPage >= totalPages - 1;
+    pagination.style.display = 'flex';
+  }
+
+  document.getElementById('memory-search-btn').addEventListener('click', searchMemory);
+  document.getElementById('memory-input').addEventListener('keydown', e => { if (e.key === 'Enter') searchMemory(); });
+  document.getElementById('mem-prev').addEventListener('click', () => { if (memPage > 0) { memPage--; renderMemPage(); } });
+  document.getElementById('mem-next').addEventListener('click', () => { if ((memPage + 1) * MEM_PAGE_SIZE < memResults.length) { memPage++; renderMemPage(); } });
+
+  function esc(s) {
+    if (typeof s !== 'string') return String(s || '');
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  // Initial load
+  loadTools();
+})();
+</script>
+</body>
+</html>

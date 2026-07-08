@@ -150,7 +150,7 @@ class PlaywrightScraper:
                             if match:
                                 date_str = match.group(1)
                                 break
-                    except:
+                    except Exception:
                         continue
                 
                 # Heuristic: Try to find date in URL (e.g. /2024/01/14/)
@@ -159,7 +159,7 @@ class PlaywrightScraper:
                         match = re.search(r'/(\d{4})/(\d{2})/(\d{2})/', url)
                         if match:
                             date_str = f"{match.group(1)}-{match.group(2)}-{match.group(3)}"
-                    except:
+                    except Exception:
                         pass
 
                 browser.close()

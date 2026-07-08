@@ -1,4 +1,5 @@
 
+import os
 from typing import Dict, Any, List, Optional
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -61,7 +62,7 @@ class ReflectionManager:
             import os
             # Reuse logic from nodes.py or similar (simplified here)
             # Ideally this should be centralized
-            model_name = os.getenv("ZIVA_LLM_MODEL", "qwen2.5:14b")
+            model_name = os.getenv("ZIVA_LLM_MODEL", "batiai/qwen3.6-35b:iq3")
             self.llm = ChatOllama(model=model_name, temperature=0)
 
         chain = self.prompt | self.llm | self.parser
@@ -86,16 +87,23 @@ class ReflectionManager:
             }
 
     
-    def _ensure_collection(self):
+    def _ensure_collection(self, vector_dim=None):
         """Ensures the reflections collection exists."""
+        vec_size = vector_dim or int(os.getenv("QDRANT_VECTOR_SIZE", "768"))
         try:
             self.client.get_collection(self.collection_name)
+            info = self.client.get_collection(self.collection_name)
+            existing_dim = info.config.params.vectors.size
+            if existing_dim != vec_size:
+                print(f"⚠️ Collection dim mismatch: {existing_dim} vs {vec_size}, deleting and recreating")
+                self.client.delete_collection(self.collection_name)
+                raise Exception("recreate")
         except Exception:
-            print(f"Creating collection: {self.collection_name}")
             from qdrant_client.models import VectorParams, Distance
+            print(f"Creating collection: {self.collection_name} (dim={vec_size})")
             self.client.create_collection(
                 collection_name=self.collection_name,
-                vectors_config=VectorParams(size=768, distance=Distance.COSINE)
+                vectors_config=VectorParams(size=vec_size, distance=Distance.COSINE)
             )
 
     def save_reflection(self, reflection: Dict[str, Any], question: str, answer: str):
@@ -103,41 +111,38 @@ class ReflectionManager:
         Saves the reflection to Qdrant.
         """
         if not self.client:
-            # Lazy init
             from qdrant_client import QdrantClient
             import os
             from core.llm import LLMService 
-             
+
             url = os.getenv("QDRANT_URL", "http://localhost:6333")
             self.client = QdrantClient(url=url)
             self.collection_name = "evolutionary_reflections"
-            # Ensure we use an embedding model from config
             emb_config = config.get_llm_provider("agent.embedding_model")
             model_name = emb_config["model_name"] if emb_config else "text-embedding-qwen2.5-0.5b-instruct"
-            
             self.embedder = LLMService(model=model_name)
-            self._ensure_collection()
 
         try:
-            # Generate embedding for the reflection (using the question gives context)
             vector = self.embedder.embedding(question)
             if not vector:
                 print("Failed to embed reflection question.")
                 return
 
+            # Ensure collection with correct dimension from actual embedding
+            self._ensure_collection(vector_dim=len(vector))
+
             import uuid
             import time
             from qdrant_client.models import PointStruct
-            
+
             point_id = str(uuid.uuid4())
-            
-            # Enrich payload
+
             payload = reflection.copy()
             payload["original_question"] = question
             payload["original_answer"] = answer
             payload["timestamp"] = time.time()
             payload["type"] = "self_reflection"
-            
+
             self.client.upsert(
                 collection_name=self.collection_name,
                 points=[
@@ -149,6 +154,6 @@ class ReflectionManager:
                 ]
             )
             print(f"✅ Reflection saved to Qdrant (Score: {reflection.get('score')})")
-            
+
         except Exception as e:
             print(f"Failed to save reflection: {e}")

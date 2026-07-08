@@ -51,7 +51,7 @@ def main():
     # Verificar se API está online
     try:
         requests.get("http://localhost:8005/v1/health")
-    except:
+    except Exception:
         print("⚠️  A API Ziva não parece estar rodando em http://localhost:8005")
         print("Por favor, inicie o './start.sh' em outro terminal antes de rodar este teste.")
         return

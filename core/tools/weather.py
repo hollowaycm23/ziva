@@ -61,7 +61,7 @@ class WeatherClient:
             if data.get("results"):
                 res = data["results"][0]
                 return res["latitude"], res["longitude"], res["name"]
-        except BaseException:
+        except Exception:
             pass
         return None, None, None
 

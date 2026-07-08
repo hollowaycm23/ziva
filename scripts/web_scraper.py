@@ -274,7 +274,7 @@ class WebScraper:
                 if 'page' in locals():
                     try:
                         page.close()
-                    except:
+                    except Exception:
                         pass
 
         # All retries failed
@@ -357,14 +357,14 @@ class WebScraper:
         if self._context:
             try:
                 self._context.close()
-            except:
+            except Exception:
                 pass
             self._context = None
 
         if self._browser:
             try:
                 self._browser.close()
-            except:
+            except Exception:
                 pass
             self._browser = None
 
